@@ -12,7 +12,7 @@ const Sidebar = () => {
 
   const navItems = [
     { name: 'Overview', icon: RiDashboardLine, path: '/overview' },
-    { name: 'Milk records', icon: RiFileList3Line, path: '/milk-records' },
+    { name: 'Milk records', icon: RiFileList3Line, path: 'components/milkRecordsPage' },
     { name: 'Accounts', icon: RiUser3Line, path: '/accounts' },
   ];
 

@@ -1,12 +1,21 @@
-import Layout from './components/Layout';
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-      <Layout>
-        <div className="flex">
-          <main className="flex-1">{children}</main>
-        </div>
-        </Layout>
-  );
+ import React from 'react';
+import Landing from "./landing/page";
+import { Sidebar } from 'lucide-react';
+import MilkRecordsPage from './(farmers)/farmers/MilkRecordsPage/page';
+import SignUp from './signup/page';
+
+
+
+
+
+export default function Home(){
+  return(
+    <main>
+      <Landing/>
+      {/* <SignUp/> */}
+       {/* <Sidebar/> */}
+         {/* <MilkRecordsPage/> */}
+        
+    </main>
+  )
 }
-
-
