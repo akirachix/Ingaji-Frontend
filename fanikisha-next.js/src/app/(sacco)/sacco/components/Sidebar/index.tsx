@@ -11,8 +11,13 @@ const Sidebar = () => {
   const [showSignOutDropdown, setShowSignOutDropdown] = useState(false);
 
   const navItems = [
+<<<<<<< HEAD:fanikisha-next.js/src/app/components/Sidebar/index.tsx
     { name: 'Overview', icon: RiDashboardLine, path: '/overview' },
     { name: 'Milk records', icon: RiFileList3Line, path: 'components/milkRecordsPage' },
+=======
+    { name: 'Overview', icon: RiDashboardLine, path: '/sacco/overview' },
+    { name: 'Milk records', icon: RiFileList3Line, path: '/milk-records' },
+>>>>>>> 8f2b3de073a13e0774817524c57bcb721ca180c2:fanikisha-next.js/src/app/(sacco)/sacco/components/Sidebar/index.tsx
     { name: 'Accounts', icon: RiUser3Line, path: '/accounts' },
   ];
 

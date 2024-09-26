@@ -9,6 +9,7 @@ import * as yup from "yup";
 import { userSignup } from "@/app/utils/postUserCredentials";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 interface userData {
   first_name: string;
@@ -54,6 +55,15 @@ const SignUp = () => {
       }
 
       else{
+
+       
+       Cookies.set("userData", JSON.stringify({
+        first_name: data.first_name,
+        last_name: data.last_name,
+        username: data.username,
+        email: data.email,
+        role: data.role,
+      }), { expires: 7 }); 
 
       setSuccessMessage("Account created successfully! Let's go to login...");
       setTimeout(()=>{router.push("/login")},2000);
