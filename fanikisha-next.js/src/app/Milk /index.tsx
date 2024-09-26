@@ -1,6 +1,8 @@
+
 'use client';
 import React, { useState } from 'react';
 import { useMilkRecords } from '../hooks/milkRecords';
+import { ChevronLeft, Plus, ChevronRight, ChevronLeft as ChevronLeftIcon,Edit} from 'lucide-react';
 
 const MilkRecordsTable = () => {
   const { milkRecords, loading, error } = useMilkRecords();
@@ -31,31 +33,15 @@ const MilkRecordsTable = () => {
   };
 
   const RecordForm = ({ record, onSave, onCancel, title }) => (
-    <div style={{ 
-      position: 'fixed', 
-      top: 0, 
-      left: 0, 
-      width: '100%', 
-      height: '100%', 
-      backgroundColor: 'rgba(0,0,0,0.5)', 
-      display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center',
-      zIndex: 1000
-    }}>
-      <div style={{ 
-        backgroundColor: 'white', 
-        padding: '20px', 
-        borderRadius: '8px', 
-        width: '300px'
-      }}>
-        <h3 style={{ marginBottom: '15px' }}>{title}</h3>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white p-6 w-80">
+        <h3 className="text-lg font-semibold mb-4">{title}</h3>
         <input 
           type="date" 
           name="date" 
           value={record.date} 
           onChange={(e) => handleChange(e, onSave === handleAdd ? setNewRecord : setEditingRecord)}
-          style={{ width: '100%', marginBottom: '10px', padding: '5px' }}
+          className="w-full mb-3 p-2 border-b border-black"
         />
         <input 
           type="number" 
@@ -63,7 +49,7 @@ const MilkRecordsTable = () => {
           value={record.milk_quantity} 
           onChange={(e) => handleChange(e, onSave === handleAdd ? setNewRecord : setEditingRecord)}
           placeholder="Quantity (L)"
-          style={{ width: '100%', marginBottom: '10px', padding: '5px' }}
+          className="w-full mb-3 p-2 border rounded"
         />
         <input 
           type="number" 
@@ -71,77 +57,70 @@ const MilkRecordsTable = () => {
           value={record.price} 
           onChange={(e) => handleChange(e, onSave === handleAdd ? setNewRecord : setEditingRecord)}
           placeholder="Sale (Litre)"
-          style={{ width: '100%', marginBottom: '10px', padding: '5px' }}
+          className="w-full mb-3 p-2 border rounded"
         />
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <button onClick={onCancel} style={{ padding: '5px 10px', backgroundColor: '#f0f0f0', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Cancel</button>
-          <button onClick={onSave} style={{ padding: '5px 10px', backgroundColor: '#4a90e2', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Save</button>
+        <div className="flex justify-between">
+          <button onClick={onCancel} className="px-4 py-2 bg-gray-200 rounded">Cancel</button>
+          <button onClick={onSave} className="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
         </div>
       </div>
     </div>
   );
 
   return (
-    <div style={{ fontFamily: 'Arial, sans-serif', maxWidth: '800px', margin: '20px auto', padding: '20px', backgroundColor: '#f8f8f8' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <button style={{ background: 'none', border: 'none', color: '#4a90e2', fontSize: '24px', cursor: 'pointer' }}>&larr;</button>
+    <div className="max-w-4xl mx-auto p-4 mt-40 ml-96">
+      <div className="flex justify-between ml-96  mb-20 ">
+        <button className="text-blue-500 ml-4"><ChevronLeft size={24} /></button>
         <button 
           onClick={() => setIsAddingRecord(true)} 
-          style={{ backgroundColor: '#4a90e2', color: 'white', padding: '8px 16px', border: 'none', borderRadius: '20px', cursor: 'pointer', fontSize: '14px' }}
+          className="bg-blue-500 text-white px-4 py-2 rounded-full flex "
         >
-          Add Collection
+          <Plus size={20} className="mr-2" /> Add Collection
         </button>
       </div>
       
-      <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', marginBottom: '20px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-        <h2 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '10px' }}>Miriam Koome</h2>
-        <p style={{ margin: '5px 0', color: '#666', fontSize: '14px' }}>Cooperative No: Muguga Dairy</p>
-        <p style={{ margin: '5px 0', color: '#666', fontSize: '14px' }}>Phone No: 0716626362</p>
-        <p style={{ margin: '5px 0', color: '#666', fontSize: '14px' }}>Joined: Oct. 2016</p>
+      <div className="bg-white p-4 rounded-lg shadow-lg  mb-14 flex gap-40 w-[984px] h-[150px] ml-44">
+        <p className="text-xl text-black ">Cooperative No: Muguga Dairy</p>
+        <p className="text-xl text-black">Phone No: 0716626362</p>
+        <p className="text-xl text-black">Joined: Oct. 2016</p>
       </div>
 
-      <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 10px', backgroundColor: 'transparent' }}>
+      <table className="w-[1290px] ml-2">
         <thead>
-          <tr>
-            <th style={{ padding: '10px', textAlign: 'left', color: '#4a90e2', fontSize: '14px', fontWeight: 'normal' }}>Date</th>
-            <th style={{ padding: '10px', textAlign: 'left', color: '#4a90e2', fontSize: '14px', fontWeight: 'normal' }}>Quantity(L)</th>
-            <th style={{ padding: '10px', textAlign: 'left', color: '#4a90e2', fontSize: '14px', fontWeight: 'normal' }}>Sale (Litre)</th>
-            <th style={{ padding: '10px', textAlign: 'left', color: '#4a90e2', fontSize: '14px', fontWeight: 'normal' }}></th>
+          <tr className="text-left text-blue-500 border-b text-2xl">
+            <th className="pb-2">Date</th>
+            <th className="pb-2">Quantity(L)</th>
+            <th className="pb-2">Sale (Litre)</th>
+            <th className="pb-2"></th>
           </tr>
         </thead>
         <tbody>
           {milkRecords.map((record, index) => (
-            <tr key={index} style={{ backgroundColor: 'white', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', borderRadius: '4px' }}>
-              <td style={{ padding: '15px', borderTopLeftRadius: '4px', borderBottomLeftRadius: '4px' }}>{new Date(record.date).toLocaleDateString()}</td>
-              <td style={{ padding: '15px' }}>{record.milk_quantity}</td>
-              <td style={{ padding: '15px' }}>{record.price}</td>
-              <td style={{ padding: '15px', borderTopRightRadius: '4px', borderBottomRightRadius: '4px' }}>
-                <button onClick={() => handleEdit(record)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '18px' }}>✎</button>
+            <tr key={index} className="bg-white mb-2 border-b text-2xl">
+              <td className="p-3">{new Date(record.date).toLocaleDateString()}</td>
+              <td className="p-3">{record.milk_quantity}</td>
+              <td className="p-3">{record.price}</td>
+              <td className="p-3">
+                <button onClick={() => handleEdit(record)} className="text-gray-500">
+                  <Edit size={18} />
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
-        <button style={{ margin: '0 5px', padding: '5px 10px', border: '1px solid #e0e0e0', backgroundColor: 'white', color: '#4a90e2', borderRadius: '4px', cursor: 'pointer' }}>&lt;</button>
+      <div className="flex  mt-40">
+        <button className="mx-1 px-3 py-1 border rounded text-blue-400 ml-96"><ChevronLeftIcon size={20} /></button>
         {[1, 2, 3, 4, 5].map((page) => (
           <button 
             key={page} 
-            style={{ 
-              margin: '0 5px', 
-              padding: '5px 10px', 
-              border: '1px solid #e0e0e0', 
-              backgroundColor: page === 1 ? '#4a90e2' : 'white', 
-              color: page === 1 ? 'white' : '#4a90e2',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
+            className={`mx-1 px-3 py-1 border rounded ${page === 1 ? 'bg-blue-500 text-white' : 'text-blue-500'}`}
           >
             {page}
           </button>
         ))}
-        <button style={{ margin: '0 5px', padding: '5px 10px', border: '1px solid #e0e0e0', backgroundColor: 'white', color: '#4a90e2', borderRadius: '4px', cursor: 'pointer' }}>&gt;</button>
+        <button className="mx-1 px-3 py-1 border rounded text-blue-500"><ChevronRight size={20} /></button>
       </div>
 
       {editingRecord && (
