@@ -11,7 +11,7 @@ const Sidebar = () => {
   const [showSignOutDropdown, setShowSignOutDropdown] = useState(false);
 
   const navItems = [
-    { name: 'Overview', icon: RiDashboardLine, path: '/overview' },
+    { name: 'Overview', icon: RiDashboardLine, path: '/sacco/overview' },
     { name: 'Milk records', icon: RiFileList3Line, path: '/milk-records' },
     { name: 'Accounts', icon: RiUser3Line, path: '/accounts' },
   ];
