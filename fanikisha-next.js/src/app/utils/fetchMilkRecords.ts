@@ -1,3 +1,29 @@
+
+
+import { MilkRecord } from "./types";
+
+  
+  const url ='/api/milk-records/1/'
+  
+  
+  export async function useMilkRecords(details: MilkRecord) {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(details),
+    });
+  
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Could not fetch milk records failed');
+    }
+  
+    return await response.json();
+  }
+  
+
 export const fetchMilkRecords = async () => {
     try {
       const response = await fetch('/api/milkRecords');
