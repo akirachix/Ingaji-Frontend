@@ -2,7 +2,7 @@
 import { MilkRecord } from "./types";
 
   
-  const url ='/api/milk-records/'
+  const url ='/api/milk-records/1/'
   
   
   export async function useMilkRecords(details: MilkRecord) {

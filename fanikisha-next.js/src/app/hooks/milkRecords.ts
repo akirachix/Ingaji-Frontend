@@ -1,3 +1,5 @@
+
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -14,9 +16,9 @@ export const useMilkRecords = () => {
       try {
         const data = await fetchMilkRecords();
         setMilkRecords(data);
-        setLoading(false);
       } catch (err) {
         setError(err instanceof Error ? err : new Error('An error occurred'));
+      } finally {
         setLoading(false);
       }
     };
@@ -24,5 +26,7 @@ export const useMilkRecords = () => {
     loadMilkRecords();
   }, []);
 
-  return { milkRecords, loading, error };
+  return { milkRecords, setMilkRecords, loading, error }; 
 };
+
+

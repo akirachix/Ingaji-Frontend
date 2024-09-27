@@ -4,10 +4,11 @@ export interface LoginCredentials {
   }
 
   export interface MilkRecord {
-    farmer_id: number;
+    first_name : string;
+    last_name : string;
     milk_quantity: number;
     price: number;
-    date: string;
+    total_value: number;
   }
 
 
