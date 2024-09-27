@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from 'react';
 import { Line, Bar } from 'react-chartjs-2';
 import {
@@ -13,6 +13,7 @@ import {
   Legend,
 } from 'chart.js';
 import { fetchMilkRecords } from '@/app/utils/fetchMilkRecords';
+import Layout from '../Layout';
 
 interface MilkRecord {
   farmer_id: number;
@@ -105,7 +106,7 @@ const Overview = () => {
     setFilteredData({
       totalFarmers,
       activeFarmers: totalFarmers,
-      inactiveFarmers: 0, 
+      inactiveFarmers: 0,
       registeredFarmersData: Array(12).fill(0).map((_, index) => index === month ? totalFarmers : 0),
       milkProductionData: milkProductionByMonth,
       totalPriceData: totalPriceByMonth,
@@ -149,54 +150,58 @@ const Overview = () => {
   };
 
   return (
-    <div className="w-80% mr-48 h-10">
-      <div className="flex justify-end mb-2 ">
-        <input
-          type="month"
-          value={`${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}`}
-          onChange={(e) => setSelectedDate(new Date(e.target.value))}
-          className="border rounded-md p-1 bg-white shadow-sm text-sm cursor-pointer"
-        />
-      </div>
-
-      <div className="grid grid-cols-3 gap-2 mb-4 mt-9 ">
-        <div className="bg-white p-2 rounded-lg shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_4px_6px_-1px_rgba(0,0,0,0.1)] text-center w-60">
-          <p className="text-lg font-bold text-blue-500">{filteredData.totalFarmers}</p>
-          <p className="text-xs text-gray-600">Total Farmers</p>
-        </div>
-        <div className="bg-white p-2 rounded-lg shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_4px_6px_-1px_rgba(0,0,0,0.1)] text-center w-60">
-          <p className="text-lg font-bold text-blue-500">{filteredData.activeFarmers}</p>
-          <p className="text-xs text-gray-600">Active Farmers</p>
-        </div>
-        <div className="bg-white p-2 rounded-lg shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_4px_6px_-1px_rgba(0,0,0,0.1)] text-center w-60">
-          <p className="text-lg font-bold text-blue-500">{filteredData.inactiveFarmers}</p>
-          <p className="text-xs text-gray-600">Inactive Farmers</p>
-        </div>
-      </div>
-
-      <div className="space-y-4 mt-8">
-        <div className="bg-white rounded-lg shadow-md mt-8">
-          <h2 className="text-sm font-semibold p-2 text-gray-800">Distribution of registered farmers over the months</h2>
-          <div className="h-40 px-2 pb-2">
-            <Line data={lineChartData} options={chartOptions} />
+    <Layout>
+      <div className="flex justify-center items-center h-[90vh] ml-80">
+        <div className="w-[90vh] h-[90vh] gap-4 mt-9">
+          <div className="flex justify-center mb-2">
+            <input
+              type="month"
+              value={`${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}`}
+              onChange={(e) => setSelectedDate(new Date(e.target.value))}
+              className="border rounded-md p-2 bg-white shadow-sm text-md cursor-pointer" 
+            />
           </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-white rounded-lg shadow-md">
-            <h2 className="text-sm font-semibold p-2 text-gray-800">Total Milk Production</h2>
-            <div className="h-40 px-2 pb-2">
-              <Bar data={milkProductionChartData} options={chartOptions} />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 mt-9 justify-center items-center">
+            <div className="bg-white p-4 rounded-lg shadow-md text-center">
+              <p className="text-3xl font-bold text-blue-500">{filteredData.totalFarmers}</p> {/* Increased to text-3xl */}
+              <p className="text-xl text-gray-600">Total Farmers</p> {/* Increased to text-xl */}
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow-md text-center">
+              <p className="text-2xl font-bold text-blue-500">{filteredData.activeFarmers}</p> {/* Increased to text-2xl */}
+              <p className="text-lg text-gray-600">Active Farmers</p> {/* Increased to text-lg */}
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow-md text-center">
+              <p className="text-2xl font-bold text-blue-500">{filteredData.inactiveFarmers}</p> {/* Increased to text-2xl */}
+              <p className="text-lg text-gray-600">Inactive Farmers</p> {/* Increased to text-lg */}
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow-md">
-            <h2 className="text-sm font-semibold p-2 text-gray-800">Total price per month</h2>
-            <div className="h-40 px-2 pb-2">
-              <Bar data={totalPriceChartData} options={chartOptions} />
+
+          <div className="space-y-4 mt-11">
+            <div className="bg-white rounded-lg shadow-md mt-8">
+              <h2 className="text-lg font-semibold p-4 text-gray-800">Distribution of registered farmers over the months</h2>
+              <div className="h-60 px-2 pb-2">
+                <Line data={lineChartData} options={chartOptions} />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+              <div className="bg-white rounded-lg shadow-md">
+                <h2 className="text-lg font-semibold p-4 text-gray-800">Total Milk Production</h2>
+                <div className="h-60 px-2 pb-2">
+                  <Bar data={milkProductionChartData} options={chartOptions} />
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-md">
+                <h2 className="text-lg font-semibold p-4 text-gray-800">Total price per month</h2>
+                <div className="h-60 px-2 pb-2">
+                  <Bar data={totalPriceChartData} options={chartOptions} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

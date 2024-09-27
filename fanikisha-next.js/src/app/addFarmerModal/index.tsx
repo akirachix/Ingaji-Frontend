@@ -47,22 +47,26 @@ const AddFarmerModal: React.FC<AddFarmerModalProps> = ({
   useEffect(() => {
     const fetchCooperatives = async () => {
       try {
-        const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/api/cooperative/'); 
+        const response = await fetch(
+          "https://fanikisha-3beb7fcefffe.herokuapp.com/api/cooperative/"
+        );
         const data: Cooperative[] = await response.json();
         setCooperatives(data);
       } catch (error) {
-        console.error('Error fetching cooperatives:', error);
+        console.error("Error fetching cooperatives:", error);
       }
     };
 
     const fetchSaccos = async () => {
       try {
-        const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/api/sacco');
+        const response = await fetch(
+          "https://fanikisha-3beb7fcefffe.herokuapp.com/api/sacco"
+        );
         const data: Sacco[] = await response.json();
-        console.log(data); 
+        console.log(data);
         setSaccos(data);
       } catch (error) {
-        console.error('Error fetching saccos:', error);
+        console.error("Error fetching saccos:", error);
       }
     };
 
@@ -97,10 +101,14 @@ const AddFarmerModal: React.FC<AddFarmerModalProps> = ({
         <h2 className="text-[34px] font-bold mb-4 text-customBlue text-center">
           New Farmer
         </h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex-1 flex flex-col">
-    
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex-1 flex flex-col"
+        >
           <div className="mb-3">
-            <label className="block text-[18px] font-medium text-gray-700">First Name</label>
+            <label className="block text-[18px] font-medium text-gray-700">
+              First Name
+            </label>
             <input
               type="text"
               {...register("first_name")}
@@ -109,11 +117,15 @@ const AddFarmerModal: React.FC<AddFarmerModalProps> = ({
               }`}
             />
             {errors.first_name && (
-              <div className="text-red-500 text-sm">{errors.first_name.message}</div>
+              <div className="text-red-500 text-sm">
+                {errors.first_name.message}
+              </div>
             )}
           </div>
           <div className="mb-3">
-            <label className="block text-[18px] font-medium text-gray-700">Last Name</label>
+            <label className="block text-[18px] font-medium text-gray-700">
+              Last Name
+            </label>
             <input
               type="text"
               {...register("last_name")}
@@ -122,12 +134,16 @@ const AddFarmerModal: React.FC<AddFarmerModalProps> = ({
               }`}
             />
             {errors.last_name && (
-              <div className="text-red-500 text-sm">{errors.last_name.message}</div>
+              <div className="text-red-500 text-sm">
+                {errors.last_name.message}
+              </div>
             )}
           </div>
 
           <div className="mb-3">
-            <label className="block text-[18px] font-medium text-gray-700">Phone Number</label>
+            <label className="block text-[18px] font-medium text-gray-700">
+              Phone Number
+            </label>
             <input
               type="text"
               {...register("phone_number")}
@@ -136,12 +152,16 @@ const AddFarmerModal: React.FC<AddFarmerModalProps> = ({
               }`}
             />
             {errors.phone_number && (
-              <div className="text-red-500 text-sm">{errors.phone_number.message}</div>
+              <div className="text-red-500 text-sm">
+                {errors.phone_number.message}
+              </div>
             )}
           </div>
 
           <div className="mb-3">
-            <label className="block text-[18px] font-medium text-gray-700">Cooperative</label>
+            <label className="block text-[18px] font-medium text-gray-700">
+              Cooperative
+            </label>
             <select
               {...register("cooperative_id")}
               className={`mt-1 p-2 w-full border rounded ${
@@ -149,19 +169,26 @@ const AddFarmerModal: React.FC<AddFarmerModalProps> = ({
               }`}
             >
               <option value="">Select Cooperative</option>
-              {cooperatives.map(cooperative => (
-                <option key={cooperative.cooperative_id} value={cooperative.cooperative_id}>
+              {cooperatives.map((cooperative) => (
+                <option
+                  key={cooperative.cooperative_id}
+                  value={cooperative.cooperative_id}
+                >
                   {cooperative.cooperative_name}
                 </option>
               ))}
             </select>
             {errors.cooperative_id && (
-              <div className="text-red-500 text-sm">{errors.cooperative_id.message}</div>
+              <div className="text-red-500 text-sm">
+                {errors.cooperative_id.message}
+              </div>
             )}
           </div>
 
           <div className="mb-3">
-            <label className="block text-[18px] font-medium text-gray-700">Sacco</label>
+            <label className="block text-[18px] font-medium text-gray-700">
+              Sacco
+            </label>
             <select
               {...register("sacco_id")}
               className={`mt-1 p-2 w-full border rounded ${
@@ -169,27 +196,33 @@ const AddFarmerModal: React.FC<AddFarmerModalProps> = ({
               }`}
             >
               <option value="">Select Sacco</option>
-              {saccos.map(sacco => (
+              {saccos.map((sacco) => (
                 <option key={sacco.sacco_id} value={sacco.sacco_id}>
-                  {sacco.sacco_name} 
+                  {sacco.sacco_name}
                 </option>
               ))}
             </select>
             {errors.sacco_id && (
-              <div className="text-red-500 text-sm">{errors.sacco_id.message}</div>
+              <div className="text-red-500 text-sm">
+                {errors.sacco_id.message}
+              </div>
             )}
           </div>
 
           {errorMessage && (
-            <div className="text-red-500 text-lg text-center mb-2">{errorMessage}</div>
+            <div className="text-red-500 text-lg text-center mb-2">
+              {errorMessage}
+            </div>
           )}
 
           {successMessage && (
-            <div className="text-green-500 text-lg text-center mb-2">{successMessage}</div>
+            <div className="text-green-500 text-lg text-center mb-2">
+              {successMessage}
+            </div>
           )}
 
           <div className="flex justify-center mt-4 gap-72">
-          <button
+            <button
               type="button"
               className="bg-customBlue text-white px-6 py-2 rounded-md"
               onClick={onClose}
@@ -213,4 +246,3 @@ const AddFarmerModal: React.FC<AddFarmerModalProps> = ({
 };
 
 export default AddFarmerModal;
-

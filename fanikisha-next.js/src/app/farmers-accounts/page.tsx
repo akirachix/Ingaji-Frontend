@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import Layout from "../components/Layout";
@@ -31,8 +31,9 @@ const FarmersDashboard: React.FC = () => {
       farmer.first_name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const sorted = [...filteredFarmers].sort((a, b) =>
-      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    const sorted = [...filteredFarmers].sort(
+      (a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     );
 
     setSortedFarmers(sorted);
@@ -42,7 +43,10 @@ const FarmersDashboard: React.FC = () => {
   const totalPages = Math.ceil(totalFarmers / farmersPerPage);
   const indexOfLastFarmer = currentPage * farmersPerPage;
   const indexOfFirstFarmer = indexOfLastFarmer - farmersPerPage;
-  const currentFarmers = sortedFarmers.slice(indexOfFirstFarmer, indexOfLastFarmer);
+  const currentFarmers = sortedFarmers.slice(
+    indexOfFirstFarmer,
+    indexOfLastFarmer
+  );
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -109,7 +113,9 @@ const FarmersDashboard: React.FC = () => {
             ) : error ? (
               <p className="text-customBlue">{error.message}</p>
             ) : sortedFarmers.length === 0 ? (
-              <p className=" text-customBlue text-[20px]">No farmers data available.</p>
+              <p className=" text-customBlue text-[20px]">
+                No farmers data available.
+              </p>
             ) : (
               <>
                 <div className="overflow-x-auto">
@@ -192,7 +198,6 @@ const FarmersDashboard: React.FC = () => {
             )}
           </section>
         </main>
-
       </div>
       <AddFarmerModal
         isOpen={isModalOpen}
