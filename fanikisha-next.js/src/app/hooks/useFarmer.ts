@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { fetchFarmers } from '../utils/fetchNumberOfFarmers';
+import { fetchFarmers } from '../utils/fetchFarmers';
 
-export const useFamers = () => {
+export const useFarmers = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
     const loadFarmers = async () => {
       setLoading(true);
@@ -15,7 +14,7 @@ export const useFamers = () => {
         setData(data);
       } catch (err: unknown){
         if (err instanceof Error){
-          console.error('Error fetching farmers:', err.message);
+          console.error('Error fetching farmers', err.message);
           setError(err.message)
         }else{
           console.error('Unknown error fetching farmers:',err);
@@ -27,9 +26,5 @@ export const useFamers = () => {
     };
     loadFarmers();
     }, []);
-    
   return { data, loading, error };
 };
-
-
-
