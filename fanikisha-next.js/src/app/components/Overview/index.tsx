@@ -151,7 +151,7 @@ const Overview = () => {
   };
 
   return (
-    <div className="w-50% mr-48 h-10">
+    <div className="w-80% mr-48 h-10">
       <div className="flex justify-end mb-2 ">
         <input
           type="month"
