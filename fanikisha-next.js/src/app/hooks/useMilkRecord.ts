@@ -1,34 +1,30 @@
 import { useEffect, useState } from 'react';
-import { fetchCreditScore } from '../utils/fetchCreditScore';
+import { fetchMilkRecords } from '../utils/fetchMilkRecords';
 
-
-export const useLoanEligibility = () => {
+export const useMilkRecord = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
-    const loadCreditScore = async () => {
+    const loadMilkRecord = async () => {
       setLoading(true);
       setError(null);
       try {
-        const fetchedCreditScore = await fetchCreditScore();
-        setData(fetchedCreditScore);
+        const data = await fetchMilkRecords();
+        setData(data);
       } catch (err: unknown){
         if (err instanceof Error){
-          console.error('Error fetching credit:', err.message);
+          console.error('Error fetching milk record', err.message);
           setError(err.message)
         }else{
-          console.error('Unknown error fetching credit score:',err);
-          setError('Error fetching credit score');
+          console.error('Unknown error fetching milk record:',err);
+          setError('Error fetching milk record');
         }
       }finally{
         setLoading(false);
       }
     };
-    loadCreditScore();
+    loadMilkRecord();
     }, []);
-    
   return { data, loading, error };
 };
-
