@@ -15,6 +15,11 @@ const config: Config = {
       fontFamily: {
         "work-sans" :["Work Sans","sans-serif"],
        },
+       screens:{
+        'lg': '1024px',
+        'xl': '1280px',
+      
+       },
     },
   },
   plugins: [],

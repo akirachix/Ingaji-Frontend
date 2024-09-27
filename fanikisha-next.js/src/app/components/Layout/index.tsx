@@ -1,7 +1,8 @@
 "use client";
 import React from 'react';
 import Sidebar from '../Sidebar'
-import MilkRecordsPage from '../../(farmers)/farmers/MilkRecordsPage/page';
+
+
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -13,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </div>
       <div className="flex-grow p-4">
         {children}
-        <MilkRecordsPage/>
+        
          
       </div>
     </div>
