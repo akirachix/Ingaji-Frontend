@@ -1,11 +1,16 @@
 import React from "react";
-
-
-const FarmersPage: React.FC = () => {
+import FarmersDashboard from "./farmers-accounts/page";
+import Layout from './components/Layout';
+import Overview from './components/Overview';
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-    </div>
-  );
-};
+      <Layout>
+        <div className="flex">
+          <main className="flex-1">{children}</main>
+          <FarmersDashboard /> 
+          <Overview/>
+        </div>
+        </Layout>
 
-export default FarmersPage;
+  );
+}

@@ -192,6 +192,7 @@ const FarmersDashboard: React.FC = () => {
             )}
           </section>
         </main>
+        
       </div>
       <AddFarmerModal
         isOpen={isModalOpen}
