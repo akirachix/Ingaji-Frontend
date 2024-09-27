@@ -7,7 +7,7 @@
 // import { MdOutlineVisibilityOff, MdVisibility } from "react-icons/md"; 
 // import { useRouter } from 'next/navigation';
 // import { userLogin } from '../utils/fetchlogin'; 
-
+// import Cookies from 'js-cookie'; 
 
 // const loginSchema = Yup.object().shape({
 //   username: Yup.string().required('Required'),
@@ -22,7 +22,6 @@
 
 //   const formik = useFormik({
 //     initialValues: {
-      
 //       username: '',
 //       password: '',
 //     },
@@ -33,7 +32,9 @@
 //       try {
 //         const data = await userLogin({ username, password });
 //         console.log('login successful:', data);
-//         localStorage.setItem('token', data.token);
+        
+//         Cookies.set('token', data.token, { expires: 7 }); 
+
 //         router.push('/dashboard'); 
 //       } catch (err) {
 //         console.error('login error:', err);
@@ -49,9 +50,8 @@
 //   };
 
 //   const handleGoogleLogin = () => {
-//         window.location.href = 'https://fanikisha-3beb7fcefffe.herokuapp.com/auth/login/';
-//       };
-    
+//     window.location.href = 'https://fanikisha-3beb7fcefffe.herokuapp.com/auth/login';
+//   };
 
 //   return (
 //     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -130,17 +130,16 @@
 //           <span className="text-gray-500 text-2xl">or</span>
 //         </div>
 
-//            <button
-//               onClick={handleGoogleLogin}
-//               disabled={loading}
-//               className={`flex items-center justify-center ml-80 px-4 py-2 border mt-6 rounded-full border-blue-400 border-b-2`}
-//             >
-//               <Image src="/images/google-icon.png" alt="Google Icon" width={30} height={30} />
-//               <span className={`ml-2 text-2xl font-work-sans  ${loading ? "text-gray-400" : "text-gray-800"}`}>
-//                 {loading ? "Signing in..." : "Sign in with Google"}
-//               </span>
-//             </button>
-
+//         <button
+//           onClick={handleGoogleLogin}
+//           disabled={loading}
+//           className={`flex items-center justify-center ml-80 px-4 py-2 border mt-6 rounded-full border-blue-400 border-b-2`}
+//         >
+//           <Image src="/images/google-icon.png" alt="Google Icon" width={30} height={30} />
+//           <span className={`ml-2 text-2xl font-work-sans  ${loading ? "text-gray-400" : "text-gray-800"}`}>
+//             {loading ? "Signing in..." : "Sign in with Google"}
+//           </span>
+//         </button>
 
 //       </div>
 
@@ -150,4 +149,3 @@
 //     </div>
 //   );
 // }
-

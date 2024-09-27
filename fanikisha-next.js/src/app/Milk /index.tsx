@@ -68,26 +68,27 @@ const MilkRecordsTable = () => {
   );
 
   return (
-    <div className="max-w-4xl mx-auto p-4 mt-40 ml-96">
-      <div className="flex justify-between ml-96  mb-20 ">
-        <button className="text-blue-500 ml-4"><ChevronLeft size={24} /></button>
+    <div className="max-w-4xl mx-auto p-4 mt-28 ml-96">
+      <div className="flex justify-between mb-20 ">
+        <button className="text-blue-500"><ChevronLeft size={24} /></button>
         <button 
           onClick={() => setIsAddingRecord(true)} 
-          className="bg-blue-500 text-white px-4 py-2 rounded-full flex "
+          className="bg-blue-400 text-white px-4 py-2 rounded-full flex"
         >
           <Plus size={20} className="mr-2" /> Add Collection
         </button>
       </div>
       
-      <div className="bg-white p-4 rounded-lg shadow-lg  mb-14 flex gap-40 w-[984px] h-[150px] ml-44">
-        <p className="text-xl text-black ">Cooperative No: Muguga Dairy</p>
-        <p className="text-xl text-black">Phone No: 0716626362</p>
-        <p className="text-xl text-black">Joined: Oct. 2016</p>
+      <div className="bg-white p-16 rounded-lg shadow-lg mb-14 flex gap-8 pb-8 border
+ w-[984px] h-[150px] ml-44">
+        <p className="text-2xl text-black">Cooperative No: Muguga Dairy</p>
+        <p className="text-2xl text-black">Phone No: 0716626362</p>
+        <p className="text-2xl text-black">Joined: Oct. 2016</p>
       </div>
 
       <table className="w-[1290px] ml-2">
         <thead>
-          <tr className="text-left text-blue-500 border-b text-2xl">
+          <tr className="text-left text-blue-500 border-b-8 border-blue-400  text-2xl">
             <th className="pb-2">Date</th>
             <th className="pb-2">Quantity(L)</th>
             <th className="pb-2">Sale (Litre)</th>
@@ -96,7 +97,7 @@ const MilkRecordsTable = () => {
         </thead>
         <tbody>
           {milkRecords.map((record, index) => (
-            <tr key={index} className="bg-white mb-2 border-b text-2xl">
+            <tr key={index} className="bg-white mb-2 border-b border-gray-300 text-2xl">
               <td className="p-3">{new Date(record.date).toLocaleDateString()}</td>
               <td className="p-3">{record.milk_quantity}</td>
               <td className="p-3">{record.price}</td>
@@ -110,8 +111,8 @@ const MilkRecordsTable = () => {
         </tbody>
       </table>
 
-      <div className="flex  mt-40">
-        <button className="mx-1 px-3 py-1 border rounded text-blue-400 ml-96"><ChevronLeftIcon size={20} /></button>
+      <div className="flex  mt-20">
+        <button className="mx-1 px-3 py-1 border rounded text-blue-400  ml-96"><ChevronLeftIcon size={20} /></button>
         {[1, 2, 3, 4, 5].map((page) => (
           <button 
             key={page} 
