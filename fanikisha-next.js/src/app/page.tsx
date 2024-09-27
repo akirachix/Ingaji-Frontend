@@ -1,15 +1,13 @@
-
-import Image from "next/image";
-// import Login from './login/page'; 
-// import MilkRecordsTable  from './MIlk';
+import Layout from './components/Layout';
+import Overview from './components/Overview';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      {/* <Login/> */}
-      {/* <MilkRecordsTable/> */}
-    </div>
+      <Layout>
+        <div className="flex">
+          <main className="flex-1">{children}</main>
+          <Overview/>
+        </div>
+        </Layout>
+
   );
 }
-
-
-
