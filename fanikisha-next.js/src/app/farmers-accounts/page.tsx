@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import Layout from "../components/Layout";
 import { useFetchFarmers } from "../hooks/useFetchFarmers";
-import { Farmer } from "../../../utils/types";
+import { Farmer } from "../utils/types";
 import AddFarmerModal from "../addFarmerModal";
 
 const FarmersDashboard: React.FC = () => {
@@ -192,7 +192,7 @@ const FarmersDashboard: React.FC = () => {
             )}
           </section>
         </main>
-        
+
       </div>
       <AddFarmerModal
         isOpen={isModalOpen}

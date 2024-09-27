@@ -1,4 +1,4 @@
-import { Farmer } from "../../../utils/types";
+import { Farmer } from "./types";
 
 const url = '/api/farmers';
 

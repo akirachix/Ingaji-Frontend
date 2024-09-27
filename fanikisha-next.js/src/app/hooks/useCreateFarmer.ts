@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NewFarmer } from "../../../utils/types";
+import { NewFarmer } from "../utils/types";
 
 export const useCreateFarmer = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);

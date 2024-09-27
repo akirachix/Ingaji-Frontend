@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Farmer } from "../../../utils/types";
+import { Farmer } from "../utils/types";
 import { displayFarmers } from "../utils/fetchAccounts";
 
 export const useFetchFarmers = () => {
