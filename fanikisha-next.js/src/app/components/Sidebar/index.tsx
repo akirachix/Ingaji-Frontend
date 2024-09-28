@@ -1,9 +1,14 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
-import { RiDashboardLine, RiFileList3Line, RiUser3Line, RiLogoutBoxRLine } from 'react-icons/ri';
+"use client";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  RiDashboardLine,
+  RiFileList3Line,
+  RiUser3Line,
+  RiLogoutBoxRLine,
+} from "react-icons/ri";
 
 const Sidebar: React.FC = () => {
   const pathname = usePathname();
@@ -16,29 +21,32 @@ const Sidebar: React.FC = () => {
   }, []);
 
   const navItems = [
-    { name: 'Overview', icon: RiDashboardLine, path: '/' },
-    { name: 'Milk records', icon: RiFileList3Line, path: '/milk-records' },
-    { name: 'Accounts', icon: RiUser3Line, path: '/farmers-accounts' },
+    { name: "Overview", icon: RiDashboardLine, path: "/" },
+    { name: "Milk records", icon: RiFileList3Line, path: "/milk-records" },
+    { name: "Accounts", icon: RiUser3Line, path: "/farmers-accounts" },
   ];
 
   const handleSignOut = async () => {
     if (!isMounted) return;
     try {
-      const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/api/logout/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name: 'logout' }),
-      });
-      
+      const response = await fetch(
+        "https://fanikisha-3beb7fcefffe.herokuapp.com/api/logout/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name: "logout" }),
+        }
+      );
+
       if (response.ok) {
-        router.push('/login');
+        router.push("/login");
       } else {
-        console.error('Error logging out');
+        console.error("Error logging out");
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -62,19 +70,21 @@ const Sidebar: React.FC = () => {
         />
       </div>
       <nav className="flex-grow flex flex-col justify-center items-center w-full">
-        <ul className="space-y-6 text-center w-full text-lg"> 
+        <ul className="space-y-6 text-center w-full text-lg">
           {navItems.map((item) => (
             <li key={item.name} className="w-full">
               <Link
                 href={item.path}
                 className={`px-4 py-3 flex items-center justify-start ${
-                  pathname === item.path ? 'border-l-4 border-white bg-blue-600' : ''
+                  pathname === item.path
+                    ? "border-l-4 border-white bg-blue-600"
+                    : ""
                 } hover:font-bold hover:underline`}
               >
-                <div className="flex items-center justify-center w-10"> 
-                  <item.icon size={28} className="mr-3" /> 
+                <div className="flex items-center justify-center w-10">
+                  <item.icon size={28} className="mr-3" />
                 </div>
-                <span className="ml-3 text-xl">{item.name}</span> 
+                <span className="ml-3 text-xl">{item.name}</span>
               </Link>
             </li>
           ))}
@@ -85,14 +95,16 @@ const Sidebar: React.FC = () => {
           className="w-full flex items-center justify-center text-white hover:text-gray-200 py-3"
           onClick={() => setShowSignOutDropdown(!showSignOutDropdown)}
         >
-          <div className="flex items-center justify-center w-10"> 
-            <RiLogoutBoxRLine size={28} className="mr-3" /> 
+          <div className="flex items-center justify-center w-10">
+            <RiLogoutBoxRLine size={28} className="mr-3" />
           </div>
-          <span className="ml-3 text-xl">Sign Out</span> 
+          <span className="ml-3 text-xl">Sign Out</span>
         </button>
         {showSignOutDropdown && (
           <div className="absolute bottom-full left-0 w-full bg-white text-blue-500 rounded-t-md shadow-md text-sm">
-            <p className="p-3 text-center">Are you sure you want to sign out?</p>
+            <p className="p-3 text-center">
+              Are you sure you want to sign out?
+            </p>
             <div className="flex justify-around p-3">
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm"
