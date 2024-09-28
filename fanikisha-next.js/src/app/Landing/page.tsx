@@ -1,9 +1,15 @@
 "use client";
 
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const Landing = () => {
+    const router = useRouter();
+
+    const getStarted = () => {
+        router.push("/sign-Up"); 
+    };
+
     return (
       <main>
         <div className="flex h-screen font-work sans">
@@ -28,12 +34,12 @@ const Landing = () => {
                     <h1 className="text-[36px] font-bold mb-2">Welcome To Fanikisha</h1>
                     <p className="text-[20px] mb-6">Your partner in Dairy record keeping</p>
                     <div className='space-x-12 mt-18 ml-24'>
-                        <Link href="/Signup?type=sacco" passHref>
-                            <button  
-                               className='text-blue-600 bg-white border-2 border-blue-500 rounded py-2.5 px-6 text-2xl mr-24 mt-6'>
-                                Get Started
-                            </button>
-                        </Link>
+                        <button  
+                           className='text-blue-600 bg-white border-2 border-blue-500 rounded py-2.5 px-6 text-2xl mr-24 mt-6'
+                           onClick={getStarted} 
+                        >
+                            Get Started
+                        </button>
                     </div>
                 </div>
             </div>
