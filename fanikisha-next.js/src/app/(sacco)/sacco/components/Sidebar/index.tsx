@@ -16,8 +16,8 @@ const Sidebar: React.FC = () => {
   }, []);
 
   const navItems = [
-    { name: 'Overview', icon: RiDashboardLine, path: '/sacco/overview' },
-    { name: 'Milk records', icon: RiFileList3Line, path: '/milk-records' },
+    { name: 'Overview', icon: RiDashboardLine, path: '/sacco/sacco_overview' },
+    { name: 'Milk records', icon: RiFileList3Line, path: '/sacco/milk-record' },
     { name: 'Accounts', icon: RiUser3Line, path: '/accounts' },
   ];
 

@@ -1,4 +1,4 @@
-import { MilkRecord } from "@/app/utils/types";
+import { MilkRecord } from "@/app/(sacco)/sacco/utils/types";
 
 const API_BASE_URL = 'https://fanikisha-3beb7fcefffe.herokuapp.com';
 

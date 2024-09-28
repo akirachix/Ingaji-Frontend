@@ -1,33 +1,32 @@
 import { useEffect, useState } from 'react';
-import { fetchMilkRecords } from './fetchMilkRecord';
+import { fetchTotalCooperative } from '../utils/fetchTotalCooperative';
 
-export const useMilkRecord = () => {
+export const useCooperative = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
-    const loadMilk = async () => {
+    const loadCooperative = async () => {
       setLoading(true);
       setError(null);
       try {
-        const data = await fetchMilkRecords();
+        const data = await fetchTotalCooperative();
         setData(data);
       } catch (err: unknown){
         if (err instanceof Error){
-          console.error('Error fetching milk record:', err.message);
+          console.error('Error fetching cooperative:', err.message);
           setError(err.message)
         }else{
-          console.error('Unknown error fetching milk record:',err);
-          setError('Error fetching milk record');
+          console.error('Unknown error fetching coopeerative:',err);
+          setError('Error fetching cooperative');
         }
       }finally{
         setLoading(false);
       }
     };
-    loadMilk();
+    loadCooperative();
     }, []);
     
   return { data, loading, error };
 };
-export { fetchMilkRecords };
-

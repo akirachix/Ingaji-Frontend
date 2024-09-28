@@ -12,7 +12,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { fetchMilkRecords } from '@/app/utils/fetchMilkRecords';
+import { fetchMilkRecords } from '../(sacco)/sacco/utils/getMilkRecord';
 
 interface MilkRecord {
   farmer_id: number;

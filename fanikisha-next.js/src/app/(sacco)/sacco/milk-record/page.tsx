@@ -1,8 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import { MdSearch } from 'react-icons/md';
-import Layout from '../Layout';
-import { useMilkRecord } from '@/app/hooks/useMilkRecord';
+import Layout from '../components/Layout';
+import { useMilkRecord } from '../hooks/useMilkRecord';
 
 interface MilkRecord {
   record_id: number;
@@ -76,7 +76,7 @@ const MilkRecords = () => {
           <p>No milk records found.</p>
         )}
       </div>
-    </Layout>
+     </Layout>
   );
 };
 export default MilkRecords;
