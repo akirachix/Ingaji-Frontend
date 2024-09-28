@@ -1,12 +1,4 @@
-export interface MilkRecord{
-  record_id: number;
-  first_name: string;
-  last_name: string;
-  milk_quantity: number;
-  price: number;
-  date: string;
-  
-}
+
 export const fetchMilkRecords = async () =>{
   try{
       const response = await fetch('/api/milk_records', {

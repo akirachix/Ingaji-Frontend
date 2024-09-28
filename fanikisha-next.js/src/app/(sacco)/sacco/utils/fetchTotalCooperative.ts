@@ -1,8 +1,4 @@
-export interface Cooperative{
-    cooperative_id: number;
-    cooperative_name: string;
-    user: string;
-}
+
 export const fetchTotalCooperative = async () =>{
     try{
         const response = await fetch('/api/cooperative', {

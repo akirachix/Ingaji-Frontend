@@ -15,12 +15,17 @@
 // }
 
 import MilkRecords from "./(sacco)/sacco/milk-record/page";
+import React from "react";
+import Overview from "./Overview";
 
 export default function Home(){
   return (
     <div>
       <MilkRecords/>
+      <Overview/>
+
     </div>
   )
-
 }
+
+

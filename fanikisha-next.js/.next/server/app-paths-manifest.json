@@ -1,11 +1,20 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/page": "app/page.js",
-  "/(sacco)/sacco/sacco_overview/page": "app/(sacco)/sacco/sacco_overview/page.js",
   "/(sacco)/sacco/milk-record/page": "app/(sacco)/sacco/milk-record/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/(sacco)/sacco/sacco_overview/page": "app/(sacco)/sacco/sacco_overview/page.js",
   "/api/cooperative/route": "app/api/cooperative/route.js",
-  "/api/loan_eligibility/route": "app/api/loan_eligibility/route.js",
   "/api/farmers/route": "app/api/farmers/route.js",
-  "/api/milk_records/route": "app/api/milk_records/route.js"
+  "/api/farmer/route": "app/api/farmer/route.js",
+  "/api/loan_eligibility/route": "app/api/loan_eligibility/route.js",
+  "/api/login/route": "app/api/login/route.js",
+  "/api/milkRecords/route": "app/api/milkRecords/route.js",
+  "/api/milk_records/route": "app/api/milk_records/route.js",
+  "/api/test/route": "app/api/test/route.js",
+  "/farmers-accounts/page": "app/farmers-accounts/page.js",
+  "/login/page": "app/login/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/page": "app/page.js",
+  "/sacco_overview/page": "app/sacco_overview/page.js",
+  "/api/auth [auth0]/route": "app/api/auth [auth0]/route.js",
+  "/api/milk recordsdetails/route": "app/api/milk recordsdetails/route.js"
 }

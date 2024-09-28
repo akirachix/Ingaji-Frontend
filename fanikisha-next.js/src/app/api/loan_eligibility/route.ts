@@ -1,5 +1,5 @@
 const baseUrl = process.env.BASE_URL;
-export async function GET(request: Request) {
+export async function GET( ) {
   try {
     const response = await fetch(`${baseUrl}/api/credit-scores/`, {
       method: 'GET',
