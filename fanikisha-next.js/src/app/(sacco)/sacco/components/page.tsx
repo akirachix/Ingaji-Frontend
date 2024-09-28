@@ -2,15 +2,12 @@
 import React from 'react';
 import Sidebar from './SideBar';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout() {
   return (
     <div className="flex min-h-screen">
       <div>
         <Sidebar/>
       </div>
-      <div className="flex-grow p-4">
-        {children}
-      </div>
-    </div>
+        </div>
   );
 }   
