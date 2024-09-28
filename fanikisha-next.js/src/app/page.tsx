@@ -1,13 +1,15 @@
 import React from "react";
 import Overview from './components/Overview';
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-      
-        <div >
-        <Overview/>
-         
-        </div>
-        
+import SignUp from './sign-Up/page';
+import LoginForm from './login/page';
 
+
+export default function RootLayout() {
+  return (
+    <div>
+      <LoginForm/>
+         <SignUp/>
+      <Overview />
+    </div>
   );
 }

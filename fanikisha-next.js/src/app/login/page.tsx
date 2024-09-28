@@ -1,4 +1,3 @@
-
 'use client';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -31,16 +30,16 @@ export default function LoginForm() {
       const { username, password } = values;
       try {
         const data = await userLogin({ username, password });
-        console.log('login successful:', data);
+        console.log('Login successful:', data);
 
         setCookie('username', username, { maxAge: 30 * 24 * 60 * 60, path: '/' });
         setCookie('token', data.token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
 
-
+   
         router.push('/dashboard');
       } catch (err) {
-        console.error('login error:', err);
-        setLoginError('login failed. Please check your credentials.');
+        console.error('Login error:', err);
+        setLoginError('Login failed. Please check your credentials.');
       } finally {
         setLoading(false);
       }
@@ -57,19 +56,19 @@ export default function LoginForm() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 border border-blue-400 shadow-md w-[1040px] h-[1000px]">
+      <div className="bg-white p-8 border border-blue-400 shadow-md w-full sm:w-[1040px] h-auto">
         <h1 className="text-5xl work-sans font-bold mb-6 mt-20 text-center">Welcome Back!</h1>
         <p className="text-center mb-6 text-2xl">
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
           <a href="#" className="text-blue-500 font-bold hover:underline">
             SignUp
           </a>
         </p>
 
         <form onSubmit={formik.handleSubmit}>
-          {loginError && (
-            <div className="text-red-500 text-sm mt-1 text-center">{loginError}</div>
-          )}
+          <div aria-live="assertive" className="text-red-500 text-sm mt-1 text-center">
+            {loginError && <span>{loginError}</span>}
+          </div>
 
           <div className="mb-12 mt-24">
             <label htmlFor="username" className="block mb-2 text-2xl font-medium ml-32">
@@ -82,10 +81,12 @@ export default function LoginForm() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.username}
-              className="w-[690px] px-3 py-4 border border-blue-400 rounded-lg ml-32"
+              className="w-full sm:w-[690px] px-3 py-4 border border-blue-400 rounded-lg ml-32"
+              aria-invalid={formik.touched.username && Boolean(formik.errors.username)}
+              aria-describedby="username-error"
             />
             {formik.touched.username && formik.errors.username && (
-              <div className="text-red-500 text-sm mt-1">{formik.errors.username}</div>
+              <div id="username-error" className="text-red-500 text-sm mt-1">{formik.errors.username}</div>
             )}
           </div>
 
@@ -101,21 +102,23 @@ export default function LoginForm() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
-                className="w-[690px] px-3 py-4 border border-blue-400 rounded-lg ml-32"
+                className="w-full sm:w-[690px] px-3 py-4 border border-blue-400 rounded-lg ml-32"
+                aria-invalid={formik.touched.password && Boolean(formik.errors.password)}
+                aria-describedby="password-error"
               />
               <button
                 type="button"
                 className="absolute inset-y-0 right-40 items-center pr-3 flex text-3xl text-blue-500"
                 onClick={togglePasswordVisibility}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? <MdVisibility /> : <MdOutlineVisibilityOff />}
               </button>
             </div>
             {formik.touched.password && formik.errors.password && (
-              <div className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
+              <div id="password-error" className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
             )}
           </div>
-
 
           <button
             type="submit"
@@ -140,14 +143,11 @@ export default function LoginForm() {
             {loading ? "Signing in..." : "Sign in with Google"}
           </span>
         </button>
-
       </div>
 
       <div className="hidden lg:block ml-8 mb-20">
-        <Image src="/images/login_vector.png" alt="login" width={890} height={820} />
+        <Image src="/images/login_vector.png" alt="Login Illustration" width={890} height={820} />
       </div>
     </div>
   );
 }
-
-
