@@ -5,9 +5,9 @@ import Overview from './components/Overview';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
       
-        <div className="flex">
+        <div >
         <Overview/>
-          <main className="flex-1">{children}</main>
+         
         </div>
         
 

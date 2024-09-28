@@ -151,49 +151,49 @@ const Overview = () => {
 
   return (
     <Layout>
-      <div className="flex justify-center items-center h-[90vh] ml-80">
-        <div className="w-[90vh] h-[90vh] gap-4 mt-9">
-          <div className="flex justify-center mb-2">
+      <div>
+        <div className="">
+          <div className="flex justify-center mb-2 ">
             <input
               type="month"
               value={`${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}`}
               onChange={(e) => setSelectedDate(new Date(e.target.value))}
-              className="border rounded-md p-2 bg-white shadow-sm text-md cursor-pointer" 
+              className="rounded-md p-2 bg-white shadow-sm text-md cursor-pointer" 
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 mt-9 justify-center items-center">
-            <div className="bg-white p-4 rounded-lg shadow-md text-center">
-              <p className="text-3xl font-bold text-blue-500">{filteredData.totalFarmers}</p> {/* Increased to text-3xl */}
-              <p className="text-xl text-gray-600">Total Farmers</p> {/* Increased to text-xl */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 mt-9 ">
+            <div className="bg-white  w-auto rounded-lg shadow-md text-center">
+              <p className="text-3xl font-bold text-blue-500">{filteredData.totalFarmers}</p> 
+              <p className="text-lg text-gray-600">Total Farmers</p> 
             </div>
             <div className="bg-white p-4 rounded-lg shadow-md text-center">
-              <p className="text-2xl font-bold text-blue-500">{filteredData.activeFarmers}</p> {/* Increased to text-2xl */}
-              <p className="text-lg text-gray-600">Active Farmers</p> {/* Increased to text-lg */}
+              <p className="text-3xl  w-auto font-bold text-blue-500">{filteredData.activeFarmers}</p> 
+              <p className="text-lg text-gray-600">Active Farmers</p> 
             </div>
             <div className="bg-white p-4 rounded-lg shadow-md text-center">
-              <p className="text-2xl font-bold text-blue-500">{filteredData.inactiveFarmers}</p> {/* Increased to text-2xl */}
-              <p className="text-lg text-gray-600">Inactive Farmers</p> {/* Increased to text-lg */}
+              <p className="text-3xl w-auto font-bold text-blue-500">{filteredData.inactiveFarmers}</p>
+              <p className="text-lg text-gray-600">Inactive Farmers</p> 
             </div>
           </div>
 
-          <div className="space-y-4 mt-11">
+          <div className=" 2xl:mt-11 xl:w-[96%] 2xl:w-full" >
             <div className="bg-white rounded-lg shadow-md mt-8">
               <h2 className="text-lg font-semibold p-4 text-gray-800">Distribution of registered farmers over the months</h2>
-              <div className="h-60 px-2 pb-2">
+              <div className="h-60 xl:h-56 lg:h-40">
                 <Line data={lineChartData} options={chartOptions} />
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-15 lg:mb-20 xl:h-20 ">
               <div className="bg-white rounded-lg shadow-md">
                 <h2 className="text-lg font-semibold p-4 text-gray-800">Total Milk Production</h2>
-                <div className="h-60 px-2 pb-2">
+                <div className="h-60 ">
                   <Bar data={milkProductionChartData} options={chartOptions} />
                 </div>
               </div>
               <div className="bg-white rounded-lg shadow-md">
                 <h2 className="text-lg font-semibold p-4 text-gray-800">Total price per month</h2>
-                <div className="h-60 px-2 pb-2">
+                <div className="h-60 px-2 ">
                   <Bar data={totalPriceChartData} options={chartOptions} />
                 </div>
               </div>
