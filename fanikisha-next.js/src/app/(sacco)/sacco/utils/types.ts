@@ -77,7 +77,8 @@ export interface Farmer {
   isSubmitting: boolean;
   errorMessage: string;
   successMessage: string;
-  login: (loginData: LoginData) => Promise<any>;
+  login: (loginData: LoginData) => Promise<userData>; 
+
 }
 export interface CreditScore{
   credit_score_id : number;
@@ -140,5 +141,31 @@ export interface RegistrationSuccessResponse {
 
 
 
+ export interface userData {
+    first_name: string;
+    last_name: string;
+    username: string;
+    email: string;
+    role: string;
+    password: string;
+  }
 
+  export interface RegistrationErrorResponse {
+    error: string;
+    details?:{
+        field?: string;
+        message?: string;
+    };
+}
+export interface RegistrationSuccessResponse {
+    message: string;
+    users: userData[];
+}
+
+
+
+
+
+
+  
   

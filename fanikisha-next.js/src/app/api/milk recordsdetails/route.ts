@@ -2,7 +2,6 @@
 
 import { MilkRecord } from "@/app/(sacco)/sacco/utils/types";
 import { NextResponse } from 'next/server';
-import { fetchMilkRecords } from '@/app/(sacco)/sacco/utils/fetchMilkRecords'; // Adjust the import path if necessary
 
 const API_BASE_URL = 'https://fanikisha-3beb7fcefffe.herokuapp.com';
 
