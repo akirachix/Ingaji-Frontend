@@ -1,43 +1,32 @@
-// CREATING AN API TO CALL AN EXTERNAL API
+
+
+import { NextRequest, NextResponse } from 'next/server';
+const baseURL = process.env.BASE_URL;
 
 export async function GET() {
-    const baseUrl = process.env.BASE_URL;
+  
 
-
-
-    // FETCHING DATA FROM API
-    try {
-        const response = await fetch(`${baseUrl}/api/credit-scores/`, {
-            method: 'GET', // Use 'GET' for fetching data
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        const result = await response.json();
-
-        return new Response(JSON.stringify(result), {
-            status: 200,
-            // statusText: "Fetch successful",
-        });
-
-    } catch (error) {
-        console.log({errors:(error as Error).message});
-        
-
-        return new Response((error as Error).message, {
-            status: 500,
-        });
+  try {
+    const response = await fetch(`${baseURL}/api/farmers`);
+    
+    if (!response.ok) {
+      const textResponse = await response.text();
+      console.error('GET error response:', textResponse);
+      return NextResponse.json(
+        { error: textResponse || 'Failed to fetch credit scores' },
+        { status: response.status }
+      );
     }
+
+    const farmers = await response.json();
+    return NextResponse.json(farmers, { status: 200 });
+
+  } catch (error) {
+    console.error('Error fetching credit scores:', error);
+    return NextResponse.json(
+      { error: 'An unexpected error occurred: ' + (error as Error).message },
+      { status: 500 }
+    );
+  }
 }
 
-// TypeScript interface for CreditScore
-export interface CreditScore {
-    credit_score_id: number;
-    score: number;
-    credit_worthiness: string;
-    loan_range: string;
-    last_checked_date: string;
-    is_eligible: boolean;
-    farmer_id: number;
-}

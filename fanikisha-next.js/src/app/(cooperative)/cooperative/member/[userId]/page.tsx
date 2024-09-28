@@ -1,10 +1,10 @@
 "use client";
 
-import BarChart from "@/app/(cooperative)/cooperative/components/BarChart";
-import { fetchMilkRecords } from "@/app/utils/fetchMilkRecords";
+import BarChartComponent from "@/app/(cooperative)/cooperative/components/BarChart"; // Ensure correct import path
+import Layout from "@/app/components/Layout";
+import { useFetchCreditScores } from "@/app/hooks/useFetchCreditScores";
+import { fetchMilkRecords } from "@/app/utils/fetchMilkRecords"; // Ensure this fetch function works as expected
 import { useEffect, useState } from "react";
-import { useFetchCreditScores } from "@/app/(sacco)/sacco/hooks/useFetchCreditScores";
-import Layout from "@/app/(sacco)/sacco/components/Layout";
 
 interface MilkRecord {
   record_id: number;
@@ -28,12 +28,14 @@ const MemberPage = ({ params: { userId } }: { params: { userId: string } }) => {
   const [milkRecords, setMilkRecords] = useState<MilkRecord[]>([]);
   const { creditScores, loading: loadingCreditScores } = useFetchCreditScores(userId as string);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const records = await fetchMilkRecords();
-        setMilkRecords(records);
+        const filteredRecords = records.filter(
+          (record: MilkRecord) => record.farmer_id === Number(userId)
+        );
+        setMilkRecords(filteredRecords);
       } catch (error) {
         console.error("Error fetching milk records:", error);
       }
@@ -51,9 +53,7 @@ const MemberPage = ({ params: { userId } }: { params: { userId: string } }) => {
   if (loadingCreditScores) return <p>Loading credit scores...</p>;
   if (!userId) return <p>Loading user information...</p>;
 
-  console.log({milkRecords});
-
-
+  console.log({ milkRecords });
   return (
     <Layout>
       <div className="p-5">
@@ -72,7 +72,7 @@ const MemberPage = ({ params: { userId } }: { params: { userId: string } }) => {
         </div>
         <div className="flex mb-8">
           <div className="flex-shrink-0">
-            <BarChart milkRecords={milkRecords} width={700} height={350} />
+            <BarChartComponent milkRecords={milkRecords} width={700} height={350} />
           </div>
           <div className="ml-24 mt-20">
             <h2 className="text-lg font-semibold">Latest Credit Score Info</h2>
