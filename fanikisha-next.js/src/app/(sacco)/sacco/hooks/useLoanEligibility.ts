@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchCreditScore } from '../utils/fetchCreditScore';
+import { fetchCreditScore } from '../../../utils/fetchCreditScore';
 
 
 export const useLoanEligibility = () => {

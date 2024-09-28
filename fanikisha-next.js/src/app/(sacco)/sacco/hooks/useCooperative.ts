@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchTotalCooperative } from '../utils/fetchTotalCooperative';
+import { fetchTotalCooperative } from '../../../utils/fetchTotalCooperative';
 
 export const useCooperative = () => {
   const [data, setData] = useState([]);
