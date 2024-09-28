@@ -2,12 +2,16 @@ import React from "react";
 import FarmersDashboard from "./farmers-accounts/page";
 import Layout from './components/Layout';
 import Overview from './components/Overview';
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+import SignUp from './sign-Up/page';
+import LoginForm from './login/page';
+
+
+export default function RootLayout() {
   return (
       
         <div >
         <Overview/>
-         
+        <SignUp/>
         </div>
         
 
