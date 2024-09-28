@@ -1,30 +1,25 @@
-// import Layout from './(sacco)/sacco/components/Layout';
-// import MilkRecords from './(sacco)/sacco/milk-record/page';
-
-// export default function RootLayout({ children }: { children: React.ReactNode }) {
-//   return (
-//       <Layout>
-//         <div className="flex">
-//           {/* <main className="flex-1">{children}</main> */}
-//           {/* <Overview/> */}
-//           {/* <MilkRecords/> */}
-//         </div>
-//         </Layout>
-
-//   );
-// }
-
-import MilkRecords from "./(sacco)/sacco/milk-record/page";
 import React from "react";
+import FarmersDashboard from "./farmers-accounts/page";
+import Layout from './components/Layout';
+import SignUp from './sign-Up/page';
+import LoginForm from './login/page';
+import MilkRecords from "./(sacco)/sacco/milk-record/page";
 import Overview from "./Overview";
 
-export default function Home(){
-  return (
-    <div>
-      <MilkRecords/>
-      <Overview/>
 
-    </div>
+
+export default function RootLayout() {
+  return (
+      
+        <div >
+        <Overview/>
+        <SignUp/>
+        <MilkRecords/>
+      <Overview/>
+        </div>
+        
+
+
   )
 }
 
