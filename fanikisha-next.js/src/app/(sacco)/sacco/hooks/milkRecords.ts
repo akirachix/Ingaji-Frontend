@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { MilkRecord } from '../utils/types';
 import { fetchMilkRecords } from '../utils/getMilkRecord';
 
+
 export const useMilkRecords = () => {
   const [milkRecords, setMilkRecords] = useState<MilkRecord[]>([]);
   const [loading, setLoading] = useState<boolean>(true);

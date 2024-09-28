@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { MdSearch } from 'react-icons/md';
-import Layout from '../../../components/Layout';
+import Layout from '../components/Layout';
 import { useMilkRecord } from '../hooks/useMilkRecord';
 
 interface MilkRecord {

@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { format } from 'date-fns';
-import Layout from '../components/Layout';
 import { useFarmers } from '../(sacco)/sacco/hooks/useFarmer';
 import { useLoanEligibility } from '../(sacco)/sacco/hooks/useLoanEligibility';
 import { useCooperative } from '../(sacco)/sacco/hooks/useCooperative';
+import Layout from '../(sacco)/sacco/components/Layout';
 
 interface CreditScore {
   credit_score_id: number;
@@ -108,7 +108,7 @@ const Overview: React.FC = () => {
   }
 
   return (
-    <Layout>
+  <Layout>
       <div className="bg-white px-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-4xl mt-4 font-bold"></h1>

@@ -19,7 +19,8 @@ export const userSignup = async (userData: { first_name: string; last_name: stri
     }
     const result = await response.json();
     return { data: result };
-  } catch (error: any) {
-    return { error: error.message || 'An unexpected error occurred. Please try again later.' };
+  } catch (error) {
+    const message = (error instanceof Error) ? error.message : 'An unexpected error occurred. Please try again later.';
+    return { error: message };
   }
 };

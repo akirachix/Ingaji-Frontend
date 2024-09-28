@@ -5,7 +5,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { userSignup } from "../utils/postUserCredentials";
+import { userSignup } from "../(sacco)/sacco/utils/postUserCredentials";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { setCookie } from 'cookies-next'; 

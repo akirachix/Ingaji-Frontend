@@ -1,6 +1,6 @@
 import {  NextResponse } from 'next/server';
+const baseUrl = process.env.BASE_URL;
 export async function GET() {
-  const baseUrl = process.env.BASE_URL;
 
   try {
     const response = await fetch(`${baseUrl}/api/milk-records/`);

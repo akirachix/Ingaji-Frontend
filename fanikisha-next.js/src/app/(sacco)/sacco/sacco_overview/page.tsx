@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
 import { format } from 'date-fns';
-import Layout from '../../../components/Layout';
+import Layout from '../components/Layout';
 import { useFarmers } from '../hooks/useFarmer';
 import { useLoanEligibility } from '../hooks/useLoanEligibility';
 import { useCooperative } from '../hooks/useCooperative';
