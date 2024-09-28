@@ -1,39 +1,33 @@
+import { useEffect, useState } from 'react';
+import { fetchMilkRecords } from './fetchMilkRecord';
 
-
-import { MilkRecord } from "./types";
-
-  
-  const url ='/api/milk-records/1/'
-  
-  
-  export async function useMilkRecords(details: MilkRecord) {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(details),
-    });
-  
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Could not fetch milk records failed');
-    }
-  
-    return await response.json();
-  }
-  
-
-export const fetchMilkRecords = async () => {
-    try {
-      const response = await fetch('/api/milkRecords');
-      if (!response.ok) {
-        throw new Error('Failed to fetch milk records'+ response.text());
+export const useMilkRecord = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    const loadMilk = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await fetchMilkRecords();
+        setData(data);
+      } catch (err: unknown){
+        if (err instanceof Error){
+          console.error('Error fetching milk record:', err.message);
+          setError(err.message)
+        }else{
+          console.error('Unknown error fetching milk record:',err);
+          setError('Error fetching milk record');
+        }
+      }finally{
+        setLoading(false);
       }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
+    };
+    loadMilk();
+    }, []);
+    
+  return { data, loading, error };
+};
+export { fetchMilkRecords };
+
