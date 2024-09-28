@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-// import { Link } from 'react-router-dom';
 import Link from 'next/link';
 
 const Landing = () => {
@@ -39,7 +38,6 @@ const Landing = () => {
                     <div className=' space-x-12 mt-18 ml-24'>
                         <Link href="src/app/Signup?type=sacco" passHref>
                         <button  
-                        //    onClick={getStarted}
                            className='text-blue-600 bg-white border-2 border-blue-500 rounded py-2.5 px-6 text-2xl mr-24 mt-6'>
                             Get Started
                         </button></Link>
