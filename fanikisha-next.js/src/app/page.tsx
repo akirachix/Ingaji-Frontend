@@ -1,21 +1,15 @@
-import React from "react";
+'use client';
+import React from 'react';
 import SignUp from './sign-Up/page';
+import Overview from './Overview';
 
-
-
-
-export default function RootLayout() {
+const Home: React.FC = () => {
   return (
-      
-        <div >
-
+      <div>
         <SignUp/>
-        </div>
-        
+        <Overview/>
+      </div>
+  );
+};
 
-
-  )
-   
-}
-
-
+export default Home;

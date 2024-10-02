@@ -1,6 +1,6 @@
 export const fetchFarmers = async () => {
     try {
-      const response = await fetch('/api/farmers', {
+      const response = await fetch('/api/farmer', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

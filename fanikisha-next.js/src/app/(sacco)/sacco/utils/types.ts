@@ -161,6 +161,13 @@ export interface RegistrationSuccessResponse {
     message: string;
     users: userData[];
 }
+export interface CombinedFarmerData {
+  name: string;
+  cooperativeNo: string;
+  last_checked_date: string;
+  is_eligible: boolean;
+}
+
 
 
 

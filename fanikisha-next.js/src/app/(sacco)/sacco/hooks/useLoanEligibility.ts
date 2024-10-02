@@ -8,7 +8,7 @@ export const useLoanEligibility = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadCreditScore = async () => {
+    const fetchLoanEligibility = async () => {
       setLoading(true);
       setError(null);
       try {
@@ -26,8 +26,11 @@ export const useLoanEligibility = () => {
         setLoading(false);
       }
     };
-    loadCreditScore();
+    fetchLoanEligibility();
     }, []);
     
   return { data, loading, error };
 };
+
+
+
