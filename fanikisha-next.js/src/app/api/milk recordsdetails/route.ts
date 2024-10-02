@@ -1,5 +1,3 @@
-// import { MilkRecord } from "@/app/(sacco)/sacco/utils/types";
-
 import { MilkRecord } from "@/app/(sacco)/sacco/utils/types";
 import { NextResponse } from 'next/server';
 

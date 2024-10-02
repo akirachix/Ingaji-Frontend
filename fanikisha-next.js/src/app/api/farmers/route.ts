@@ -32,7 +32,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Handle GET requests
 export async function GET() {
   try {
     const response = await fetch(`${baseURL}/api/farmers/`);
