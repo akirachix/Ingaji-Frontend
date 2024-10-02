@@ -1,8 +1,7 @@
 
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 const baseURL = process.env.BASE_URL;
-
 export async function GET() {
   
 
@@ -22,7 +21,7 @@ export async function GET() {
     return NextResponse.json(farmers, { status: 200 });
 
   } catch (error) {
-    console.error('Error fetching credit scores:', error);
+    console.error('Error fetching credit scores:');
     return NextResponse.json(
       { error: 'An unexpected error occurred: ' + (error as Error).message },
       { status: 500 }

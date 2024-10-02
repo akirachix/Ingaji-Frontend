@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import {NextResponse } from 'next/server';
 
 const baseURL = process.env.BASE_URL;
 
 
 
-// Handle GET requests
+
 export async function GET() {
   try {
     const response = await fetch(`${baseURL}/api/milk-records/`);
@@ -22,7 +22,7 @@ export async function GET() {
     return NextResponse.json(farmers, { status: 200 });
 
   } catch (error) {
-    console.error('Error fetching milk records:', error);
+    console.error('Error fetching milk records:');
     return NextResponse.json(
       { error: 'An unexpected error occurred: ' + (error as Error).message },
       { status: 500 }

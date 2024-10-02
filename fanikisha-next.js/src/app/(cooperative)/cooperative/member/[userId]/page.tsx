@@ -14,15 +14,15 @@ interface MilkRecord {
   date: string;
 }
 
-interface CreditScore {
-  credit_score_id: number;
-  score: number;
-  credit_worthiness: string;
-  loan_range: string;
-  last_checked_date: string;
-  is_eligible: boolean;
-  farmer_id: number;
-}
+// interface CreditScore {
+//   credit_score_id: number;
+//   score: number;
+//   credit_worthiness: string;
+//   loan_range: string;
+//   last_checked_date: string;
+//   is_eligible: boolean;
+//   farmer_id: number;
+// }
 
 const MemberPage = ({ params: { userId } }: { params: { userId: string } }) => {
   const [milkRecords, setMilkRecords] = useState<MilkRecord[]>([]);

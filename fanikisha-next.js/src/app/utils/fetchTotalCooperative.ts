@@ -18,7 +18,7 @@ export const fetchTotalCooperative = async () =>{
     }
     return await response.json();
 
- }  catch (error){
+ }  catch {
     throw new Error('Failed to fetch data')
  }
 };
