@@ -18,7 +18,7 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const router = useRouter(); 
 
   const formik = useFormik({
     initialValues: {
@@ -38,6 +38,12 @@ export default function LoginForm() {
 
 
         router.push('/dashboard');
+        
+  setCookie('username', username, { maxAge: 30 * 24 * 60 * 60, path: '/' }); 
+  setCookie('token', data.token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
+
+
+        router.push('/dashboard'); 
       } catch (err) {
         console.error('login error:', err);
         setLoginError('login failed. Please check your credentials.');
@@ -108,7 +114,8 @@ export default function LoginForm() {
                 className="absolute inset-y-0 right-40 items-center pr-3 flex text-3xl text-blue-500"
                 onClick={togglePasswordVisibility}
               >
-                {showPassword ? <MdVisibility /> : <MdOutlineVisibilityOff />}
+                
+                {showPassword ? <MdVisibility /> : <MdOutlineVisibilityOff />} 
               </button>
             </div>
             {formik.touched.password && formik.errors.password && (
@@ -116,6 +123,7 @@ export default function LoginForm() {
             )}
           </div>
 
+          
 
           <button
             type="submit"
@@ -135,7 +143,7 @@ export default function LoginForm() {
           disabled={loading}
           className={`flex items-center justify-center ml-80 px-4 py-2 border mt-6 rounded-full border-blue-400 border-b-2`}
         >
-          <Image src="/images/google-icon.png" alt="Google Icon" width={30} height={30} />
+          <Image src="/image/google-icon.png" alt="Google Icon" width={30} height={30} />
           <span className={`ml-2 text-2xl font-work-sans  ${loading ? "text-gray-400" : "text-gray-800"}`}>
             {loading ? "Signing in..." : "Sign in with Google"}
           </span>
@@ -144,7 +152,7 @@ export default function LoginForm() {
       </div>
 
       <div className="hidden lg:block ml-8 mb-20">
-        <Image src="/images/login_vector.png" alt="login" width={890} height={820} />
+        <Image src="/image/login_vector.png" alt="login" width={890} height={820} />
       </div>
     </div>
   );

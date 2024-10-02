@@ -12,6 +12,7 @@ export interface LoginCredentials {
   }
 
 
+
   
 export interface Farmer {
     id: number;
@@ -19,7 +20,7 @@ export interface Farmer {
   }
 
   export interface MilkRecord {
-    id: number;
+    farmerId: number;
     farmer: number;
     date: string;
     quantity: number;
@@ -66,3 +67,4 @@ export interface Farmer {
     cooperatives: Cooperative[];
     saccos: Sacco[];
   }
+  
