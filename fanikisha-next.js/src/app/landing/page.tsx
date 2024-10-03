@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -42,13 +42,15 @@ const Landing = () => {
                            onClick={getStarted}>
                             Get Started
                         </button>
+                    <div className='space-x-12 mt-18 ml-24'>
+                       
                     </div>
                 </div>
             </div>
+        </div>
         </div>
       </main>
     );
 };
 
 export default Landing;
-

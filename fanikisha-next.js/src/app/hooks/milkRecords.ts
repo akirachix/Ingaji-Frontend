@@ -4,7 +4,7 @@
 
 import { useState, useEffect } from 'react';
 import { MilkRecord } from '../utils/types';
-import { fetchMilkRecords } from '../api/milk recordsdetails/route';
+import { fetchMilkRecords } from '../utils/fetchMilkRecords';
 
 export const useMilkRecords = () => {
   const [milkRecords, setMilkRecords] = useState<MilkRecord[]>([]);
