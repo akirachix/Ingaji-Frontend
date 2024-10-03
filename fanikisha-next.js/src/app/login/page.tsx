@@ -37,7 +37,7 @@ export default function LoginForm() {
         setCookie('token', data.token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
 
 
-        router.push('/dashboard');
+        router.push('/admin-Overview');
       } catch (err) {
         console.error('login error:', err);
         setLoginError('login failed. Please check your credentials.');

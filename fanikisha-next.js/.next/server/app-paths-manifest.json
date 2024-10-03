@@ -1,4 +1,7 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
-  "/api/milkRecords/route": "app/api/milkRecords/route.js"
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/api/milkRecords/route": "app/api/milkRecords/route.js",
+  "/sign-Up/page": "app/sign-Up/page.js"
 }
