@@ -1,4 +1,3 @@
 {
-  "/page": "app/page.js",
-  "/api/milkRecords/route": "app/api/milkRecords/route.js"
+  "/_not-found/page": "app/_not-found/page.js"
 }
