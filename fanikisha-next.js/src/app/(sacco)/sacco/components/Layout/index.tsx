@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Sidebar from '../Sidebar';
-import MugugaCooperative from '@/app/miguga_cooperative/page';
+import Overview from '@/app/sacco_overview/page';
 
 export default function Layout({ children, showMuguga }: { children: React.ReactNode, showMuguga?: boolean }) {
   return (
@@ -10,7 +10,7 @@ export default function Layout({ children, showMuguga }: { children: React.React
         <Sidebar />
       </div>
       <div className="flex-grow p-4">
-        {showMuguga ? <MugugaCooperative /> : children} 
+        {showMuguga ? <Overview /> : children} 
       </div>
     </div>
   );

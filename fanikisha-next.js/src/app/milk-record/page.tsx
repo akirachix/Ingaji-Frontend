@@ -1,8 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import { MdSearch } from 'react-icons/md';
-import Layout from '../components/Layout';
-import { useMilkRecord } from '../hooks/useMilkRecord';
+import Layout from '../(sacco)/sacco/components/Layout';
+import { useMilkRecord } from '../(sacco)/sacco/hooks/useMilkRecord';
 
 interface MilkRecord {
   record_id: number;
