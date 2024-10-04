@@ -16,6 +16,7 @@
     "paths": {
       "@/*": ["src/*"]
     },
+    "types": ["next", "next/image"],
     "plugins": [
       {
         "name": "next"
@@ -30,5 +31,6 @@
     ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
+  
 }
 

@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     }
   
     try {
-      const response = await fetch(`${baseURL}/api/login/`, {
+      const response = await fetch("https://fanikisha-3beb7fcefffe.herokuapp.com/api/login/", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

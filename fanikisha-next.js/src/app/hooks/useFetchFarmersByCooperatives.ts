@@ -1,6 +1,5 @@
-
 import { useEffect, useState } from "react";
-import { Farmer } from "../utils/types"; 
+import { Farmer } from "../utils/types";
 
 export const useFetchFarmersByCooperative = (cooperative_id: number) => {
   const [data, setData] = useState<Farmer[]>([]);
@@ -10,7 +9,9 @@ export const useFetchFarmersByCooperative = (cooperative_id: number) => {
   useEffect(() => {
     const fetchFarmers = async () => {
       try {
-        const response = await fetch(`/api/farmers?cooperative_id=${cooperative_id}`); 
+        const response = await fetch(
+          `/api/farmers?cooperative_id=${cooperative_id}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch farmers");
         }

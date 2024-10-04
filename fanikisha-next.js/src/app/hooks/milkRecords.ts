@@ -1,10 +1,8 @@
+"use client";
 
-
-'use client';
-
-import { useState, useEffect } from 'react';
-import { MilkRecord } from '../utils/types';
-import { fetchMilkRecords } from '../utils/fetchMilkRecords';
+import { useState, useEffect } from "react";
+import { MilkRecord } from "../utils/types";
+import { fetchMilkRecords } from "../utils/getMilkRecord";
 
 export const useMilkRecords = () => {
   const [milkRecords, setMilkRecords] = useState<MilkRecord[]>([]);
@@ -17,7 +15,7 @@ export const useMilkRecords = () => {
         const data = await fetchMilkRecords();
         setMilkRecords(data);
       } catch (err) {
-        setError(err instanceof Error ? err : new Error('An error occurred'));
+        setError(err instanceof Error ? err : new Error("An error occurred"));
       } finally {
         setLoading(false);
       }
@@ -26,7 +24,5 @@ export const useMilkRecords = () => {
     loadMilkRecords();
   }, []);
 
-  return { milkRecords, setMilkRecords, loading, error }; 
+  return { milkRecords, setMilkRecords, loading, error };
 };
-
-

@@ -9,7 +9,9 @@ export const useFetchCooperatives = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://fanikisha-3beb7fcefffe.herokuapp.com/api/cooperative/");
+        const response = await fetch(
+          "https://fanikisha-3beb7fcefffe.herokuapp.com/api/cooperative/"
+        );
         if (!response.ok) throw new Error("Failed to fetch cooperatives");
         const result = await response.json();
         setData(result);

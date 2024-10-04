@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { fetchMilkRecords } from '../utils/fetchMilkRecords';
+import { useEffect, useState } from "react";
+import { fetchMilkRecords } from "@/app/utils/fetchMilkRecords";
 
 export const useMilkRecord = () => {
   const [data, setData] = useState([]);
@@ -12,19 +12,19 @@ export const useMilkRecord = () => {
       try {
         const data = await fetchMilkRecords();
         setData(data);
-      } catch (err: unknown){
-        if (err instanceof Error){
-          console.error('Error fetching milk record', err.message);
-          setError(err.message)
-        }else{
-          console.error('Unknown error fetching milk record:',err);
-          setError('Error fetching milk record');
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error("Error fetching milk record", err.message);
+          setError(err.message);
+        } else {
+          console.error("Unknown error fetching milk record:", err);
+          setError("Error fetching milk record");
         }
-      }finally{
+      } finally {
         setLoading(false);
       }
     };
     loadMilkRecord();
-    }, []);
+  }, []);
   return { data, loading, error };
 };
