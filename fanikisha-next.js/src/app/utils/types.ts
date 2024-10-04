@@ -54,6 +54,7 @@ export interface Farmer {
   export interface Cooperative {
     cooperative_id: number; 
     cooperative_name: string;
+    user: number;
   }
   
   export interface Sacco {
@@ -88,6 +89,25 @@ export interface RegistrationSuccessResponse {
 }
 
 
+export interface FarmerData {
+  count: number;
+  farmers: Array<{
+      farmer_id: number;
+      first_name: string;
+      last_name: string;
+      phone_number: string;
+      cooperative_number: string;
+      sacco_id: number;
+      cooperative_id: number;
+      created_at: string;
+  }>;
+}
+
+export interface CooperativeWithFarmers {
+  cooperative_id: number;     
+  cooperative_name: string;     
+  number_of_farmers: number;   
+}
 
 
 

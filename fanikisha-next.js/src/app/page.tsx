@@ -1,15 +1,11 @@
 import React from "react";
-import Overview from './components/Overview';
-import SignUp from './sign-Up/page';
-import LoginForm from './login/page';
+import CooperativeDashboard from "./cooperativeFarmers";
 
 
 export default function RootLayout() {
   return (
     <div>
-      <LoginForm/>
-         <SignUp/>
-      <Overview />
+   <CooperativeDashboard/>
     </div>
   );
 }
