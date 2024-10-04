@@ -58,7 +58,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="flex justify-center items-center h-screen">
       <div className="bg-white 2xl:p-8 xl:p-12 lg:p-12 xl:py-2 xl:mb-2 xl:mt-2 lg:py-0 2xl:w-[820px] 2xl:h-[890px] lg:w-[700px] lg:ml-12 lg:h-screen xl:h-screen 2xl:ml-2">
         <h1 className="2xl:text-5xl lg:text-xl xl:text-xl work-sans font-bold mb-6 mt-20 text-center">Welcome Back!</h1>
         <p className="text-center mb-6 2xl:text-2xl xl:text-xl lg:text-sm ">
