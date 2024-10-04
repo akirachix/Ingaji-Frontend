@@ -18,12 +18,12 @@
   "/api/milk recordsdetails/route": "app/api/milk recordsdetails/route.js",
   "/api/milkRecords/route": "app/api/milkRecords/route.js",
   "/api/milk_records/route": "app/api/milk_records/route.js",
-  "/api/signup/route": "app/api/signup/route.js",
   "/api/test/route": "app/api/test/route.js",
   "/landing/page": "app/landing/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/login/page": "app/login/page.js",
   "/page": "app/page.js",
   "/sign-Up/page": "app/sign-Up/page.js",
-  "/api/auth [auth0]/route": "app/api/auth [auth0]/route.js"
+  "/api/auth [auth0]/route": "app/api/auth [auth0]/route.js",
+  "/api/signup/route": "app/api/signup/route.js"
 }
