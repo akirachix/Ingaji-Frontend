@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -48,11 +49,9 @@ export default function LoginForm() {
         console.log("UserRole:", role);
 
         if (role === "sacco") {
-          console.log("Redirecting to /sacco/cooperativeFarmers");
-          router.push("/sacco/components/Sidebar");
+          router.push("/sacco/sacco-overview");
         } else if (role === "cooperative") {
-          console.log("Redirecting to /cooperative/Overview");
-          router.push("/cooperative/components/Sidebar");
+          router.push("/cooperative/Overview");
         } 
         
 
