@@ -82,7 +82,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex justify-center items-center lg:px-2   xl:px-4 lg:flex justify-center items-centre 2xl:px-6 2xl:min-h-screen lg:min-h-3.5 bg-white-100 font-work sans">
+    <div className="flex items-center lg:px-2   xl:px-4 lg:flex justify-center items-centre 2xl:px-6 2xl:min-h-screen lg:min-h-3.5 bg-white-100 font-work sans">
       <div className="2xl:w-[1250px] lg:w-[700px] flex justify-between items-center">
         <form
           onSubmit={handleSubmit(onSubmit)}

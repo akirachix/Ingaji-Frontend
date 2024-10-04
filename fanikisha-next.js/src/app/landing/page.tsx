@@ -3,15 +3,14 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-
 const Landing = () => {
-
     const router = useRouter();
-      
+
     const getStarted = () => {
-        router.push("/sign-Up");
+        router.push("/sign-Up"); 
     };
-    
+
+
     return (
       <main>
         <div className="flex h-screen font-work sans">
@@ -43,7 +42,16 @@ const Landing = () => {
                             Get Started
                         </button>
                     <div className='space-x-12 mt-18 ml-24'>
+
+                        <button  
+                           className='text-blue-600 bg-white border-2 border-blue-500 rounded py-2.5 px-6 text-2xl mr-24 mt-6'
+                           onClick={getStarted} 
+                        >
+                            Get Started
+                        </button>
+
                        
+
                     </div>
                 </div>
             </div>

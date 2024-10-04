@@ -1,16 +1,20 @@
-'use client';
+
+"use client";
+import Sidebar from '@/app/(cooperative)/cooperative/components/Sidebar';
 import React from 'react';
-import Sidebar from '../Sidebar';
-import Overview from '@/app/sacco_overview/page';
-export default function Layout({ children, showMuguga }: { children: React.ReactNode, showMuguga?: boolean }) {
+
+
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen">
       <div>
-        <Sidebar />
+       <Sidebar/>
+       
       </div>
       <div className="flex-grow p-4">
-        {showMuguga ? <Overview /> : children} 
+        {children}
       </div>
     </div>
   );
-}
+}   
+
