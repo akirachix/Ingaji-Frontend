@@ -1,8 +1,5 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
   "/miguga_cooperative/page": "app/miguga_cooperative/page.js",
-  "/sacco_overview/page": "app/sacco_overview/page.js",
-  "/milk-record/page": "app/milk-record/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/api/credit-score/route": "app/api/credit-score/route.js"
 }
