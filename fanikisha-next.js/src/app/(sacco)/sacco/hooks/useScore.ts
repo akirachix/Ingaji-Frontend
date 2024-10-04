@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
-import { fetchCreditScore } from '../utils/fetchCreditScore';
+import { fetchScores } from '../utils/fetchScores';
 
 
-export const useLoanEligibility = () => {
+export const useScore = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchLoanEligibility = async () => {
+    const fetchScore = async () => {
       setLoading(true);
       setError(null);
       try {
-        const fetchedCreditScore = await fetchCreditScore();
-        setData(fetchedCreditScore);
+        const fetchedScore = await fetchScores();
+        setData(fetchedScore);
       } catch (err: unknown){
         if (err instanceof Error){
           console.error('Error fetching credit:', err.message);
@@ -26,7 +26,7 @@ export const useLoanEligibility = () => {
         setLoading(false);
       }
     };
-    fetchLoanEligibility();
+    fetchScore();
     }, []);
     
   return { data, loading, error };

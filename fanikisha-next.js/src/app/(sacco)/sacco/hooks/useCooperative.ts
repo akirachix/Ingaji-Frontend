@@ -1,36 +1,32 @@
 import { useEffect, useState } from 'react';
-import { fetchCreditScore } from '../utils/fetchCreditScore';
+import { fetchTotalCooperative } from '../utils/fetchTotalCooperative';
 
-
-export const useLoanEligibility = () => {
+export const useCooperative = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchLoanEligibility = async () => {
+    const loadCooperative = async () => {
       setLoading(true);
       setError(null);
       try {
-        const fetchedCreditScore = await fetchCreditScore();
-        setData(fetchedCreditScore);
+        const data = await fetchTotalCooperative();
+        setData(data);
       } catch (err: unknown){
         if (err instanceof Error){
-          console.error('Error fetching credit:', err.message);
+          console.error('Error fetching cooperative:', err.message);
           setError(err.message)
         }else{
-          console.error('Unknown error fetching credit score:',err);
-          setError('Error fetching credit score');
+          console.error('Unknown error fetching coopeerative:',err);
+          setError('Error fetching cooperative');
         }
       }finally{
         setLoading(false);
       }
     };
-    fetchLoanEligibility();
+    loadCooperative();
     }, []);
     
   return { data, loading, error };
 };
-
-
-

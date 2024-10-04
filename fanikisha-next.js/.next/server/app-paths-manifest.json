@@ -1,4 +1,5 @@
 {
   "/page": "app/page.js",
-  "/(cooperative)/cooperative/member/[userId]/page": "app/(cooperative)/cooperative/member/[userId]/page.js"
+  "/api/credit-score/route": "app/api/credit-score/route.js",
+  "/api/milkRecords/route": "app/api/milkRecords/route.js"
 }

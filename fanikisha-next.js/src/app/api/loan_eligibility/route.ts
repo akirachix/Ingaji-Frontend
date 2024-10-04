@@ -1,19 +1,13 @@
-import {NextResponse } from 'next/server';
-
-const baseURL = process.env.BASE_URL;
-
-
-
-
-  const baseUrl = process.env.BASE_URL;
-export async function GET() {
+const baseUrl = process.env.BASE_URL;
+export async function GET( ) {
   try {
-    const response = await fetch(`${baseUrl}/api/milk-records/`, {
+    const response = await fetch(`${baseUrl}/api/credit-scores/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     });
+    
     if (!response.ok) {
       const errorText = await response.text();
       console.error("GET error response:", errorText)

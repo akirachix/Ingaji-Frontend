@@ -1,8 +1,10 @@
+import { MilkRecord } from "@/app/(sacco)/sacco/utils/types";
 import { NextResponse } from 'next/server';
-import { MilkRecord } from "@/app/utils/types";
 
 const API_BASE_URL = 'https://fanikisha-3beb7fcefffe.herokuapp.com';
 
+
+    
 export async function GET() { 
   try {
     const response = await fetch(`${API_BASE_URL}/api/milk-records/1/`);
