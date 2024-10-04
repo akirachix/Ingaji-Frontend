@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { CreditScore } from "../utils/fetchCreditScore";
+import { CreditScore } from "../(sacco)/sacco/utils/fetchCreditScore";
 
 export const useFetchCreditScores = (userId: string) => {
   const [creditScores, setCreditScores] = useState<CreditScore[]>([]);
