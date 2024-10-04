@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { format } from 'date-fns';
-import { useFarmers } from '../(sacco)/sacco/hooks/useFarmer';
+import { useFamers } from '../(sacco)/sacco/hooks/useFarmer';
 import { useLoanEligibility } from '../(sacco)/sacco/hooks/useLoanEligibility';
 import { useCooperative } from '../(sacco)/sacco/hooks/useCooperative';
 import Layout from '../(sacco)/sacco/components/Layout';
@@ -42,7 +42,7 @@ const Overview: React.FC = () => {
 
   const { data: cooperativesData, loading: saccoLoading, error: saccoError } = useCooperative();
   const { data: loanEligibilityData, loading: loanLoading, error: loanError } = useLoanEligibility();
-  const { data: farmersData, loading: farmersLoading, error: farmersError } = useFarmers();
+  const { data: farmersData, loading: farmersLoading, error: farmersError } = useFamers();
 
   useEffect(() => {
     if (cooperativesData && loanEligibilityData && farmersData) {

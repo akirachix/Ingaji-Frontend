@@ -1,10 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
-import Layout from "../(sacco)/sacco/components/Layout";
-import { useFetchFarmers } from "../(sacco)/sacco/hooks/useFetchFarmers";
-import { Farmer } from "../(sacco)/sacco/utils/types";
-import AddFarmerModal from "../addFarmerModal";
+import Layout from "../../../../components/Layout";
+import { useFetchFarmers } from "@/app/(sacco)/sacco/hooks/useFetchFarmers";
+import { Farmer } from "@/app/(sacco)/sacco/utils/types";
+import AddFarmerModal from "../farmers";
+
 
 const FarmersDashboard: React.FC = () => {
   const { data, isLoading, error } = useFetchFarmers();

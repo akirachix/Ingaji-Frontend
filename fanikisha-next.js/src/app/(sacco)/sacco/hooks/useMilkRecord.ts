@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { fetchMilkRecords } from '../utils/fetchMilkRecords';
+import { fetchMilkRecords } from '../utils/fetchMilkRecords'
+
 
 export const useMilkRecord = () => {
   const [data, setData] = useState([]);
@@ -26,5 +27,5 @@ export const useMilkRecord = () => {
     };
     loadMilkRecord();
     }, []);
-  return { data, loading, error };
+  return { data, loading,error};
 };

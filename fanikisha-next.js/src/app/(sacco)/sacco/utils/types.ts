@@ -1,29 +1,25 @@
+
 export interface LoginCredentials {
     username: string;
     password: string;
   }
 
+  
   export interface MilkRecord {
+    record_id: number;
+    farmer_id: number;
     first_name : string;
     last_name : string;
+    farmer: number;
+    date: string;
     milk_quantity: number;
     price: number;
     total_value: number;
   }
 
-
-  
 export interface Farmer {
     id: number;
     date_registered: string;
-  }
-
-  export interface MilkRecord {
-    id: number;
-    farmer: number;
-    date: string;
-    quantity: number;
-    price: number;
   }
 
   export interface CooperativeData {
