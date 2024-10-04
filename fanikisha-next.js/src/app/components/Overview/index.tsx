@@ -162,7 +162,7 @@ const Overview = () => {
             <p className="text-red-500">{error}</p>
           ) : (
             <>
-              <div className="flex justify-center mb-2 ">
+              <div className="mb-2">
                 <input
                   type="month"
                   value={`${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, "0")}`}
@@ -171,7 +171,7 @@ const Overview = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 mt-9 ">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4 mt-9">
                 <div className="bg-white w-auto rounded-lg shadow-md text-center">
                   <p className="text-3xl font-bold text-blue-500">{filteredData.totalFarmers}</p>
                   <p className="text-lg text-gray-600">Total Farmers</p>
@@ -217,3 +217,7 @@ const Overview = () => {
 };
 
 export default Overview;
+
+
+
+
