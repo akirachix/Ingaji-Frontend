@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   RiDashboardLine,
   RiFileList3Line,
+  RiUser3Line,
   RiLogoutBoxRLine,
 } from "react-icons/ri";
 
@@ -20,8 +21,13 @@ const Sidebar: React.FC = () => {
   }, []);
 
   const navItems = [
-    { name: "Overview", icon: RiDashboardLine, path: "/sacco_overview" },
-    { name: "Cooperative", icon: RiFileList3Line, path: "/" },
+    { name: 'Overview', icon: RiDashboardLine, path: '/overview' },
+    { name: 'Milk records', icon: RiFileList3Line, path: '/milk-records' },
+    { name: 'Accounts', icon: RiUser3Line, path: '/accounts' },
+
+    { name: "Overview", icon: RiDashboardLine, path: "/" },
+    { name: "Milk records", icon: RiFileList3Line, path: "/milk-records" },
+    { name: "Accounts", icon: RiUser3Line, path: "/farmers-accounts" },
   ];
 
   const handleSignOut = async () => {
@@ -57,7 +63,7 @@ const Sidebar: React.FC = () => {
   if (!isMounted) return null;
 
   return (
-    <div className="bg-blue-500 text-white 2xl:h-screen w-64 flex flex-col items-center font-worksans relative lg:h-[88%] xl:h-[102%]  lg:h-screen ">
+    <div className="bg-blue-500 text-white 2xl:h-screen w-64 flex flex-col items-center font-worksans relative lg:h-[88%] xl:h-[102%] ">
       <div className="py-6">
         <Image
           src="/image/fanikisha.png"
