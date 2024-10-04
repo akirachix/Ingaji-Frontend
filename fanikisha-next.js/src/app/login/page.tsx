@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { MdOutlineVisibilityOff, MdVisibility } from "react-icons/md";
 import { useRouter } from 'next/navigation';
-import { userLogin } from '../utils/fetchlogin';
+import { userLogin } from '../(sacco)/sacco/utils/fetchlogin';
 import { setCookie } from 'cookies-next';
 
 const loginSchema = Yup.object().shape({
@@ -35,8 +35,10 @@ export default function LoginForm() {
         setCookie('username', username, { maxAge: 30 * 24 * 60 * 60, path: '/' });
         setCookie('token', data.token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
 
+
+        router.push('/admin-Overview');
    
-        router.push('/dashboard');
+        
       } catch (err) {
         console.error('Login error:', err);
         setLoginError('Login failed. Please check your credentials.');

@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
 import { Line, Bar } from "react-chartjs-2";
+import { fetchMilkRecords } from '../(sacco)/sacco/utils/getMilkRecord';
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,9 +13,9 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
-import { fetchMilkRecords } from "@/app/utils/fetchMilkRecords";
-import Layout from "../Layout";
+} from 'chart.js';
+import Layout from "../(sacco)/sacco/components/Layout";
+
 
 interface MilkRecord {
   farmer_id: number;

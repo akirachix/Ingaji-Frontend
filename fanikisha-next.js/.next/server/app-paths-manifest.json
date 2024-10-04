@@ -1,5 +1,6 @@
 {
   "/page": "app/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/api/milkRecords/route": "app/api/milkRecords/route.js"
+  "/api/milkRecords/route": "app/api/milkRecords/route.js",
+  "/components/miguga_cooperative/page": "app/miguga_cooperative/page.js"
 }

@@ -1,3 +1,4 @@
+
 "use client";
 import React from 'react';
 import Sidebar from '../SideBar';
@@ -14,3 +15,4 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     </div>
   );
 }   
+

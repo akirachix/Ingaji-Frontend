@@ -1,8 +1,9 @@
-import { NextResponse } from 'next/server';
+import {  NextResponse } from 'next/server';
+const baseUrl = process.env.BASE_URL;
 export async function GET() {
 
   try {
-    const response = await fetch("https://fanikisha-3beb7fcefffe.herokuapp.com/api/milk-records/");
+    const response = await fetch(`${baseUrl}/api/milk-records/`);
 
     if (!response.ok) {
       const textResponse = await response.text();
