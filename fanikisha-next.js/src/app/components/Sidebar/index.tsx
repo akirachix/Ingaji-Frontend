@@ -59,7 +59,7 @@ const Sidebar: React.FC = () => {
   if (!isMounted) return null;
 
   return (
-    <div className="bg-blue-500 text-white 2xl:h-screen w-64 flex flex-col items-center font-worksans relative lg:h-[88%] xl:h-[102%] ">
+    <div className="bg-blue-500 text-white 2xl:h-screen w-64 flex flex-col items-center font-worksans relative lg:h-[auto] xl:h-[auto]">
       <div className="py-6">
         <Image
           src="/image/fanikisha.png"
