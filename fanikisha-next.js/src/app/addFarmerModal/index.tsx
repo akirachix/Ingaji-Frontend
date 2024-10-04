@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { Farmer,NewFarmer,Cooperative,Sacco } from "../utils/types";
-import { useCreateFarmer } from "../hooks/useCreateFarmer";
+import { Farmer, NewFarmer, Cooperative, Sacco } from "../(sacco)/sacco/utils/types";
+import { useCreateFarmer } from "../(sacco)/sacco/hooks/useCreateFarmer";
 
 interface AddFarmerModalProps {
   isOpen: boolean;
