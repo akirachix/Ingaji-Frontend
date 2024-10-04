@@ -22,8 +22,7 @@ const Sidebar: React.FC = () => {
 
   const navItems = [
     { name: "Overview", icon: RiDashboardLine, path: "/sacco_overview" },
-    { name: "Milk records", icon: RiFileList3Line, path: "/milk-record" },
-    { name: "Accounts", icon: RiUser3Line, path: "/miguga_cooperative" },
+    { name: "Cooperative", icon: RiFileList3Line, path: "/" },
   ];
 
   const handleSignOut = async () => {
