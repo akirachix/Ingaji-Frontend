@@ -8,8 +8,6 @@ export default function RootLayout() {
     <div>
       <Landing />
 
-<Sidebar/>
-
     </div>
   );
 }
