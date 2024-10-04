@@ -1,3 +1,4 @@
+
 'use client';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -17,7 +18,7 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const router = useRouter(); 
 
   const formik = useFormik({
     initialValues: {
@@ -30,18 +31,15 @@ export default function LoginForm() {
       const { username, password } = values;
       try {
         const data = await userLogin({ username, password });
-        console.log('Login successful:', data);
+        console.log('login successful:', data);
 
         setCookie('username', username, { maxAge: 30 * 24 * 60 * 60, path: '/' });
         setCookie('token', data.token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
 
-
-        router.push('/admin-Overview');
-   
-        
+        router.push('/dashboard');
       } catch (err) {
-        console.error('Login error:', err);
-        setLoginError('Login failed. Please check your credentials.');
+        console.error('login error:', err);
+        setLoginError('login failed. Please check your credentials.');
       } finally {
         setLoading(false);
       }
@@ -57,10 +55,10 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 border border-blue-400 shadow-md w-full sm:w-[1040px] h-auto">
-        <h1 className="text-5xl work-sans font-bold mb-6 mt-20 text-center">Welcome Back!</h1>
-        <p className="text-center mb-6 text-2xl">
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="bg-white 2xl:p-8 xl:p-12 lg:p-12 xl:py-2 xl:mb-2 xl:mt-2 lg:py-0 2xl:w-[820px] 2xl:h-[890px] lg:w-[700px] lg:ml-12 lg:h-screen xl:h-screen 2xl:ml-2">
+        <h1 className="2xl:text-5xl lg:text-xl xl:text-xl work-sans font-bold mb-6 mt-20 text-center">Welcome Back!</h1>
+        <p className="text-center mb-6 2xl:text-2xl xl:text-xl lg:text-sm ">
           Don&apos;t have an account?{' '}
           <a href="#" className="text-blue-500 font-bold hover:underline">
             SignUp
@@ -68,12 +66,12 @@ export default function LoginForm() {
         </p>
 
         <form onSubmit={formik.handleSubmit}>
-          <div aria-live="assertive" className="text-red-500 text-sm mt-1 text-center">
-            {loginError && <span>{loginError}</span>}
-          </div>
+          {loginError && (
+            <div className="text-red-500 text-sm mt-1 text-center">{loginError}</div>
+          )}
 
-          <div className="mb-12 mt-24">
-            <label htmlFor="username" className="block mb-2 text-2xl font-medium ml-32">
+          <div className="2xl:mb-12 2xl:mt-24 lg:mt-10 xl:mt-10 lg:mb-10 xl:mb-10">
+            <label htmlFor="username" className="block mb-2 2xl:text-2xl xl:text-xl lg:text-sm font-medium ml-8 ">
               Username:
             </label>
             <input
@@ -83,17 +81,15 @@ export default function LoginForm() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.username}
-              className="w-full sm:w-[690px] px-3 py-4 border border-blue-400 rounded-lg ml-32"
-              aria-invalid={formik.touched.username && Boolean(formik.errors.username)}
-              aria-describedby="username-error"
+              className="w-[690px] px-3 2xl:py-4 lg:py-2 border border-blue-400 rounded-lg ml-8 lg:w-[350px] 2xl:w-[700px] xl:w-[450px]"
             />
             {formik.touched.username && formik.errors.username && (
-              <div id="username-error" className="text-red-500 text-sm mt-1">{formik.errors.username}</div>
+              <div className="text-red-500 text-sm mt-1">{formik.errors.username}</div>
             )}
           </div>
 
           <div className="mb-6">
-            <label htmlFor="password" className="block mb-2 text-2xl font-medium ml-32">
+            <label htmlFor="password" className="block mb-2 2xl:text-2xl xl:text-xl lg:text-sm font-medium ml-8 ">
               Password:
             </label>
             <div className="relative">
@@ -104,52 +100,53 @@ export default function LoginForm() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
-                className="w-full sm:w-[690px] px-3 py-4 border border-blue-400 rounded-lg ml-32"
-                aria-invalid={formik.touched.password && Boolean(formik.errors.password)}
-                aria-describedby="password-error"
+                className="w-[690px] px-3 2xl:py-4 lg:py-2 border border-blue-400 rounded-lg ml-8 lg:w-[350px] 2xl:w-[700px] xl:w-[450px]"
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-40 items-center pr-3 flex text-3xl text-blue-500"
+                className="absolute inset-y-0 2xl:right-12 xl:right-2 lg:right-2 items-center pr-3 flex text-3xl text-blue-500"
                 onClick={togglePasswordVisibility}
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
-                {showPassword ? <MdVisibility /> : <MdOutlineVisibilityOff />}
+                {showPassword ? <MdVisibility /> : <MdOutlineVisibilityOff />} 
               </button>
             </div>
             {formik.touched.password && formik.errors.password && (
-              <div id="password-error" className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
+              <div className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
             )}
           </div>
 
           <button
             type="submit"
-            className={`w-40 ${loading ? 'bg-gray-500' : 'bg-blue-500'} text-white font-bold py-2 rounded-md hover:bg-blue-600 ml-96 mt-16 text-2xl`}
+            className={`w-40 ${loading ? 'bg-gray-500' : 'bg-blue-500'} text-white font-bold py-2 rounded-md hover:bg-blue-600 2xl:ml-72 xl:ml-40 lg:ml-28 mt-16 2xl:text-2xl xl:text-xl lg:text-sm `}
             disabled={loading}
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
-        <div className="mt-4 -ml-10 text-center">
-          <span className="text-gray-500 text-2xl">or</span>
+        <div className="mt-4 -ml-10 lg:-ml-3 xl:-ml-3 text-center">
+          <span className="text-gray-500 2xl:text-2xl lg:text-sm xl:text-xl">or</span>
         </div>
 
         <button
           onClick={handleGoogleLogin}
           disabled={loading}
-          className={`flex items-center justify-center ml-80 px-4 py-2 border mt-6 rounded-full border-blue-400 border-b-2`}
+          className={`flex items-center justify-center 2xl:ml-56 lg:ml-24 xl:ml-28 px-4 py-2 border mt-6 rounded-full border-blue-400 border-b-2`}
         >
           <Image src="/images/google-icon.png" alt="Google Icon" width={30} height={30} />
-          <span className={`ml-2 text-2xl font-work-sans  ${loading ? "text-gray-400" : "text-gray-800"}`}>
+          <span className={`ml-2 2xl:text-2xl xl:text-xl lg:text-sm font-work-sans ${loading ? "text-gray-400" : "text-gray-800"}`}>
             {loading ? "Signing in..." : "Sign in with Google"}
           </span>
         </button>
+
       </div>
 
       <div className="hidden lg:block ml-8 mb-20">
-        <Image src="/images/login_vector.png" alt="Login Illustration" width={890} height={820} />
+        <Image src="/images/login_vector.png" alt="login" width={890} height={890} />
       </div>
     </div>
   );
 }
+
+
+
