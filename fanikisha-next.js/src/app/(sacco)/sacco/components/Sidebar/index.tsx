@@ -6,7 +6,6 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   RiDashboardLine,
   RiFileList3Line,
-  RiUser3Line,
   RiLogoutBoxRLine,
 } from "react-icons/ri";
 
