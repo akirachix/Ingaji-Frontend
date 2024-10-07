@@ -36,7 +36,19 @@ export default function LoginForm() {
         setCookie('token', data.token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
 
 
-        router.push('/admin-Overview');
+        switch (data.role) {
+          case 'admin':
+            router.push('/admin-overview');
+            break;
+          case 'Sacco':
+            router.push('/sacco-overview');
+            break;
+          case 'Cooperative':
+            router.push('/cooperative-overview');
+            break;
+          default:
+            router.push('/default-dashboard');
+        }
    
         
       } catch (err) {
@@ -71,6 +83,7 @@ export default function LoginForm() {
           <div aria-live="assertive" className="text-red-500 text-sm mt-1 text-center">
             {loginError && <span>{loginError}</span>}
           </div>
+
 
           <div className="mb-12 mt-24">
             <label htmlFor="username" className="block mb-2 text-2xl font-medium ml-32">

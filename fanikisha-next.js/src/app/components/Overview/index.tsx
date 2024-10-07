@@ -171,16 +171,16 @@ const Overview = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 mt-9 ">
-                <div className="bg-white w-auto rounded-lg shadow-md text-center">
+              <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 gap-4 mb-4 mt-9 xl:gap-[-20px] ">
+                <div className="bg-white w-auto xl:w-1/2 rounded-lg shadow-md text-center">
                   <p className="text-3xl font-bold text-blue-500">{filteredData.totalFarmers}</p>
                   <p className="text-lg text-gray-600">Total Farmers</p>
                 </div>
-                <div className="bg-white p-4 rounded-lg shadow-md text-center">
+                <div className="bg-white p-4 rounded-lg xl:w-1/2 shadow-md text-center">
                   <p className="text-3xl w-auto font-bold text-blue-500">{filteredData.activeFarmers}</p>
                   <p className="text-lg text-gray-600">Active Farmers</p>
                 </div>
-                <div className="bg-white p-4 rounded-lg shadow-md text-center">
+                <div className="bg-white p-4 rounded-lg shadow-md xl:w-1/2 text-center">
                   <p className="text-3xl w-auto font-bold text-blue-500">{filteredData.inactiveFarmers}</p>
                   <p className="text-lg text-gray-600">Inactive Farmers</p>
                 </div>
