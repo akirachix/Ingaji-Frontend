@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { MilkRecord } from '@/app/(sacco)/sacco/utils/types';
 
-const API_BASE_URL = 'https://fanikisha-3beb7fcefffe.herokuapp.com';
+const API_BASE_URL = 'https://fanikisha-3beb7fcefffe.herokuapp.com/';
 
 export async function GET() { 
   try {
