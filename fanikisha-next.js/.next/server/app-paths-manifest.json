@@ -1,4 +1,7 @@
 {
   "/page": "app/page.js",
-  "/api/milkRecords/route": "app/api/milkRecords/route.js"
+  "/api/milkRecords/route": "app/api/milkRecords/route.js",
+  "/sign-Up/page": "app/sign-Up/page.js",
+  "/login/page": "app/login/page.js"
+
 }

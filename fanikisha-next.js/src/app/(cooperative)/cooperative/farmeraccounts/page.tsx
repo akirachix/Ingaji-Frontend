@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
-import Layout from "../components/Layout";
-import { useFetchFarmers } from "../hooks/useFetchFarmers";
-import { Farmer } from "../utils/types";
-import AddFarmerModal from "../addFarmerModal";
+import { useFetchFarmers } from "../../../hooks/useFetchFarmers";
+import { Farmer } from "@/app/utils/types";
+import AddFarmerModal from "../farmers";
+import Layout from "@/app/Layout";
 
 const FarmersDashboard: React.FC = () => {
   const { data, isLoading, error } = useFetchFarmers();
@@ -46,6 +46,7 @@ const FarmersDashboard: React.FC = () => {
   const currentFarmers = sortedFarmers.slice(
     indexOfFirstFarmer,
     indexOfLastFarmer
+    
   );
 
   const formatDate = (dateString: string) => {
@@ -80,7 +81,8 @@ const FarmersDashboard: React.FC = () => {
   };
 
   return (
-    <Layout>
+ <Layout>
+    <div>
       <div className="bg-white">
         <header className="text-[#299acf] p-4">
           <div className="container mx-auto">
@@ -204,7 +206,8 @@ const FarmersDashboard: React.FC = () => {
         onClose={() => setIsModalOpen(false)}
         onFarmerAdded={handleAddFarmer}
       />
-    </Layout>
+      </div>
+</Layout>
   );
 };
 
