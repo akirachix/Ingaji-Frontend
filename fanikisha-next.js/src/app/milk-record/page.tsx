@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { MdSearch } from 'react-icons/md';
 import Layout from '../(sacco)/sacco/components/Layout';
 import { useMilkRecord } from '../(sacco)/sacco/hooks/useMilkRecord';
+import Link from 'next/link';
 
 interface MilkRecord {
   record_id: number;
@@ -61,6 +62,7 @@ const MilkRecords = () => {
             </thead>
             <tbody>
               {filteredRecords.map((record: MilkRecord) => (
+                <Link href='/components/Milk'>                
                 <tr key={record.record_id} className={record.record_id % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
                   <td className="p-2 border-t ">{record.first_name}</td>
                   <td className="p-2 border-t">{record.last_name}</td>
@@ -69,7 +71,10 @@ const MilkRecords = () => {
                   <td className="p-2 border-t">{new Date(record.date).toLocaleDateString()}</td>
                   <td className="p-2 border-t">{(record.milk_quantity * record.price).toFixed(2)}</td>
                 </tr>
+                </Link>
+
               ))}
+              
             </tbody>
           </table>
         ) : (
