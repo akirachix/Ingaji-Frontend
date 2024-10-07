@@ -1,30 +1,12 @@
-'use client';
-import React from 'react';
-import MugugaCooperative from './miguga_cooperative/page';
-// import SignUp from './sign-Up/page';
-import Overview from './Overview';
-import LoginForm from './login/page';
+import React from "react";
+
 import Landing from "./landing/page";
 
-
-const Home: React.FC = () => {
+export default function RootLayout() {
   return (
-      <div>
-        {/* /* <SignUp/> */}
-      
-        <MugugaCooperative/>
-          <Landing/>
-        <Overview/>
-        <LoginForm/>
-        
-        
-        
-        
-        </div>
-        
+    <div>
+      <Landing />
 
-   
+    </div>
   );
-};
-
-export default Home;
+}

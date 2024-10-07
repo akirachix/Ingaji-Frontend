@@ -1,7 +1,7 @@
 const baseUrl = process.env.BASE_URL;
 export async function GET() {
   try {
-    console.log('Fetching farmers from:', `${baseUrl}/api/farmers/`);
+    // console.log('Fetching farmers from:', `${baseUrl}/api/farmers/`);
     const response = await fetch(`${baseUrl}/api/farmers/`, {
       method: 'GET',
       headers: {

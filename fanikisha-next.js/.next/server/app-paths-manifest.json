@@ -9,5 +9,7 @@
   "/api/farmer/route": "app/api/farmer/route.js",
   "/milk-record/page": "app/milk-record/page.js",
   "/api/milk_records/route": "app/api/milk_records/route.js",
-  "/miguga_cooperative/page": "app/miguga_cooperative/page.js"
+  "/miguga_cooperative/page": "app/miguga_cooperative/page.js",
+  "/sign-Up/page": "app/sign-Up/page.js",
+  "/login/page": "app/login/page.js"
 }
