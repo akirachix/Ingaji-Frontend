@@ -1,4 +1,3 @@
-'use client';
 import React from "react";
 //  import MugugaCooperative from './miguga_cooperative/page';
 //  import LoginForm from './login/page';
@@ -8,10 +7,10 @@ import React from "react";
 import MilkRecords from "./milk-record/page";
 import MilkCollectionPage from "./Milk";
 
+// import Landing from "./landing/page";
 
-const Home: React.FC = () => {
+export default function RootLayout() {
   return (
-
     <div>
       {/* <Overview/>
    
@@ -22,11 +21,8 @@ const Home: React.FC = () => {
         {/* <LoginForm/> */}
         <MilkRecords/>
         <MilkCollectionPage/>
+      {/* <Landing /> */}
 
     </div>
-
-   
   );
-};
-
-export default Home;
+}

@@ -1,9 +1,10 @@
 "use client";
+
 import React, { useState } from "react";
 import { MdSearch } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import Layout from "@/app/Layout";
-import { useMilkRecord } from "../hooks/useMilkRecord";
+import { useMilkRecord } from "../../../hooks/useMilkRecord";
 
 interface MilkRecord {
   record_id: number;
@@ -13,12 +14,14 @@ interface MilkRecord {
   price: number;
   date: string;
 }
+
 const MilkRecords = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { data: milkRecords, loading, error } = useMilkRecord();
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
   const router = useRouter();
+
   if (loading)
     return (
       <Layout>
@@ -31,6 +34,7 @@ const MilkRecords = () => {
         <div className="container mx-auto p-4">Error: {error}</div>
       </Layout>
     );
+
   const filteredRecords = milkRecords
     ? milkRecords.filter((record: MilkRecord) => {
         const total = (record.milk_quantity * record.price).toFixed(2);
@@ -45,6 +49,7 @@ const MilkRecords = () => {
         );
       })
     : [];
+
   const totalRecords = filteredRecords.length;
   const totalPages = Math.ceil(totalRecords / recordsPerPage);
   const indexOfLastRecord = currentPage * recordsPerPage;
@@ -53,9 +58,11 @@ const MilkRecords = () => {
     indexOfFirstRecord,
     indexOfLastRecord
   );
+
   const handleRowClick = (record_id: number) => {
     router.push(`/farmer/${record_id}`);
   };
+
   return (
     <Layout>
       <div className="bg-white">
@@ -175,8 +182,5 @@ const MilkRecords = () => {
     </Layout>
   );
 };
+
 export default MilkRecords;
-
-
-
-

@@ -24,6 +24,7 @@ const Sidebar: React.FC = () => {
     { name: "Overview", icon: RiDashboardLine, path: "/Overview" },
     { name: "Milk records", icon: RiFileList3Line, path: "/milk-records" },
     { name: "Accounts", icon: RiUser3Line, path: "/farmers-accounts" },
+
   ];
 
   const handleSignOut = async () => {

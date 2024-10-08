@@ -1,5 +1,6 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
-  "/sacco_overview/page": "app/sacco_overview/page.js"
+  "/api/milk_records/route": "app/api/milk_records/route.js",
+  "/api/milkRecords/route": "app/api/milkRecords/route.js"
 }

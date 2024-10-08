@@ -1,37 +1,29 @@
-import { useState, useEffect } from 'react';
+"use client";
+import { useState, useEffect } from "react";
+import { MilkRecord } from "../utils/types";
+import { fetchMilkRecords } from "../utils/getMilkRecord";
+
 export const useMilkRecords = () => {
-  const [milkRecords, setMilkRecords] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const fetchMilkRecords = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/api/milk-records/');
-      if (!response.ok) {
-        const errorResponse = await response.text();
-        console.error("Error fetching milk records:", errorResponse);
-        throw new Error('Failed to fetch milk records');
-      }
-      const data = await response.json();
-      setMilkRecords(data || []);
-    } catch (err) {
-      console.error("Error fetching milk records:", err);
-      setError('Error fetching milk records');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [milkRecords, setMilkRecords] = useState<MilkRecord[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
+
   useEffect(() => {
-    fetchMilkRecords();
+    const loadMilkRecords = async () => {
+      try {
+        const data = await fetchMilkRecords();
+        setMilkRecords(data);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error("An error occurred"));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadMilkRecords();
   }, []);
-  return {
-    milkRecords,
-    loading,
-    error,
-  };
+
+  return { milkRecords, setMilkRecords, loading, error };
 };
-
-
 
 

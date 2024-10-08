@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MilkRecord } from "@/app/utils/fetchMilkRecords";
+import { MilkRecord } from "../utils/types";
 
 export const useFetchMilkRecords = (userId: string) => {
   const [milkRecords, setMilkRecords] = useState<MilkRecord[]>([]);

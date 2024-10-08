@@ -1,29 +1,21 @@
-
-
 'use client';
 import React, { useState, useEffect, ReactNode } from 'react';
 import { IoArrowBack, IoPencil, IoAddCircleOutline } from 'react-icons/io5';
-import Layout from '../components/Layout';
+import Layout from '../Layout';
 import { useMilkRecords } from '../hooks/milkRecords';
-import { useNavigate } from 'react-router-dom';
-
-
 interface MilkRecord {
   id: string;
   milk_quantity: number;
   price: number;
   first_name: string;
   last_name: string;
-  date: string; 
 }
-
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   children: ReactNode;
 }
-
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, children }) => {
   if (!isOpen) return null;
   return (
@@ -48,7 +40,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, children }) =>
     </div>
   );
 };
-
 function MilkCollectionPage() {
   const farmerId = 1;
   const { milkRecords: initialRecords, loading, error } = useMilkRecords(farmerId);
@@ -59,22 +50,18 @@ function MilkCollectionPage() {
     price: 0,
     first_name: '',
     last_name: '',
-    date: '', 
   });
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [showForm, setShowForm] = useState(false);
-
   useEffect(() => {
     if (initialRecords) {
       setMilkRecords(initialRecords);
     }
   }, [initialRecords]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNewCollection((prev) => ({ ...prev, [name]: value }));
   };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const collectionToAdd: MilkRecord = {
@@ -91,22 +78,18 @@ function MilkCollectionPage() {
     }
     resetForm();
   };
-
   const resetForm = () => {
-    setNewCollection({ id: '', milk_quantity: 0, price: 0, first_name: '', last_name: '', date: '' });
+    setNewCollection({ id: '', milk_quantity: 0, price: 0, first_name: '', last_name: '' });
     setShowForm(false);
     setEditIndex(null);
   };
-
   const handleEdit = (index: number) => {
     setNewCollection(milkRecords[index]);
     setEditIndex(index);
     setShowForm(true);
   };
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
-
   return (
     <Layout>
       <div className="container mx-auto p-4 mt-12">
@@ -122,7 +105,7 @@ function MilkCollectionPage() {
           <input
             type="date"
             name="date"
-            value={newCollection.date} 
+            value={newCollection.id}
             onChange={handleChange}
             required
             className="w-full mb-4 p-2 border border-gray-300 rounded" />
@@ -189,7 +172,6 @@ function MilkCollectionPage() {
     </Layout>
   );
 }
-
 export default MilkCollectionPage;
 
 
