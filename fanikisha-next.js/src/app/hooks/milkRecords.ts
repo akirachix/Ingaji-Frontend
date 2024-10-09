@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { MilkRecord } from "../utils/types";
 import { fetchMilkRecords } from "../utils/getMilkRecord";
@@ -26,3 +25,5 @@ export const useMilkRecords = () => {
 
   return { milkRecords, setMilkRecords, loading, error };
 };
+
+

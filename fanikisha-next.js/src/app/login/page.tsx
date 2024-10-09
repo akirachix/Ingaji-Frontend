@@ -1,6 +1,5 @@
 
 "use client";
-
 import Image from "next/image";
 import React, { useState } from "react";
 import { useFormik } from "formik";
@@ -20,7 +19,7 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const router = useRouter(); 
 
   const formik = useFormik({
     initialValues: {
@@ -75,7 +74,7 @@ export default function LoginForm() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 border border-blue-400 shadow-md w-full sm:w-[1040px] h-auto">
+      <div className="bg-white p-8  w-full sm:w-[1040px] h-auto">
         <h1 className="text-5xl work-sans font-bold mb-6 mt-20 text-center">
           Welcome Back!
         </h1>
@@ -147,11 +146,12 @@ export default function LoginForm() {
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-40 items-center pr-3 flex text-3xl text-blue-500"
+                className="absolute inset-y-0 right-28 items-center pr-3 flex text-3xl text-blue-500"
                 onClick={togglePasswordVisibility}
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
-                {showPassword ? <MdVisibility /> : <MdOutlineVisibilityOff />}
+                
+                {showPassword ? <MdVisibility /> : <MdOutlineVisibilityOff />} 
               </button>
             </div>
             {formik.touched.password && formik.errors.password && (
@@ -170,7 +170,7 @@ export default function LoginForm() {
           </button>
         </form>
 
-        <div className="mt-4 -ml-10 text-center">
+        <div className="mt-4 -ml-2 text-center">
           <span className="text-gray-500 text-2xl">or</span>
         </div>
 

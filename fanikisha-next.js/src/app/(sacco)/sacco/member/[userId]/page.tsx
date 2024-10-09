@@ -1,5 +1,4 @@
 "use client";
-
 import BarChartComponent from "@/app/(cooperative)/cooperative/components/BarChart";
 import { useFetchCreditScores } from "../../../../hooks/useFetchCreditScores";
 import { fetchMilkRecords } from "../../../../utils/fetchMilkRecords";
