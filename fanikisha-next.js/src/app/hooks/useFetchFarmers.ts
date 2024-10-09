@@ -13,7 +13,7 @@ export const useFetchFarmers = () => {
         const result = await displayFarmers(
           "https://fanikisha-3beb7fcefffe.herokuapp.com/api/farmers"
         );
-
+        
         if (result && Array.isArray(result.farmers)) {
           setData(result.farmers);
         } else {

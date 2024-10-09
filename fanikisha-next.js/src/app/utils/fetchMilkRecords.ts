@@ -16,4 +16,4 @@ export const fetchMilkRecords = async () => {
     console.error('Fetch error:', error); 
     throw new Error('Failed to fetch data');
   }
-};
+}

@@ -18,9 +18,18 @@ export interface LoginCredentials {
     total_value: number;
   }
 
+  
 export interface Farmer {
     id: number;
     date_registered: string;
+  }
+
+  export interface MilkRecord {
+    farmerId: number;
+    farmer: number;
+    date: string;
+    quantity: number;
+    price: number;
   }
 
   export interface CooperativeData {
