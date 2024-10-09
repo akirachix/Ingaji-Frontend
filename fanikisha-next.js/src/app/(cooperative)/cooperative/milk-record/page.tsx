@@ -35,8 +35,7 @@ const CombinedMilkRecordsPage = () => {
 
   useEffect(() => {
     if (selectedFarmer) {
-      // In a real application, you would fetch the farmer's collections from your API here
-      // For this example, we'll just use the selected farmer as the initial collection
+
       setFarmerCollections([selectedFarmer]);
     }
   }, [selectedFarmer]);
@@ -77,14 +76,12 @@ const CombinedMilkRecordsPage = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (editingRecord) {
-      // Update existing record
       setFarmerCollections(prevCollections =>
         prevCollections.map(collection =>
           collection.record_id === editingRecord.record_id ? { ...newCollection, record_id: editingRecord.record_id } : collection
         )
       );
     } else {
-      // Add new record
       const newRecordId = Math.max(...farmerCollections.map(c => c.record_id), 0) + 1;
       setFarmerCollections(prevCollections => [...prevCollections, { ...newCollection, record_id: newRecordId }]);
     }
