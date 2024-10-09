@@ -1,6 +1,6 @@
 export const fetchMilkRecords = async () => {
   try {
-    const response = await fetch('/api/milk_records', {
+    const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/api/milk-records', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
