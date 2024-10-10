@@ -2,7 +2,6 @@
 import React from 'react';
 
 
-import SignUp from '@/app/sign-Up/page';
 import Sidebar from '@/app/(cooperative)/cooperative/components/Sidebar';
 // import Sidebar from '@/app/(sacco)/sacco/components/Sidebar';
 

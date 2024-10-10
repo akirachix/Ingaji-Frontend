@@ -1,6 +1,6 @@
 "use client";
 
-import BarChartComponent from "@/app/(cooperative)/cooperative/components/BarChart";
+import BarChartComponent from "../../components/BarChart";
 import { useFetchCreditScores } from "../../../../hooks/useFetchCreditScores";
 import { fetchMilkRecords } from "../../../../utils/fetchMilkRecords";
 import { useEffect, useState } from "react";

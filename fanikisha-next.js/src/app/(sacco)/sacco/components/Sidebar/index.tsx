@@ -20,14 +20,10 @@ const Sidebar: React.FC = () => {
   }, []);
 
   const navItems = [
-<<<<<<< HEAD:fanikisha-next.js/src/app/components/Sidebar/index.tsx
-    { name: "Overview", icon: RiDashboardLine, path: "/Overview" },
-    { name: "Milk records", icon: RiFileList3Line, path: "/milk-records" },
-    { name: "Accounts", icon: RiUser3Line, path: "/farmers-accounts" },
-=======
+
     { name: "Overview", icon: RiDashboardLine, path: "/sacco/sacco-overview" },
     { name: "Cooperative", icon: RiFileList3Line, path: "/sacco/cooperativeFarmers" },
->>>>>>> 1a61c9f31189a40406d039a3609d4b7d8f74dcb2:fanikisha-next.js/src/app/(sacco)/sacco/components/Sidebar/index.tsx
+
   ];
 
   const handleSignOut = async () => {
