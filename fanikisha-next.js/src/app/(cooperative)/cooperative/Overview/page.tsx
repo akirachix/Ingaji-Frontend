@@ -188,7 +188,6 @@ const Overview = () => {
                   className="rounded-md p-2 bg-white shadow-sm text-md cursor-pointer"
                 />
               </div>
-
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 mt-9 ">
                 <div className="bg-white w-auto rounded-lg shadow-md text-center">
                   <p className="text-3xl font-bold text-blue-500">
@@ -206,6 +205,7 @@ const Overview = () => {
                   <p className="text-3xl w-auto font-bold text-blue-500">
                     {filteredData.inactiveFarmers}
                   </p>
+
                   <p className="text-lg text-gray-600">Inactive Farmers</p>
                 </div>
               </div>
