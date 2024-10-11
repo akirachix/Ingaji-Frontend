@@ -32,7 +32,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
-# .env
+.env
 
 # vercel
 .vercel
@@ -54,7 +54,7 @@ node_modules/
 out/
 
 # Environment variables
-# .env
+.env
 .env.local
 .env.development.local
 .env.test.local
