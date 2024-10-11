@@ -9,26 +9,9 @@ export interface CreditScore {
   is_eligible: boolean;
 }
 
-export const fetchCreditScores = async () => {
-  try {
-    const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/api/credit-scores/');
-    if (!response.ok) {
-      throw new Error('Failed to fetch credit scores: ' + (await response.text()));
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
-
-
-
-
 export const fetchCreditScore = async () => {
     try {
-        const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/api/loan_eligibility', {
+        const response = await fetch('/api/credit-score', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 "use client";
 
-import BarChartComponent from "@/app/(cooperative)/cooperative/components/BarChart";
+import BarChartComponent from "../../components/BarChart";
 import { useFetchCreditScores } from "../../../../hooks/useFetchCreditScores";
 import { fetchMilkRecords } from "../../../../utils/fetchMilkRecords";
 import { useEffect, useState } from "react";
@@ -44,7 +44,6 @@ const MemberPage = ({ params: { userId } }: { params: { userId: string } }) => {
       new Date(a.last_checked_date).getTime()
   )[0];
 
-  // Pagination logic
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
   const currentCreditScores = creditScores.slice(
@@ -52,7 +51,6 @@ const MemberPage = ({ params: { userId } }: { params: { userId: string } }) => {
     indexOfLastRecord
   );
 
-  // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   if (loadingCreditScores) return <p>Loading credit scores...</p>;
@@ -159,7 +157,7 @@ const MemberPage = ({ params: { userId } }: { params: { userId: string } }) => {
           </table>
         </div>
 
-        {/* Pagination */}
+        
         <div className="flex justify-center mt-4">
           {Array.from({ length: totalPages }, (_, index) => (
             <button
