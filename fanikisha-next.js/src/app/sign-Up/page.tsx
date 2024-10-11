@@ -48,19 +48,7 @@ const SignUp = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
-    //  const response= await userSignup ({
-    //     first_name: data.first_name,
-    //     last_name: data.last_name,
-    //     username: data.username,
-    //     email: data.email,
-    //     role: data.role,
-    //     password: data.password,
-    //   });
-
       setCookie('role', data.role, { maxAge: 60 * 60 * 24 * 7, path:'/' }); 
-    
-    
-
 
       setSuccessMessage("Account created successfully!");
       setTimeout(() => router.push("/login"), 2000);

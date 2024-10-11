@@ -3,7 +3,6 @@ import React from 'react';
 
 
 import Sidebar from '@/app/(cooperative)/cooperative/components/Sidebar';
-// import Sidebar from '@/app/(sacco)/sacco/components/Sidebar';
 
 
 

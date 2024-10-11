@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { FaSearch, FaArrowLeft, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useFetchCooperatives } from "@/app/hooks/useFetchCooperative";
-// import { useFetchCreditScores } from "@/app/hooks/useFetchCreditScores";
 import { useScore } from "@/app/hooks/useScore";
 import Layout from "../components/Layout";
 import BarChartComponent from "../components/BarChart";
@@ -21,10 +20,7 @@ interface FarmerData {
   };
 }
 
-// interface Cooperative {
-//   cooperative_id: number;
-//   cooperative_name: string;
-// }
+
 
 interface MilkRecord {
   record_id: number;
@@ -51,8 +47,8 @@ const CooperativeDashboard: React.FC = () => {
     error: errorCooperatives,
   } = useFetchCooperatives();
   
-  // const { data: creditScores, loading: loadingScores, error: errorScores } = useScore();
-  const { data: creditScores, loading: loadingScores, error: errorScores }: { data: CreditScore[]; loading: boolean; error: any} = useScore();
+ 
+  const { data: creditScores, loading: loadingScores, error: errorScores }: { data: CreditScore[]; loading: boolean; error: string | null } = useScore();
   const [searchTerm, setSearchTerm] = useState("");
   const [farmersData, setFarmersData] = useState<{ [key: number]: FarmerData[] }>({});
   const [currentPage, setCurrentPage] = useState(1);
@@ -98,7 +94,6 @@ const CooperativeDashboard: React.FC = () => {
       const updatedFarmersData = { ...farmersData };
       Object.keys(updatedFarmersData).forEach((cooperativeId) => {
         updatedFarmersData[Number(cooperativeId)] = updatedFarmersData[Number(cooperativeId)].map(farmer => {
-          // const creditScore = creditScores.find(score => score.farmer_id === farmer.farmer_id);
           const creditScore = creditScores.find((score: CreditScore) => score.farmer_id === farmer.farmer_id);
           return {
             ...farmer,
@@ -145,27 +140,12 @@ const CooperativeDashboard: React.FC = () => {
       : [];
   }, [cooperatives, searchTerm]);
 
-  // const currentFarmers = selectedCooperativeId
-  //   ? farmersData[selectedCooperativeId] || []
-  //   : [];
-
-  // const filteredFarmers = useMemo(() => {
-  //   return currentFarmers.filter(
-  //     (farmer) =>
-  //       farmer.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //       farmer.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //       (farmer.credit_score?.last_checked_date || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //       (farmer.credit_score?.score?.toString() || "").includes(searchTerm.toLowerCase()) ||
-  //       (farmer.credit_score?.credit_worthiness || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //       (farmer.credit_score?.is_eligible ? "Eligible" : "Not Eligible").toLowerCase().includes(searchTerm.toLowerCase())
-  //   );
-  // }, [currentFarmers, searchTerm]);
-  // Memoizing currentFarmers
+ 
 const currentFarmers = useMemo(() => {
   return selectedCooperativeId ? farmersData[selectedCooperativeId] || [] : [];
 }, [farmersData, selectedCooperativeId]);
 
-// Memoizing filteredFarmers
+
 const filteredFarmers = useMemo(() => {
   return currentFarmers.filter(
     (farmer) =>
