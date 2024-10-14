@@ -5,6 +5,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { userSignup } from "../utils/postUserCredentials";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
@@ -48,11 +49,24 @@ const SignUp = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
+      const formData = {
+        first_name: data.first_name,
+        last_name: data.last_name,
+        username: data.username,
+        email: data.email,
+        role: data.role,
+        password: data.password,
+      };
+      const response = await userSignup(formData);
+
+      if (response.error) {
+        setErrorMessage(response.error);
+      } else {
       setCookie('role', data.role, { maxAge: 60 * 60 * 24 * 7, path:'/' }); 
 
       setSuccessMessage("Account created successfully!");
       setTimeout(() => router.push("/login"), 2000);
-
+      }
     } catch (error) {
       if (error instanceof Error) {
         setErrorMessage(error.message);
@@ -291,3 +305,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
