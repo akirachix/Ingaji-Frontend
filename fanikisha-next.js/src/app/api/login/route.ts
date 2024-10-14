@@ -11,8 +11,6 @@ export async function POST(request: Request) {
   }
 
   try {
-   
-
     const response = await fetch(`${baseURL}/api/login/`, {
       method: 'POST',
       headers: {
