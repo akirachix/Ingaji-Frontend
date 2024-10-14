@@ -19,6 +19,8 @@ const config: Config = {
        screens:{
         'lg': '1024px',
         'xl': '1280px',
+          'nh': {'min': '1000px', 'max': '1279px'},
+          'nhm':{'min': '1280px', 'max':'1280px'},
        },
 
     },

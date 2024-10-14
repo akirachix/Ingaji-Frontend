@@ -41,18 +41,7 @@ const Landing = () => {
                            onClick={getStarted}>
                             Get Started
                         </button>
-                    <div className='space-x-12 mt-18 ml-24'>
-
-                        <button  
-                           className='text-blue-600 bg-white border-2 border-blue-500 rounded py-2.5 px-6 text-2xl mr-24 mt-6'
-                           onClick={getStarted} 
-                        >
-                            Get Started
-                        </button>
-
-                       
-
-                    </div>
+           
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
-import {  NextResponse } from 'next/server';
-const baseUrl = process.env.BASE_URL;
+ const baseUrl=process.env.BASE_URL;
+import { NextResponse } from 'next/server';
 export async function GET() {
 
   try {
