@@ -1,12 +1,29 @@
+"use client"
+
 import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import CooperativeDashboard from "./(sacco)/sacco/cooperativeFarmers/page";
+import CooperativeDetail from "./(sacco)/sacco/cooperativeDetail/page";
 
-import Landing from "./landing/page";
-
-export default function RootLayout() {
+const App: React.FC = () => {
   return (
-    <div>
-      <Landing />
-
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<CooperativeDashboard />} />
+        <Route path="/cooperative/:id" element={<CooperativeDetail/>} />
+      </Routes>
+    </Router>
   );
-}
+};
+
+export default App;
+
+
+// import React from "react";
+// import CooperativeDashboard from "./(sacco)/sacco/cooperativeFarmers/page";
+
+// const Home: React.FC = () => {
+//   return <CooperativeDashboard />;
+// };
+
+// export default Home;

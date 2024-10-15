@@ -1,3 +1,4 @@
+import { Key, ReactNode } from "react";
 
 export interface LoginCredentials {
     username: string;
@@ -23,6 +24,7 @@ export interface Farmer {
   }
 
   export interface CooperativeData {
+    cooperative_id: Key | null | undefined;
     totalFarmers: number;
     activeFarmers: number;
     inactiveFarmers: number;
@@ -136,8 +138,20 @@ export interface RegistrationSuccessResponse {
 
 
 export interface FarmerData {
+  phone_number: ReactNode;
+  status: string;
+  score: string;
+  last_checked_date: string;
+  first_name: ReactNode;
+  last_name: ReactNode;
+  farmer_id: Key | null | undefined;
+  is_eligible: any;
   count: number;
   farmers: Array<{
+      status: string;
+      score: string;
+      is_eligible: any;
+      last_checked_date: string;
       farmer_id: number;
       first_name: string;
       last_name: string;

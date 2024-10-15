@@ -116,10 +116,10 @@ const Overview: React.FC = () => {
 
   return (
     <Layout>
-      <div className="bg-white px-8">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-4xl mt-4 font-bold">Overview</h1>
-          <div className="rounded-md border-t border-blue-500 shadow-[0_2px_4px_0px_rgba(64,123,255)] px-4 py-2 inline-block">
+      <div className="bg-white 2xl:px-8 lg:px-4">
+        <div className="flex justify-between items-center 2xl:mb-6">
+          <h1 className="2xl:text-4xl 2xl:mt-4 font-bold lg:text-2xl lg:mt-[-20px]">Overview</h1>
+          <div className="rounded-md border-t border-blue-500 shadow-[0_2px_4px_0px_rgba(64,123,255)] 2xl:px-4 2xl:py-2 inline-block lg:mt-[-9px] lg:px-1 lg:py-1 lg:mr-3 xl:mr-4">
             <input
               type="month"
               id="date"
@@ -131,23 +131,23 @@ const Overview: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 2xl:gap-6 2xl:mt-12 lg:gap-[-10px] lg:mt-[15px] xl: mt-[30px]">
           {stats.map((stat, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-[34px] flex flex-col justify-center items-center w-[346px] h-[220px] border-t border-blue-500 shadow-[0_2px_6px_0px_rgba(64,123,255)]"
+              className="bg-white rounded-[34px] flex flex-col justify-center items-center 2xl:w-[346px] lg:w-[150px] lg:h-[140px] xl:w-[220px] xl:h-[160px] lg:ml-[6px] lg:mt-2 2xl:h-[220px] border-t border-blue-500 shadow-[0_2px_6px_0px_rgba(64,123,255)]"
             >
-              <div className="text-6xl text-right font-bold text-blue-600 mb-2">{stat.value}</div>
+              <div className="2xl:text-6xl lg:text-3xl text-right font-bold text-blue-600 2xl:mb-2">{stat.value}</div>
               <div className="text-xl text-gray-600 text-center px-4">{stat.label}</div>
             </div>
           ))}
         </div>
 
-        <div className="grid grid-cols-2 gap-6 mt-24">
+        <div className="grid grid-cols-2 2xl:gap-6 2xl:mt-24 lg:mt-14 lg:gap-[-1px] lg:ml-4">
           <div>
-            <h2 className="text-2xl mb-6">Loan Eligibility Checked</h2>
-            <div className="bg-white rounded-[34px] p-8 w-[720px] h-[400px] border-t border-blue-500 shadow-[0_2px_4px_0px_rgba(64,123,255)]">
-              <div className="w-full h-[300px]">
+            <h2 className="2xl:text-2xl 2xl:mb-6 lg:text-[20px] xl:text-[30px] lg:mb-7">Loan Eligibility Checked</h2>
+            <div className="bg-white rounded-[34px] 2xl:p-8  lg:px-6 lg:py-4 xl:px-20 xl:py-4 lg:h-[260px] lg:w-[320px] xl:h-[330px] xl:w-[450px] 2xl:w-[720px] 2xl:h-[400px] border-t border-blue-500 shadow-[0_2px_4px_0px_rgba(64,123,255)]">
+              <div className="2xl:w-full 2xl:h-[300px] lg:w-[180px] lg:h-[180px] xl:w-[230px] xl:h-[230px] xl:w-ful">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
@@ -187,9 +187,9 @@ const Overview: React.FC = () => {
           </div>
 
           <div>
-            <h2 className="text-2xl mb-6">Number of Farmers Eligible for Loans per Cooperative</h2>
-            <div className="bg-white rounded-[34px] p-8 w-[720px] h-[400px] border-t border-blue-500 shadow-[0_2px_4px_0px_rgba(64,123,255)]">
-              <div className="w-full h-[300px]">
+            <h2 className="2xl:text-2xl 2xl:mb-6 lg:text-[20px] lg:mb-1 lg:ml-6 xl:ml-8 xl:text-[30px]" >Farmers Eligible per Cooperative</h2>
+            <div className="bg-white rounded-[34px] 2xl:p-8 xl:px-6 xl:py-4 lg:px-4 lg:py-2  lg:h-[260px] xl:h-[300] lg:w-[320px] xl:w-[450px] xl:h-[330px] 2xl:w-[720px] 2xl:h-[400px]  lg:mt-6 border-t border-blue-500 shadow-[0_2px_4px_0px_rgba(64,123,255)]">
+              <div className="2xl:w-full 2xl:h-[300px] lg:w-[250px] lg:h-[230px] xl:w-[400px] xl:h-[300px]">
                 {barData.length > 0 ? (
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={barData} layout="vertical">
@@ -214,3 +214,6 @@ const Overview: React.FC = () => {
 };
 
 export default Overview;
+
+
+
