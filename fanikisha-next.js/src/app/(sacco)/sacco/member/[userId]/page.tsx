@@ -1,13 +1,8 @@
 "use client";
 
 import BarChartComponent from "../../components/BarChart";
-<<<<<<< HEAD
-import { useFetchCreditScores } from "@/app/hooks/useFetchCreditScores";
-import { fetchMilkRecords } from "@/app/utils/fetchMilkRecords";
-=======
 import { useFetchCreditScores } from "../../../../hooks/useFetchCreditScores";
 import { fetchMilkRecords } from "../../../../utils/fetchMilkRecords";
->>>>>>> 694da9e228faa3ab11f44105c40841d21f9206d2
 import { useEffect, useState } from "react";
 import Layout from "@/app/Layout";
 

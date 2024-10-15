@@ -1,4 +1,4 @@
-import { Key, ReactNode } from "react";
+import { Key} from "react";
 
 export interface LoginCredentials {
     username: string;
@@ -138,30 +138,31 @@ export interface RegistrationSuccessResponse {
 
 
 export interface FarmerData {
-  phone_number: ReactNode;
+  phone_number: string;
   status: string;
   score: string;
   last_checked_date: string;
-  first_name: ReactNode;
-  last_name: ReactNode;
-  farmer_id: Key | null | undefined;
-  is_eligible: any;
+  first_name: string;
+  last_name: string;
+  farmer_id: number | null | undefined;
+  is_eligible: boolean;
   count: number;
   farmers: Array<{
-      status: string;
-      score: string;
-      is_eligible: any;
-      last_checked_date: string;
-      farmer_id: number;
-      first_name: string;
-      last_name: string;
-      phone_number: string;
-      cooperative_number: string;
-      sacco_id: number;
-      cooperative_id: number;
-      created_at: string;
+    status: string;
+    score: string;
+    is_eligible: boolean;
+    last_checked_date: string;
+    farmer_id: number;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+    cooperative_number: string;
+    sacco_id: number;
+    cooperative_id: number;
+    created_at: string;
   }>;
 }
+
 
 export interface CooperativeWithFarmers {
   cooperative_id: number;     
@@ -211,4 +212,4 @@ export interface MilkRecordData {
 
 
   
-  
+ 

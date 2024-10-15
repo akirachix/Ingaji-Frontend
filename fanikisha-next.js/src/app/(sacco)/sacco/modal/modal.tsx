@@ -1,10 +1,12 @@
-// components/Modal.tsx
+"use client";
+import { FarmerData } from "@/app/utils/types";
 import React from "react";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  farmersData: any[]; // Adjust the type according to your farmer data structure
+  // farmersData:any[];
+  farmersData: FarmerData[];
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, farmersData }) => {
