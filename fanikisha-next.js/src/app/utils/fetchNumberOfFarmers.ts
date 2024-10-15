@@ -1,6 +1,6 @@
 export const fetchFarmers = async () => {
     try {
-      const response = await fetch('/api/farmer', {
+      const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/api/farmers/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
