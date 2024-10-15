@@ -5,7 +5,6 @@ import React from "react";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  // farmersData:any[];
   farmersData: FarmerData[];
 }
 
