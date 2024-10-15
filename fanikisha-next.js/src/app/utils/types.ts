@@ -1,3 +1,4 @@
+import { Key} from "react";
 
 export interface LoginCredentials {
     username: string;
@@ -23,6 +24,7 @@ export interface Farmer {
   }
 
   export interface CooperativeData {
+    cooperative_id: Key | null | undefined;
     totalFarmers: number;
     activeFarmers: number;
     inactiveFarmers: number;
@@ -136,18 +138,31 @@ export interface RegistrationSuccessResponse {
 
 
 export interface FarmerData {
+  phone_number: string;
+  status: string;
+  score: string;
+  last_checked_date: string;
+  first_name: string;
+  last_name: string;
+  farmer_id: number | null | undefined;
+  is_eligible: boolean;
   count: number;
   farmers: Array<{
-      farmer_id: number;
-      first_name: string;
-      last_name: string;
-      phone_number: string;
-      cooperative_number: string;
-      sacco_id: number;
-      cooperative_id: number;
-      created_at: string;
+    status: string;
+    score: string;
+    is_eligible: boolean;
+    last_checked_date: string;
+    farmer_id: number;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+    cooperative_number: string;
+    sacco_id: number;
+    cooperative_id: number;
+    created_at: string;
   }>;
 }
+
 
 export interface CooperativeWithFarmers {
   cooperative_id: number;     
@@ -197,4 +212,4 @@ export interface MilkRecordData {
 
 
   
-  
+ 
