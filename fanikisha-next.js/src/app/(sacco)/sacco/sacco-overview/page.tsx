@@ -145,7 +145,7 @@ const Overview: React.FC = () => {
 
         <div className="grid grid-cols-2 2xl:gap-6 2xl:mt-24 lg:mt-14 lg:gap-[-1px] lg:ml-4">
           <div>
-            <h2 className="2xl:text-2xl 2xl:mb-6 lg:text-[20px] xl:text-[30px] lg:mb-7">Loan Eligibility Checked</h2>
+            <h2 className="2xl:text-2xl 2xl:mb-6 lg:text-[15px] xl:text-[20px] lg:mb-7">Loan Eligibility Checked</h2>
             <div className="bg-white rounded-[34px] 2xl:p-8  lg:px-6 lg:py-4 xl:px-20 xl:py-4 lg:h-[260px] lg:w-[320px] xl:h-[330px] xl:w-[450px] 2xl:w-[720px] 2xl:h-[400px] border-t border-blue-500 shadow-[0_2px_4px_0px_rgba(64,123,255)]">
               <div className="2xl:w-full 2xl:h-[300px] lg:w-[180px] lg:h-[180px] xl:w-[230px] xl:h-[230px] xl:w-ful">
                 <ResponsiveContainer width="100%" height="100%">
@@ -187,7 +187,7 @@ const Overview: React.FC = () => {
           </div>
 
           <div>
-            <h2 className="2xl:text-2xl 2xl:mb-6 lg:text-[20px] lg:mb-1 lg:ml-6 xl:ml-8 xl:text-[30px]" >Farmers Eligible per Cooperative</h2>
+            <h2 className="2xl:text-2xl 2xl:mb-6 lg:text-[15px] lg:mb-1 lg:ml-6 xl:ml-8 xl:text-[20px]" >Farmers Eligible per Cooperative</h2>
             <div className="bg-white rounded-[34px] 2xl:p-8 xl:px-6 xl:py-4 lg:px-4 lg:py-2  lg:h-[260px] xl:h-[300] lg:w-[320px] xl:w-[450px] xl:h-[330px] 2xl:w-[720px] 2xl:h-[400px]  lg:mt-6 border-t border-blue-500 shadow-[0_2px_4px_0px_rgba(64,123,255)]">
               <div className="2xl:w-full 2xl:h-[300px] lg:w-[250px] lg:h-[230px] xl:w-[400px] xl:h-[300px]">
                 {barData.length > 0 ? (
