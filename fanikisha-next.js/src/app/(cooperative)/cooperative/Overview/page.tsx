@@ -11,6 +11,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
 } from "chart.js";
 import { fetchMilkRecords } from "@/app/utils/fetchMilkRecords";
 import Layout from "../../../Layout";
@@ -48,7 +49,21 @@ const months = [
   "Dec",
 ];
 
-const chartOptions = {
+const commonYAxisConfig = {
+  beginAtZero: true,
+  grid: { color: "rgba(0, 0, 0, 0.1)" },
+  ticks: {
+    stepSize: 1,
+    callback: function(tickValue: number | string) {
+      if (typeof tickValue === 'number' && Number.isInteger(tickValue) && tickValue > 0) {
+        return tickValue;
+      }
+      return '';
+    }
+  }
+};
+
+const farmersChartOptions: ChartOptions<'line'> = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
@@ -59,8 +74,34 @@ const chartOptions = {
       grid: { display: false },
     },
     y: {
-      grid: { color: "rgba(0, 0, 0, 0.1)" },
-      ticks: { display: true },
+      ...commonYAxisConfig,
+      min: 0,
+      max: 10,
+      ticks: {
+        ...commonYAxisConfig.ticks,
+        stepSize: 1,
+      }
+    },
+  },
+};
+
+const productionChartOptions: ChartOptions<'bar'> = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { display: false },
+  },
+  scales: {
+    x: {
+      grid: { display: false },
+    },
+    y: {
+      ...commonYAxisConfig,
+      min: 0,
+      ticks: {
+        ...commonYAxisConfig.ticks,
+        stepSize: undefined, 
+      }
     },
   },
 };
@@ -188,7 +229,6 @@ const Overview = () => {
                   className="rounded-md p-2 bg-white shadow-sm text-md cursor-pointer"
                 />
               </div>
-
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 mt-9 ">
                 <div className="bg-white w-auto rounded-lg shadow-md text-center">
                   <p className="text-3xl font-bold text-blue-500">
@@ -216,7 +256,7 @@ const Overview = () => {
                     Distribution of registered farmers over the months
                   </h2>
                   <div className="h-60 xl:h-56 lg:h-40">
-                    <Line data={lineChartData} options={chartOptions} />
+                    <Line data={lineChartData} options={farmersChartOptions} />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-15 lg:mb-20 xl:h-20 ">
@@ -227,7 +267,7 @@ const Overview = () => {
                     <div className="h-60 ">
                       <Bar
                         data={milkProductionChartData}
-                        options={chartOptions}
+                        options={productionChartOptions}
                       />
                     </div>
                   </div>
@@ -236,7 +276,7 @@ const Overview = () => {
                       Total price per month
                     </h2>
                     <div className="h-60 px-2 ">
-                      <Bar data={totalPriceChartData} options={chartOptions} />
+                      <Bar data={totalPriceChartData} options={productionChartOptions} />
                     </div>
                   </div>
                 </div>

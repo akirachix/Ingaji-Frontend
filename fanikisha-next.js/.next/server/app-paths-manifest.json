@@ -1,6 +1,5 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
-  "/api/milk_records/route": "app/api/milk_records/route.js",
-  "/api/credit-score/route": "app/api/credit-score/route.js",
   "/favicon.ico/route": "app/favicon.ico/route.js"
 }
