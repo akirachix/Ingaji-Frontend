@@ -4,7 +4,7 @@ import BarChartComponent from "../../components/BarChart";
 import { useFetchCreditScores } from "../../../../hooks/useFetchCreditScores";
 import { fetchMilkRecords } from "../../../../utils/fetchMilkRecords";
 import { useEffect, useState } from "react";
-import Layout from "../../components/Layout";
+import Layout from "@/app/Layout";
 
 interface MilkRecord {
   record_id: number;
