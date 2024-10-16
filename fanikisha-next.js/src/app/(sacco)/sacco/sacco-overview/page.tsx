@@ -34,26 +34,14 @@ const Overview: React.FC = () => {
   const { data: farmersData, loading: farmersLoading, error: farmersError } = useFamers();
 
   useEffect(() => {
-    console.log('Effect running');
-    console.log('cooperativesData:', cooperativesData);
-    console.log('loanEligibilityData:', loanEligibilityData);
-    console.log('farmersData:', farmersData);
-
     if (cooperativesData && loanEligibilityData && farmersData) {
       const selectedMonth = format(date, 'yyyy-MM');
-      console.log('Selected month:', selectedMonth);
 
       const creditScoresData = (loanEligibilityData as CreditScore[]).filter((score) =>
         format(new Date(score.last_checked_date), 'yyyy-MM') === selectedMonth
       );
-      console.log('Filtered credit scores:', creditScoresData);
-
       const farmers = Array.isArray(farmersData) ? farmersData : [];
-      console.log('Farmers:', farmers);
-
       const cooperatives = cooperativesData as Cooperative[];
-      console.log('Cooperatives:', cooperatives);
-
       setStats([
         { label: 'Eligible to take a loan', value: creditScoresData.filter(score => score.is_eligible).length },
         { label: 'Checked eligibilities', value: creditScoresData.length },
@@ -164,7 +152,7 @@ const Overview: React.FC = () => {
               <div className="w-full h-[300px] 2xl:h-[300px] lg:h-[200px] xl:h-[280px]  2xl:w-full lg:w-[250px] xl:w-[320px] ">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={barData}>
-                   <XAxis dataKey="name" label={{ value: 'Month', position: 'insideBottom', offset: -10 }} />
+                   <XAxis dataKey="name" label={{ value: 'Month', position: 'insideBottom', offset: -3 }} />
 
                     <YAxis 
                       domain={[0, 'dataMax + 1']} 
