@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 import Layout from '../components/Layout';
 import { useFamers } from '@/app/hooks/useFarmer';
 import { useLoanEligibility } from '@/app/hooks/useLoanEligibility';
@@ -12,27 +12,15 @@ interface CreditScore {
   farmer_id: number;
   score: number;
   credit_worthiness: string;
-  loan_range: number;
+  loan_range: string;
   last_checked_date: string;
   is_eligible: boolean;
-}
-
-interface Farmer {
-  is_eligible: boolean;
-  farmer_id: number;
-  first_name: string;
-  last_name: string;
-  phone_number: string;
-  created_at: string;
-  cooperative_number: string; 
-  sacco_name: string;
-  cooperative_id: number;
 }
 
 interface Cooperative {
   cooperative_id: number;
   cooperative_name: string;
-  user: string;
+  user: number;
 }
 
 const Overview: React.FC = () => {
@@ -46,64 +34,35 @@ const Overview: React.FC = () => {
   const { data: farmersData, loading: farmersLoading, error: farmersError } = useFamers();
 
   useEffect(() => {
-    console.log('Effect running');
-    console.log('cooperativesData:', cooperativesData);
-    console.log('loanEligibilityData:', loanEligibilityData);
-    console.log('farmersData:', farmersData);
-
     if (cooperativesData && loanEligibilityData && farmersData) {
       const selectedMonth = format(date, 'yyyy-MM');
-      console.log('Selected month:', selectedMonth);
-  
+
       const creditScoresData = (loanEligibilityData as CreditScore[]).filter((score) =>
         format(new Date(score.last_checked_date), 'yyyy-MM') === selectedMonth
       );
-      console.log('Filtered credit scores:', creditScoresData);
-  
-      const farmers = Array.isArray(farmersData) ? farmersData : [];
-      console.log('Farmers:', farmers);
-  
-      const cooperatives = cooperativesData as Cooperative[];
-      console.log('Cooperatives:', cooperatives);
-  
+     const cooperatives = cooperativesData as Cooperative[];
       setStats([
         { label: 'Eligible to take a loan', value: creditScoresData.filter(score => score.is_eligible).length },
         { label: 'Checked eligibilities', value: creditScoresData.length },
         { label: 'Not Eligible for loan', value: creditScoresData.filter(score => !score.is_eligible).length },
         { label: 'Total cooperatives', value: cooperatives.length },
       ]);
-  
+
       const totalChecked = creditScoresData.length;
       const eligibleCount = creditScoresData.filter((score: CreditScore) => score.is_eligible).length;
       const ineligibleCount = totalChecked - eligibleCount;
-  
+
       setPieData([
-        { name: 'Eligible Loans', value: eligibleCount, color: '#1E40AF' },
+        { name: 'Eligible for Loans', value: eligibleCount, color: '#1E40AF' },
         { name: 'Not eligible for Loans', value: ineligibleCount, color: '#60A5FA' },
       ]);
-  
-      const cooperativeFarmerCounts = cooperatives.reduce((acc: { [key: string]: number }, coop: Cooperative) => {
-        const eligibleFarmers = farmers.filter((farmer: Farmer) => 
-          farmer.cooperative_id === coop.cooperative_id && farmer.is_eligible
-        );
-        console.log(`Eligible farmers for ${coop.cooperative_name}:`, eligibleFarmers.length);
-  
-        acc[coop.cooperative_name] = eligibleFarmers.length;
-        return acc;
-      }, {});
-  
-      const sortedCooperatives = Object.entries(cooperativeFarmerCounts)
-        .map(([name, value]) => ({ name, value }))
-        .sort((a, b) => b.value - a.value);
-  
-      console.log('Sorted cooperatives:', sortedCooperatives);
-      setBarData(sortedCooperatives);
+      const eligibleFarmersForMonth = creditScoresData.filter(score => score.is_eligible).length;
+      setBarData([{ name: format(date, 'MMM yyyy'), value: eligibleFarmersForMonth }]);
     }
   }, [cooperativesData, loanEligibilityData, farmersData, date]);
-  
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDate(new Date(event.target.value));
+    setDate(parse(event.target.value, 'yyyy-MM', new Date()));
   };
 
   if (saccoLoading || loanLoading || farmersLoading) {
@@ -131,7 +90,7 @@ const Overview: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 2xl:gap-6 2xl:mt-12 lg:gap-[-10px] lg:mt-[15px] xl: mt-[30px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 2xl:gap-6 2xl:mt-12 lg:gap-[-10px] lg:mt-[15px] xl:mt-[30px]">
           {stats.map((stat, index) => (
             <div 
               key={index} 
@@ -187,23 +146,22 @@ const Overview: React.FC = () => {
           </div>
 
           <div>
-            <h2 className="2xl:text-2xl 2xl:mb-6 lg:text-[15px] lg:mb-1 lg:ml-6 xl:ml-8 xl:text-[20px]" >Farmers Eligible per Cooperative</h2>
-            <div className="bg-white rounded-[34px] 2xl:p-8 xl:px-6 xl:py-4 lg:px-4 lg:py-2  lg:h-[260px] xl:h-[300] lg:w-[320px] xl:w-[450px] xl:h-[330px] 2xl:w-[720px] 2xl:h-[400px]  lg:mt-6 border-t border-blue-500 shadow-[0_2px_4px_0px_rgba(64,123,255)]">
-              <div className="2xl:w-full 2xl:h-[300px] lg:w-[250px] lg:h-[230px] xl:w-[400px] xl:h-[300px]">
-                {barData.length > 0 ? (
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={barData} layout="vertical">
-                      <XAxis type="number" />
-                      <YAxis dataKey="name" type="category" width={150} />
-                      <Tooltip />
-                      <Bar dataKey="value" fill="#1E40AF" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                ) : (
-                  <div className="flex items-center justify-center h-full">
-                    <p>No data available for the selected period.</p>
-                  </div>
-                )}
+            <h2 className="2xl:text-2xl 2xl:mb-6 lg:text-[15px] xl:text-[20px] lg:mb-7">Eligible Farmers for Selected Month</h2>
+            <div className="bg-white rounded-[34px] 2xl:p-8 lg:px-6 lg:py-4 xl:px-20 xl:py-4 lg:h-[260px] lg:w-[320px] xl:h-[330px] xl:w-[450px] 2xl:w-[720px] 2xl:h-[400px] border-t border-blue-500 shadow-[0_2px_4px_0px_rgba(64,123,255)]">
+              <div className="w-full h-[300px] 2xl:h-[300px] lg:h-[200px] xl:h-[280px]  2xl:w-full lg:w-[250px] xl:w-[320px] ">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={barData}>
+                   <XAxis dataKey="name" label={{ value: 'Month', position: 'insideBottom', offset: -3 }} />
+
+                    <YAxis 
+                      domain={[0, 'dataMax + 1']} 
+                      label={{ value: 'Number of Farmers eligible', angle: -90}} 
+                      tickFormatter={(value) => Math.round(value).toString()}
+                    />
+                    <Tooltip />
+                    <Bar dataKey="value" fill="#8884d8" />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
           </div>
@@ -214,6 +172,3 @@ const Overview: React.FC = () => {
 };
 
 export default Overview;
-
-
-
