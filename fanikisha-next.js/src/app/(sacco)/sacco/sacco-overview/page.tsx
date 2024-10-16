@@ -40,8 +40,7 @@ const Overview: React.FC = () => {
       const creditScoresData = (loanEligibilityData as CreditScore[]).filter((score) =>
         format(new Date(score.last_checked_date), 'yyyy-MM') === selectedMonth
       );
-      const farmers = Array.isArray(farmersData) ? farmersData : [];
-      const cooperatives = cooperativesData as Cooperative[];
+     const cooperatives = cooperativesData as Cooperative[];
       setStats([
         { label: 'Eligible to take a loan', value: creditScoresData.filter(score => score.is_eligible).length },
         { label: 'Checked eligibilities', value: creditScoresData.length },
