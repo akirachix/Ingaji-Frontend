@@ -177,9 +177,9 @@ const SignUp = () => {
               className="2xl:mt-1 block 2xl:w-full lg:w-3/4 border xl:text-[20px] xl:w-full border-blue-500 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 2xl:p-3 lg:p-1 xl:p-2"
             >
               <option value="">Select Role</option>
-              <option value="cooperative">Cooperative</option>
-              <option value="sacco">Sacco</option>
-              <option value="admin">Admin</option>
+              <option value="Cooperative">Cooperative</option>
+              <option value="Sacco">Sacco</option>
+              <option value="Admin">Admin</option>
             </select>
             {errors.role && (
               <span className="text-red-500 2xl:text-sm">

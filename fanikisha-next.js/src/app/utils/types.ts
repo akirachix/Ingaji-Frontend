@@ -192,7 +192,17 @@ export interface MilkRecordData {
   price: number;
 }
 
+export interface Farmer {
+  id: number;
+  name: string;
+}
 
+export interface CooperativeDetails {
+  id: number;
+  name: string;
+  farmers: Farmer[];
+  creditScores: CreditScore[];
+}
 
 
 
