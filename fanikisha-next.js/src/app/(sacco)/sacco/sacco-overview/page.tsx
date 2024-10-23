@@ -15,6 +15,7 @@ interface CreditScore {
   last_checked_date: string;
   is_eligible: boolean;
 }
+
 interface Cooperative {
   cooperative_id: number;
   cooperative_name: string;
@@ -31,19 +32,23 @@ const Overview: React.FC = () => {
   useEffect(() => {
     if (cooperativesData && loanEligibilityData && farmersData) {
       const selectedMonth = format(date, 'yyyy-MM');
+
       const creditScoresData = (loanEligibilityData as CreditScore[]).filter((score) =>
         format(new Date(score.last_checked_date), 'yyyy-MM') === selectedMonth
       );
       const cooperatives = cooperativesData as Cooperative[];
+
       setStats([
         { label: 'Eligible to take a loan', value: creditScoresData.filter(score => score.is_eligible).length },
         { label: 'Total Farmers checked', value: creditScoresData.length },
         { label: 'Not Eligible for loan', value: creditScoresData.filter(score => !score.is_eligible).length },
         { label: 'Total cooperatives', value: cooperatives.length },
       ]);
+
       const totalChecked = creditScoresData.length;
       const eligibleCount = creditScoresData.filter((score: CreditScore) => score.is_eligible).length;
       const ineligibleCount = totalChecked - eligibleCount;
+
       setPieData([
         { name: 'Eligible for Loans', value: eligibleCount, color: '#1E40AF' },
         { name: 'Not eligible for Loans', value: ineligibleCount, color: '#60A5FA' },
@@ -52,6 +57,8 @@ const Overview: React.FC = () => {
       setBarData([{ name: format(date, 'MMM yyyy'), value: eligibleFarmersForMonth }]);
     }
   }, [cooperativesData, loanEligibilityData, farmersData, date]);
+
+
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDate(parse(event.target.value, 'yyyy-MM', new Date()));
   };
@@ -77,10 +84,12 @@ const Overview: React.FC = () => {
             />
           </div>
         </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 2xl:gap-6 2xl:mt-12 lg:gap-[-10px] lg:mt-[15px] xl:mt-[30px]">
           {stats.map((stat, index) => (
             <div
               key={index}
+
               className="bg-white rounded-[34px] flex flex-col justify-center items-center 2xl:w-[346px] lg:w-[150px] lg:h-[140px] xl:w-[220px] xl:h-[160px] lg:ml-[6px] lg:mt-2 2xl:h-[220px] border-t border-blue-500 shadow-[0_2px_6px_0px_rgba(64,123,255)]"
             >
               <div className="2xl:text-6xl lg:text-3xl text-right font-bold text-blue-600 2xl:mb-2">{stat.value}</div>
@@ -88,6 +97,7 @@ const Overview: React.FC = () => {
             </div>
           ))}
         </div>
+
         <div className="grid grid-cols-2 2xl:gap-6 2xl:mt-24 lg:mt-14 lg:gap-[-1px] lg:ml-4">
           <div>
             <h2 className="2xl:text-2xl 2xl:mb-6 lg:text-[15px] xl:text-[20px] lg:mb-7">Loan Eligibility Checked</h2>
@@ -138,6 +148,7 @@ const Overview: React.FC = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={barData}>
                    <XAxis dataKey="name" label={{ value: 'Month', position: 'insideBottom', offset: -3 }} />
+
                     <YAxis
                       domain={[0, 'dataMax + 1']}
                       label={{ value: 'Number of Farmers eligible', angle: -90}}
@@ -145,6 +156,7 @@ const Overview: React.FC = () => {
                     />
                     <Tooltip />
                     <Bar dataKey="value" fill="#8884D8" />
+
                   </BarChart>
                 </ResponsiveContainer>
               </div>
