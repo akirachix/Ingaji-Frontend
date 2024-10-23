@@ -12,17 +12,17 @@ import { setCookie } from "cookies-next";
 import Link from "next/link";
 
 const schema = yup.object().shape({
-  first_name: yup.string().required("first name is required"),
-  last_name: yup.string().required("last name is required"),
-  username: yup.string().required("username is required"),
+  first_name: yup.string().required("First name is required"),
+  last_name: yup.string().required("Last name is required"),
+  username: yup.string().required("Username is required"),
   role: yup.string().required("Role is required"),
   email: yup
     .string()
     .email("Invalid email address")
-    .required("email is required"),
+    .required("Email is required"),
   password: yup
     .string()
-    .min(6, "password must be at least 6 characters")
+    .min(6, "Password must be at least 6 characters")
     .required("Password is required"),
   confirm_password: yup
     .string()
@@ -92,7 +92,7 @@ const SignUp = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="2xl:w-[2780px] lg:w-[1000px] xl:w-[1900px] 2xl:container 2xl:mx-auto 2xl:py-[30px] lg:py-[26px] xl:py-[44px] lg:px-1 xl:px-1 2xl:px-18 bg-white  shadow-md 2xl:mt-1 2xl:ml-[-220px] lg:ml-[-100px] xl:ml-[-190px] "
         >
-          <h1 className="2xl:text-[50px]  2xl:mb-4 lg:mb-[-5px] xl:mb-[2px] text-blue-500 font-bold text-center lg:text-[40px] xl:text-[48px] 2xl:mt-[-30px] xl:mt-[-14px]">
+          <h1 className="2xl:text-[50px]  2xl:mb-3 lg:mb-[-5px] xl:mb-[2px] text-blue-500 font-bold text-center lg:text-[40px] xl:text-[48px] 2xl:mt-[-30px] xl:mt-[-14px]">
             Sign Up
           </h1>
 
@@ -265,7 +265,7 @@ const SignUp = () => {
               ${isSubmitting ? "opacity-40 cursor-not-allowed" : ""}`}
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Creating account...." : "Signup"}
+              {isSubmitting ? "Creating account...." : "Sign Up"}
             </button>
             {successMessage && (
               <p className="2xl:mt-2 text-green-500 text-center 2xl:text-sm 2xl:ml-30">
@@ -292,9 +292,9 @@ const SignUp = () => {
 
         <div>
           <Image
-            src="/media/login.png"
+            src="/media/logo.png"
             alt="Sign Up Illustration"
-            className="2xl:ml-[160px] lg:ml-[100px] lg:w-[500px] lg:h-[350px] lg:mt-[-80px] xl:ml-[200px] xl:w-[1250px] xl:h-[440px] xl:mt-[30px] 2xl:w-[2000px] 2xl:h-[600px]"
+            className="2xl:ml-[50px] 2xl:mt-[-15px] lg:ml-[100px] lg:w-[500px] lg:h-[350px] lg:mt-[-80px] xl:ml-[200px] xl:w-[1250px] xl:h-[440px] xl:mt-[30px] 2xl:w-[2000px] 2xl:h-[450px]"
             width={2000}
             height={1600}
           />
