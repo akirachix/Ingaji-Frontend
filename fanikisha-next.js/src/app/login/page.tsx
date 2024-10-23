@@ -140,7 +140,7 @@ return (
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-40 items-center pr-3 flex text-3xl text-blue-500"
+              className="absolute inset-y-0 right-32 items-center pr-3 flex text-3xl text-blue-500"
               onClick={togglePasswordVisibility}
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
