@@ -215,7 +215,8 @@ const filteredFarmers = useMemo(() => {
       if (!response.ok) {
       } else {
       }
-    } catch (error) {
+    }  catch (err) {
+      console.error('Error checking eligibility:', err instanceof Error ? err.message : 'Unknown error');
     }
   };
   const getColor = (worthiness: string) => {
