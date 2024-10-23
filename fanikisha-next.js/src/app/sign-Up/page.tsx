@@ -153,29 +153,7 @@ const SignUp = () => {
             )}
           </div>
 
-          {/* <div className="mb-1 flex flex-col items-center ">
-            <label
-              htmlFor="Role"
-              className="2xl:text-[22px] text-black-700 lg:ml-[-330px] lg:text-[14px] xl:text-[20px] xl:ml-[-450px] 2xl:ml-[-780px]"
-            >
-              Role:
-            </label>
-            <select
-              id="role"
-              {...register("role")}
-              className="2xl:mt-1 block 2xl:w-full lg:w-3/4 border xl:text-[20px] xl:w-full border-blue-500 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 2xl:p-3 lg:p-1 xl:p-2"
-            >
-              <option value="" >Select Role</option>
-              <option value="cooperative">cooperative</option>
-              <option value="sacco">sacco</option>
-              
-            </select>
-            {errors.role && (
-              <span className="text-red-500 2xl:text-sm ">
-                {errors.role.message}
-              </span>
-            )}
-          </div> */}
+         
   <div className="mb-1 flex flex-col items-center ">
   <label
     htmlFor="Role"
