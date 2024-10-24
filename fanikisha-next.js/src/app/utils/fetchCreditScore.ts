@@ -9,6 +9,7 @@ export interface CreditScore {
   is_eligible: boolean;
 }
 
+
 export const fetchCreditScore = async () => {
     try {
         const response = await fetch('/api/credit-score', {
