@@ -182,7 +182,6 @@ import Layout from '../components/Layout';
 import { useFamers } from '@/app/hooks/useFarmer';
 import { useLoanEligibility } from '@/app/hooks/useLoanEligibility';
 import { useCooperative } from '@/app/hooks/useCooperative';
-
 interface CreditScore {
   credit_score_id: number;
   farmer_id: number;
@@ -198,17 +197,14 @@ interface Cooperative {
   cooperative_name: string;
   user: number;
 }
-
 const Overview: React.FC = () => {
   const [date, setDate] = useState(new Date());
   const [stats, setStats] = useState<Array<{ label: string; value: number }>>([]);
   const [pieData, setPieData] = useState<Array<{ name: string; value: number; color: string }>>([]);
   const [barData, setBarData] = useState<Array<{ name: string; value: number }>>([]);
-
   const { data: cooperativesData, loading: saccoLoading, error: saccoError } = useCooperative();
   const { data: loanEligibilityData, loading: loanLoading, error: loanError } = useLoanEligibility();
   const { data: farmersData, loading: farmersLoading, error: farmersError } = useFamers();
-
   useEffect(() => {
     if (cooperativesData && loanEligibilityData && farmersData) {
       const selectedMonth = format(date, 'yyyy-MM');
@@ -217,6 +213,10 @@ const Overview: React.FC = () => {
         format(new Date(score.last_checked_date), 'yyyy-MM') === selectedMonth
       );
       const cooperatives = cooperativesData as Cooperative[];
+<<<<<<< HEAD
+=======
+
+>>>>>>> cba3e353cec18fa1bc2f4f3a0ee5fd46535a4df4
       setStats([
         { label: 'Eligible to take a loan', value: creditScoresData.filter(score => score.is_eligible).length },
         { label: 'Total Farmers checked', value: creditScoresData.length },
@@ -237,18 +237,16 @@ const Overview: React.FC = () => {
     }
   }, [cooperativesData, loanEligibilityData, farmersData, date]);
 
+
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDate(parse(event.target.value, 'yyyy-MM', new Date()));
   };
-
   if (saccoLoading || loanLoading || farmersLoading) {
     return <div className="text-center text-lg">Loading...</div>;
   }
-
   if (saccoError || loanError || farmersError) {
     return <div className="text-red-500 text-center">Error: {saccoError || loanError || farmersError}</div>;
   }
-
   return (
     <Layout>
       <div className="bg-white 2xl:px-8 lg:px-4">
@@ -268,8 +266,9 @@ const Overview: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 2xl:gap-6 2xl:mt-12 lg:gap-[-10px] lg:mt-[15px] xl:mt-[30px]">
           {stats.map((stat, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
+
               className="bg-white rounded-[34px] flex flex-col justify-center items-center 2xl:w-[346px] lg:w-[150px] lg:h-[140px] xl:w-[220px] xl:h-[160px] lg:ml-[6px] lg:mt-2 2xl:h-[220px] border-t border-blue-500 shadow-[0_2px_6px_0px_rgba(64,123,255)]"
             >
               <div className="2xl:text-6xl lg:text-3xl text-right font-bold text-blue-600 2xl:mb-2">{stat.value}</div>
@@ -321,7 +320,6 @@ const Overview: React.FC = () => {
               </div>
             </div>
           </div>
-
           <div>
             <h2 className="2xl:text-2xl 2xl:mb-6 lg:text-[15px] xl:text-[20px] lg:mb-7">Eligible Farmers for Selected Month</h2>
             <div className="bg-white rounded-[34px] 2xl:p-8 lg:px-6 lg:py-4 xl:px-20 xl:py-4 lg:h-[260px] lg:w-[320px] xl:h-[330px] xl:w-[450px] 2xl:w-[720px] 2xl:h-[400px] border-t border-blue-500 shadow-[0_2px_4px_0px_rgba(64,123,255)]">
@@ -330,13 +328,14 @@ const Overview: React.FC = () => {
                   <BarChart data={barData}>
                    <XAxis dataKey="name" label={{ value: 'Month', position: 'insideBottom', offset: -3 }} />
 
-                    <YAxis 
-                      domain={[0, 'dataMax + 1']} 
-                      label={{ value: 'Number of Farmers eligible', angle: -90}} 
+                    <YAxis
+                      domain={[0, 'dataMax + 1']}
+                      label={{ value: 'Number of Farmers eligible', angle: -90}}
                       tickFormatter={(value) => Math.round(value).toString()}
                     />
                     <Tooltip />
-                    <Bar dataKey="value" fill="#8884d8" />
+                    <Bar dataKey="value" fill="#8884D8" />
+
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -347,5 +346,4 @@ const Overview: React.FC = () => {
     </Layout>
   );
 };
-
 export default Overview;
