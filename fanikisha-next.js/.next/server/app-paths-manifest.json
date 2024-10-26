@@ -1,7 +1,3 @@
 {
-  "/page": "app/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/(sacco)/sacco/sacco-overview/page": "app/(sacco)/sacco/sacco-overview/page.js",
-  "/api/cooperative/route": "app/api/cooperative/route.js",
-  "/api/credit-score/route": "app/api/credit-score/route.js"
+  "/sign-Up/page": "app/sign-Up/page.js"
 }
