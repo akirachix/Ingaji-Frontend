@@ -202,22 +202,38 @@ const filteredFarmers = useMemo(() => {
  }
  };
 
- const handleViewEligibility = (farmerId: number) => {
- setSelectedFarmerId(farmerId);
- };
 
- const getColor = (worthiness: string) => {
- switch (worthiness.toLowerCase()) {
- case "high":
- return "green";
- case "good":
- return "orange";
- case "low":
- return "red";
- default:
- return "black";
- }
- };
+  const handleViewEligibility = async (farmerId: number) => {
+    setSelectedFarmerId(farmerId);
+    try {
+      const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/check-eligibity/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ farmer_id: farmerId }),
+      });
+      if (!response.ok) {
+      } else {
+      }
+    }  catch (err) {
+      console.error('Error checking eligibility:', err instanceof Error ? err.message : 'Unknown error');
+    }
+  };
+  const getColor = (worthiness: string) => {
+    switch (worthiness.toLowerCase()) {
+      case "high":
+        return "green";
+      case "good":
+        return "orange";
+      case "low":
+        return "red";
+      default:
+        return "black";
+    }
+  };
+
+
 
  if (loadingCooperatives || loadingScores)
  return (
@@ -497,368 +513,5 @@ const filteredFarmers = useMemo(() => {
 };
 
 export default CooperativeDashboard;
-
-
-// "use client";
-// import React, { useState, useEffect, useMemo } from "react";
-// import { FaSearch, FaArrowLeft, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-// import { useFetchCooperatives } from "@/app/hooks/useFetchCooperative";
-// import { useScore } from "@/app/hooks/useScore";
-// import Layout from "../components/Layout";
-// import BarChartComponent from "../components/BarChart";
-// import { fetchMilkRecords } from "@/app/utils/fetchMilkRecords";
-
-// interface FarmerData {
-//   farmer_id: number;
-//   first_name: string;
-//   last_name: string;
-//   credit_score?: {
-//     score: number;
-//     credit_worthiness: string;
-//     loan_range: number;
-//     last_checked_date: string;
-//     is_eligible: boolean;
-//   };
-// }
-
-// interface MilkRecord {
-//   record_id: number;
-//   farmer_id: number;
-//   milk_quantity: number;
-//   price: number;
-//   date: string;
-// }
-
-// interface CreditScore {
-//   credit_score_id: number;
-//   farmer_id: number;
-//   score: number;
-//   credit_worthiness: string;
-//   loan_range: number;
-//   last_checked_date: string;
-//   is_eligible: boolean;
-// }
-
-// const CooperativeDashboard: React.FC = () => {
-//   const {
-//     data: cooperatives,
-//     isLoading: loadingCooperatives,
-//     error: errorCooperatives,
-//   } = useFetchCooperatives();
-
-//   const { data: creditScores, loading: loadingScores, error: errorScores }: { data: CreditScore[]; loading: boolean; error: string | null } = useScore();
-  
-//   const [searchTerm, setSearchTerm] = useState("");
-//   const [farmersData, setFarmersData] = useState<{ [key: number]: FarmerData[] }>({});
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const [selectedCooperativeId, setSelectedCooperativeId] = useState<number | null>(null);
-//   const [selectedFarmerId, setSelectedFarmerId] = useState<number | null>(null);
-//   const [milkRecords, setMilkRecords] = useState<MilkRecord[]>([]);
-//   const [totalIncome, setTotalIncome] = useState<number | null>(null);
-//   const itemsPerPage = 7;
-
-//   useEffect(() => {
-//     const fetchFarmersData = async () => {
-//       if (cooperatives && cooperatives.length > 0) {
-//         const farmersByCooperative: { [key: number]: FarmerData[] } = {};
-//         for (const cooperative of cooperatives) {
-//           try {
-//             const response = await fetch(
-//               `https://fanikisha-3beb7fcefffe.herokuapp.com/api/farmers/?cooperative_id=${cooperative.cooperative_id}`
-//             );
-//             if (!response.ok) {
-//               console.error(
-//                 "Error fetching farmers for cooperative ID",
-//                 cooperative.cooperative_id,
-//                 ":",
-//                 response.status,
-//                 response.statusText
-//               );
-//               farmersByCooperative[cooperative.cooperative_id] = [];
-//               continue;
-//             }
-//             const { farmers } = await response.json();
-//             farmersByCooperative[cooperative.cooperative_id] = farmers;
-//           } catch (error) {
-//             console.error("Error fetching farmers:", error);
-//           }
-//         }
-//         setFarmersData(farmersByCooperative);
-//       }
-//     };
-//     fetchFarmersData();
-//   }, [cooperatives]);
-
-//   useEffect(() => {
-//     if (creditScores && farmersData) {
-//       const updatedFarmersData = { ...farmersData };
-//       Object.keys(updatedFarmersData).forEach((cooperativeId) => {
-//         updatedFarmersData[Number(cooperativeId)] = updatedFarmersData[Number(cooperativeId)].map(farmer => {
-//           const creditScore = creditScores.find((score: CreditScore) => score.farmer_id === farmer.farmer_id);
-//           return {
-//             ...farmer,
-//             credit_score: creditScore ? {
-//               score: creditScore.score,
-//               credit_worthiness: creditScore.credit_worthiness,
-//               loan_range: creditScore.loan_range,
-//               last_checked_date: creditScore.last_checked_date,
-//               is_eligible: creditScore.is_eligible,
-//             } : undefined
-//           };
-//         });
-//       });
-//       setFarmersData(updatedFarmersData);
-//     }
-//   }, [creditScores, farmersData]);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       if (selectedFarmerId) {
-//         try {
-//           const records = await fetchMilkRecords();
-//           const filteredRecords = records.filter(
-//             (record: MilkRecord) => record.farmer_id === selectedFarmerId
-//           );
-//           setMilkRecords(filteredRecords);
-//         } catch (error) {
-//           console.error("Error fetching milk records:", error);
-//         }
-//       }
-//     };
-
-//     fetchData();
-//   }, [selectedFarmerId]);
-
-//   const filteredCooperatives = useMemo(() => {
-//     return cooperatives
-//       ? cooperatives.filter((cooperative) =>
-//           cooperative.cooperative_name.toLowerCase().includes(searchTerm.toLowerCase())
-//         )
-//       : [];
-//   }, [cooperatives, searchTerm]);
-
-//   const currentFarmers = useMemo(() => {
-//     return selectedCooperativeId ? farmersData[selectedCooperativeId] || [] : [];
-//   }, [farmersData, selectedCooperativeId]);
-
-//   const filteredFarmers = useMemo(() => {
-//     return currentFarmers.filter(
-//       (farmer) =>
-//         farmer.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-//         farmer.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-//         (farmer.credit_score?.last_checked_date || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-//         (farmer.credit_score?.score?.toString() || "").includes(searchTerm.toLowerCase()) ||
-//         (farmer.credit_score?.credit_worthiness || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-//         (farmer.credit_score?.is_eligible ? "Eligible" : "Not Eligible").toLowerCase().includes(searchTerm.toLowerCase())
-//     );
-//   }, [currentFarmers, searchTerm]);
-
-//   const totalPages = Math.ceil(filteredFarmers.length / itemsPerPage);
-//   const indexOfLastFarmer = currentPage * itemsPerPage;
-//   const indexOfFirstFarmer = indexOfLastFarmer - itemsPerPage;
-//   const paginatedFarmers = filteredFarmers.slice(indexOfFirstFarmer, indexOfLastFarmer);
-
-//   const handleCooperativeClick = (cooperativeId: number) => {
-//     setSelectedCooperativeId(cooperativeId);
-//     setSelectedFarmerId(null);
-//     setCurrentPage(1);
-//     setSearchTerm("");
-//   };
-
-//   const handleBackButtonClick = () => {
-//     if (selectedFarmerId) {
-//       setSelectedFarmerId(null);
-//       setTotalIncome(null); // Reset total income
-//     } else {
-//       setSelectedCooperativeId(null);
-//     }
-//     setCurrentPage(1);
-//     setSearchTerm("");
-//   };
-
-//   const handlePageChange = (newPage: number) => {
-//     setCurrentPage(newPage);
-//   };
-
-//   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     setSearchTerm(e.target.value);
-//     setCurrentPage(1);
-//   };
-
-//   const handleNextPage = () => {
-//     if (currentPage < totalPages) {
-//       setCurrentPage((prev) => prev + 1);
-//     }
-//   };
-
-//   const handlePrevPage = () => {
-//     if (currentPage > 1) {
-//       setCurrentPage((prev) => prev - 1);
-//     }
-//   };
-
-//   const handleViewEligibility = (farmerId: number) => {
-//     setSelectedFarmerId(farmerId);
-    
-//     const income = milkRecords.reduce((acc, record) => {
-//       return record.farmer_id === farmerId ? acc + (record.milk_quantity * record.price) : acc;
-//     }, 0);
-
-//     setTotalIncome(income);
-//   };
-
-//   const getColor = (worthiness: string) => {
-//     switch (worthiness.toLowerCase()) {
-//       case "high":
-//         return "green";
-//       case "good":
-//         return "orange";
-//       case "low":
-//         return "red";
-//       default:
-//         return "black";
-//     }
-//   };
-
-//   if (loadingCooperatives || loadingScores)
-//     return (
-//       <Layout>
-//         <div className="text-customBlue text-lg lg:text-xl 2xl:text-2xl">
-//           Loading data...
-//         </div>
-//       </Layout>
-//     );
-
-//   if (errorCooperatives || errorScores)
-//     return (
-//       <Layout>
-//         <div className="text-customBlue text-lg lg:text-xl 2xl:text-2xl">
-//           {errorCooperatives || errorScores}
-//         </div>
-//       </Layout>
-//     );
-
-//   return (
-//     <Layout>
-//       <div className="bg-white">
-//         <header className="text-[#299ACF] p-4">
-//           <div className="container mx-auto">
-//             <h1 className="text-[40px] font-bold">Cooperatives</h1>
-//           </div>
-//         </header>
-//         <main className="container mx-auto p-4">
-//           <section className="mt-4">
-//             <div className="relative flex mb-4">
-//               <div className="flex-grow max-w-lg">
-//                 <input
-//                   type="text"
-//                   placeholder={selectedCooperativeId ? "Search Farmers..." : "Search Cooperatives..."}
-//                   value={searchTerm}
-//                   onChange={handleSearch}
-//                   className="border rounded-md p-2 w-full"
-//                 />
-//               </div>
-//               <button className="ml-2 bg-[#299ACF] text-white p-2 rounded">
-//                 <FaSearch />
-//               </button>
-//             </div>
-//             <div>
-//               {selectedCooperativeId ? (
-//                 <>
-//                   <button
-//                     onClick={handleBackButtonClick}
-//                     className="mb-4 bg-[#299ACF] text-white px-4 py-2 rounded"
-//                   >
-//                     <FaArrowLeft /> Back to Cooperatives
-//                   </button>
-//                   <h2 className="text-xl font-semibold mb-4">
-//                     Farmers in {cooperatives.find(coop => coop.cooperative_id === selectedCooperativeId)?.cooperative_name}
-//                   </h2>
-//                   {paginatedFarmers.length === 0 ? (
-//                     <p>No farmers found.</p>
-//                   ) : (
-//                     <ul className="space-y-2">
-//                       {paginatedFarmers.map((farmer) => (
-//                         <li
-//                           key={farmer.farmer_id}
-//                           className="border p-4 rounded-md flex justify-between items-center"
-//                         >
-//                           <div>
-//                             <h3 className="font-semibold">
-//                               {farmer.first_name} {farmer.last_name}
-//                             </h3>
-//                             {farmer.credit_score && (
-//                               <p className={`text-${getColor(farmer.credit_score.credit_worthiness)}`}>
-//                                 Credit Score: {farmer.credit_score.score} - {farmer.credit_score.credit_worthiness}
-//                               </p>
-//                             )}
-//                           </div>
-//                           <button
-//                             onClick={() => handleViewEligibility(farmer.farmer_id)}
-//                             className="bg-[#299ACF] text-white px-4 py-2 rounded"
-//                           >
-//                             View Eligibility
-//                           </button>
-//                         </li>
-//                       ))}
-//                     </ul>
-//                   )}
-//                   <div className="flex justify-between mt-4">
-//                     <button
-//                       onClick={handlePrevPage}
-//                       disabled={currentPage === 1}
-//                       className="bg-[#299ACF] text-white px-4 py-2 rounded"
-//                     >
-//                       <FaChevronLeft />
-//                     </button>
-//                     <button
-//                       onClick={handleNextPage}
-//                       disabled={currentPage === totalPages}
-//                       className="bg-[#299ACF] text-white px-4 py-2 rounded"
-//                     >
-//                       <FaChevronRight />
-//                     </button>
-//                   </div>
-//                 </>
-//               ) : (
-//                 <>
-//                   <h2 className="text-xl font-semibold mb-4">Select a Cooperative</h2>
-//                   <ul className="space-y-2">
-//                     {filteredCooperatives.map((cooperative) => (
-//                       <li
-//                         key={cooperative.cooperative_id}
-//                         className="border p-4 rounded-md cursor-pointer"
-//                         onClick={() => handleCooperativeClick(cooperative.cooperative_id)}
-//                       >
-//                         {cooperative.cooperative_name}
-//                       </li>
-//                     ))}
-//                   </ul>
-//                 </>
-//               )}
-//             </div>
-//           </section>
-
-//           {selectedFarmerId && (
-//             <div className="mt-6">
-//               <h2 className="text-2xl font-semibold mb-4">
-//                 Farmer Details - ID: {selectedFarmerId}
-//               </h2>
-              
-//               <div className="bg-white p-6 rounded-lg shadow-md mt-4">
-//                 <p className="mb-2">
-//                   <strong>Total Income (KES):</strong> {totalIncome !== null ? totalIncome.toFixed(2) : "Calculating..."}
-//                 </p>
-//               </div>
-              
-//             </div>
-//           )}
-//         </main>
-//       </div>
-//     </Layout>
-//   );
-// };
-
-// export default CooperativeDashboard;
 
 

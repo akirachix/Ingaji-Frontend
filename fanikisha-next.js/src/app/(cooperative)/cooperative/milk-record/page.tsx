@@ -128,6 +128,7 @@ const CombinedMilkRecordsPage = () => {
                       onChange={(e) => setSearchTerm(e.target.value)}
                     />
                     <MdSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                    
                   </div>
                 </div>
                 {currentRecords.length > 0 ? (
@@ -212,85 +213,122 @@ const CombinedMilkRecordsPage = () => {
                 <IoAddCircleOutline className="mr-2" /> Add Collection
               </button>
             </div>
-
             {showForm && (
-              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm">
-                <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
-                  <div className="flex justify-between mb-4">
-                    <h2 className="text-xl font-semibold">
-                      {editingRecord ? "Edit Milk Collection" : "Add Milk Collection"}
-                    </h2>
-                    <button onClick={resetForm} className="text-customBlue text-xl">X</button>
-                  </div>
-                  <form onSubmit={handleSubmit}>
-                    <input
-                      type="date"
-                      name="date"
-                      value={newCollection.date}
-                      onChange={handleChange}
-                      required
-                      className="w-full mb-4 p-2 border border-gray-300 rounded"
-                    />
-                    <input
-                      type="number"
-                      name="milk_quantity"
-                      value={newCollection.milk_quantity}
-                      onChange={handleChange}
-                      placeholder="Quantity (L)"
-                      required
-                      className="w-full mb-4 p-2 border border-gray-300 rounded"
-                    />
-                    <input
-                      type="number"
-                      name="price"
-                      value={newCollection.price}
-                      onChange={handleChange}
-                      placeholder="Price"
-                      required
-                      className="w-full mb-4 p-2 border border-gray-300 rounded"
-                    />
-                    <div className="flex justify-end mt-4">
-                      <button type="submit" className="bg-customBlue text-white px-4 py-2 rounded">
-                        {editingRecord ? "Update" : "Save"}
-                      </button>
-                      <button type="button" onClick={resetForm} className="bg-red-500 text-white px-4 py-2 rounded ml-2">Cancel</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            )}
+  <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
+    <div className="bg-white p-6 rounded-lg shadow-lg w-[600px] flex flex-col">
+      <div className="flex justify-between mb-4">
+        <h2 className="text-[34px] font-bold mb-4 text-customBlue text-center">
+          {editingRecord ? "Edit Milk Collection" : "Add Milk Collection"}
+        </h2>
+      </div>
+      <form onSubmit={handleSubmit} className="flex-1 flex flex-col">
+        <div className="mb-3">
+          <label className="block text-[18px] font-medium text-gray-700">
+            Date
+          </label>
+          <input
+            type="date"
+            name="date"
+            value={newCollection.date}
+            onChange={handleChange}
+            required
+            className="mt-1 p-2 w-full border rounded border-gray-300"
+          />
+        </div>
 
-            <h2 className="text-2xl font-bold mb-4">Farmer Details</h2>
-            <p><strong>Name:</strong> {selectedFarmer.first_name} {selectedFarmer.last_name}</p>
-            <p><strong>Last Collection:</strong> {new Date(selectedFarmer.date).toLocaleDateString()}</p>
-            <p><strong>Quantity:</strong> {selectedFarmer.milk_quantity} L</p>
-            <p><strong>Price:</strong> {selectedFarmer.price} per liter</p>
+        <div className="mb-3">
+          <label className="block text-[18px] font-medium text-gray-700">
+            Quantity (L)
+          </label>
+          <input
+            type="number"
+            name="milk_quantity"
+            value={newCollection.milk_quantity}
+            onChange={handleChange}
+            placeholder="Quantity (L)"
+            required
+            className="mt-1 p-2 w-full border rounded border-gray-300"
+          />
+        </div>
 
-            <h3 className="text-xl font-bold mt-8 mb-4">Collection History</h3>
-            <table className="w-full mt-4">
-              <thead>
-                <tr className="border-b-4 border-blue-500">
-                  <th className="text-left py-2 text-lg text-blue-500">Date</th>
-                  <th className="text-left py-2 text-lg text-blue-500">Quantity (L)</th>
-                  <th className="text-left py-2 text-lg text-blue-500">Price</th>
-                  <th className="text-center"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {farmerCollections.map((collection) => (
-                  <tr key={collection.record_id} className="border-b border-black">
-                    <td className="py-3">{new Date(collection.date).toLocaleDateString()}</td>
-                    <td className="py-3">{collection.milk_quantity}</td>
-                    <td className="py-3">{collection.price}</td>
-                    <td className="py-3 text-center">
-                      <button onClick={() => handleEdit(collection)} className="text-black">
-                        <IoPencil />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="mb-3">
+          <label className="block text-[18px] font-medium text-gray-700">
+            Price per Liter
+          </label>
+          <input
+            type="number"
+            name="price"
+            value={newCollection.price}
+            onChange={handleChange}
+            placeholder="Price"
+            required
+            className="mt-1 p-2 w-full border rounded border-gray-300"
+          />
+        </div>
+
+        <div className="flex justify-center mt-4 gap-40">
+          <button
+            type="button"
+            className="bg-customBlue text-white px-6 py-2 rounded-md"
+            onClick={resetForm}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="bg-customBlue text-white px-6 py-2 rounded-md"
+          >
+            {editingRecord ? "Update" : "Save"}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+<h2 className="text-2xl font-bold mb-4">Farmer Details</h2>
+<p>
+  <strong>Name:</strong> {selectedFarmer.first_name} {selectedFarmer.last_name}
+</p>
+<p>
+  <strong>Last Collection:</strong>{" "}
+  {new Date(selectedFarmer.date).toLocaleDateString()}
+</p>
+<p>
+  <strong>Quantity:</strong> {selectedFarmer.milk_quantity} L
+</p>
+<p>
+  <strong>Price:</strong> {selectedFarmer.price} per liter
+</p>
+<h3 className="text-xl font-bold mt-8 mb-4">Collection History</h3>
+<table className="w-full mt-4">
+  <thead>
+    <tr className="border-b-4 border-blue-500">
+      <th className="text-left py-2 text-lg text-blue-500">Date</th>
+      <th className="text-left py-2 text-lg text-blue-500">Quantity (L)</th>
+      <th className="text-left py-2 text-lg text-blue-500">Price</th>
+      <th className="text-center"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {farmerCollections.map((collection) => (
+      <tr key={collection.record_id} className="border-b border-black">
+        <td className="py-3">
+          {new Date(collection.date).toLocaleDateString()}
+        </td>
+        <td className="py-3">{collection.milk_quantity}</td>
+        <td className="py-3">{collection.price}</td>
+        <td className="py-3 text-center">
+  <button onClick={() => handleEdit(collection)} className="text-black flex items-center gap-2">
+    <IoPencil />
+    <span>Edit</span>
+  </button>
+</td>
+
+      </tr>
+    ))}
+  </tbody>
+</table>
+
           </div>
         )}
       </div>

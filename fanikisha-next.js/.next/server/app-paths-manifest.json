@@ -1,5 +1,6 @@
 {
   "/page": "app/page.js",
-  "/sign-Up/page": "app/sign-Up/page.js",
-  "/api/signup/route": "app/api/signup/route.js"
+  "/(cooperative)/cooperative/milk-record/page": "app/(cooperative)/cooperative/milk-record/page.js",
+  "/(cooperative)/cooperative/farmeraccounts/page": "app/(cooperative)/cooperative/farmeraccounts/page.js",
+  "/login/page": "app/login/page.js"
 }

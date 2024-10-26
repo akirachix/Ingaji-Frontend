@@ -2,16 +2,17 @@
 import React from "react";
 import Landing from "./landing/page";
 import CooperativeDashboard from "./(sacco)/sacco/cooperativeFarmers/page";
-// import LoginForm from "./login/page";
+import FarmerDetails from "./(sacco)/sacco/checkEligibility/page";
 
 
 export default function RootLayout() {
   return (
       
         <div >
-          <Landing/>
+          {/* <Landing/> */}
           {/* <CooperativeDashboard/> */}
-          {/* <LoginForm/> */}
+          <FarmerDetails/>
+
         </div>
         
   )

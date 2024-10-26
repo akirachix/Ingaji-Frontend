@@ -48,6 +48,9 @@ const FarmersDashboard: React.FC = () => {
     indexOfLastFarmer
     
   );
+  const formatPhoneNumber = (phone: string) => {
+    return phone.slice(0, 4) + phone.slice(4).replace(/\d/g, "X");
+  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -150,7 +153,9 @@ const FarmersDashboard: React.FC = () => {
                           <td className="py-3 px-6">
                             {farmer.cooperative_number}
                           </td>
-                          <td className="py-3 px-6">{farmer.phone_number}</td>
+                          <td className="py-3 px-6">
+                        {formatPhoneNumber(farmer.phone_number)}
+                      </td>
                           <td className="py-3 px-6">
                             {formatDate(farmer.created_at)}
                           </td>
