@@ -202,22 +202,38 @@ const filteredFarmers = useMemo(() => {
  }
  };
 
- const handleViewEligibility = (farmerId: number) => {
- setSelectedFarmerId(farmerId);
- };
 
- const getColor = (worthiness: string) => {
- switch (worthiness.toLowerCase()) {
- case "high":
- return "green";
- case "good":
- return "orange";
- case "low":
- return "red";
- default:
- return "black";
- }
- };
+  const handleViewEligibility = async (farmerId: number) => {
+    setSelectedFarmerId(farmerId);
+    try {
+      const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/check-eligibity/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ farmer_id: farmerId }),
+      });
+      if (!response.ok) {
+      } else {
+      }
+    }  catch (err) {
+      console.error('Error checking eligibility:', err instanceof Error ? err.message : 'Unknown error');
+    }
+  };
+  const getColor = (worthiness: string) => {
+    switch (worthiness.toLowerCase()) {
+      case "high":
+        return "green";
+      case "good":
+        return "orange";
+      case "low":
+        return "red";
+      default:
+        return "black";
+    }
+  };
+
+
 
  if (loadingCooperatives || loadingScores)
  return (
