@@ -246,3 +246,6 @@ const AddFarmerModal: React.FC<AddFarmerModalProps> = ({
 };
 
 export default AddFarmerModal;
+
+
+

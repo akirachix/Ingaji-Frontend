@@ -1,7 +1,9 @@
 {
-  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/(sacco)/sacco/sacco-overview/page": "app/(sacco)/sacco/sacco-overview/page.js",
+  "/login/page": "app/login/page.js",
   "/(cooperative)/cooperative/Overview/page": "app/(cooperative)/cooperative/Overview/page.js",
   "/(cooperative)/cooperative/milk-record/page": "app/(cooperative)/cooperative/milk-record/page.js",
-  "/(cooperative)/cooperative/farmeraccounts/page": "app/(cooperative)/cooperative/farmeraccounts/page.js"
+  "/(cooperative)/cooperative/farmeraccounts/page": "app/(cooperative)/cooperative/farmeraccounts/page.js",
+  "/api/cooperative/route": "app/api/cooperative/route.js",
+  "/api/credit-score/route": "app/api/credit-score/route.js"
 }
