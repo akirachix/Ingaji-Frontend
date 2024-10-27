@@ -213,10 +213,6 @@ const Overview: React.FC = () => {
         format(new Date(score.last_checked_date), 'yyyy-MM') === selectedMonth
       );
       const cooperatives = cooperativesData as Cooperative[];
-<<<<<<< HEAD
-=======
-
->>>>>>> cba3e353cec18fa1bc2f4f3a0ee5fd46535a4df4
       setStats([
         { label: 'Eligible to take a loan', value: creditScoresData.filter(score => score.is_eligible).length },
         { label: 'Total Farmers checked', value: creditScoresData.length },

@@ -1,3 +1,7 @@
 {
-  "/sign-Up/page": "app/sign-Up/page.js"
+  "/page": "app/page.js",
+  "/(cooperative)/cooperative/Overview/page": "app/(cooperative)/cooperative/Overview/page.js",
+  "/(cooperative)/cooperative/milk-record/page": "app/(cooperative)/cooperative/milk-record/page.js",
+  "/(cooperative)/cooperative/farmeraccounts/page": "app/(cooperative)/cooperative/farmeraccounts/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
 }
