@@ -135,7 +135,20 @@ export interface RegistrationSuccessResponse {
     message: string;
     users: userData[];
 }
-
+export interface FarmersData {
+  totalIncome: number;
+  age: number;
+  education: string;
+  carOwnership: string;
+  numberOfChildren: number;
+  totalIncome2: number;
+  gender: string;
+  familyMembers: number;
+  familyStatus: string;
+  housingType: string;
+  daysEmployed: number;
+  occupationType: string;
+}
 
 export interface FarmerData {
   phone_number: string;
