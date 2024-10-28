@@ -202,6 +202,7 @@ const Overview: React.FC = () => {
   const [stats, setStats] = useState<Array<{ label: string; value: number }>>([]);
   const [pieData, setPieData] = useState<Array<{ name: string; value: number; color: string }>>([]);
   const [barData, setBarData] = useState<Array<{ name: string; value: number }>>([]);
+  const [showNoDataPopup, setShowNoDataPopup] = useState(false); // New state for no data popup
   const { data: cooperativesData, loading: saccoLoading, error: saccoError } = useCooperative();
   const { data: loanEligibilityData, loading: loanLoading, error: loanError } = useLoanEligibility();
   const { data: farmersData, loading: farmersLoading, error: farmersError } = useFamers();
@@ -215,10 +216,16 @@ const Overview: React.FC = () => {
       const cooperatives = cooperativesData as Cooperative[];
       setStats([
         { label: 'Eligible to take a loan', value: creditScoresData.filter(score => score.is_eligible).length },
-        { label: 'Total Farmers checked', value: creditScoresData.length },
+        { label: 'Total loan eligibilities checked', value: creditScoresData.length },
         { label: 'Not Eligible for loan', value: creditScoresData.filter(score => !score.is_eligible).length },
         { label: 'Total cooperatives', value: cooperatives.length },
       ]);
+
+      if (creditScoresData.length === 0) {
+        setShowNoDataPopup(true); // Show popup if no data for selected month
+      } else {
+        setShowNoDataPopup(false); // Hide popup if data exists
+      }
 
       const totalChecked = creditScoresData.length;
       const eligibleCount = creditScoresData.filter((score: CreditScore) => score.is_eligible).length;
@@ -246,6 +253,22 @@ const Overview: React.FC = () => {
   return (
     <Layout>
       <div className="bg-white 2xl:px-8 lg:px-4">
+          {/* No Data Popup */}
+          {showNoDataPopup && (
+          <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+            <div className="bg-white p-6 rounded-md shadow-md text-center">
+              <p className="text-lg text-gray-800">No data available for the selected month.</p>
+              <button
+                onClick={() => setShowNoDataPopup(false)}
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Main Content */}
         <div className="flex justify-between items-center 2xl:mb-6">
           <h1 className="2xl:text-4xl 2xl:mt-4 font-bold lg:text-2xl lg:mt-[-20px]">Overview</h1>
           <div className="rounded-md border-t border-blue-500 shadow-[0_2px_4px_0px_rgba(64,123,255)] 2xl:px-4 2xl:py-2 inline-block lg:mt-[-9px] lg:px-1 lg:py-1 lg:mr-3 xl:mr-4">
