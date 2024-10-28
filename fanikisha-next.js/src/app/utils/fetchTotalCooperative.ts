@@ -1,6 +1,6 @@
 export const fetchTotalCooperative = async () => {
     try {
-      const response = await fetch('/api/cooperative', {
+      const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/api/cooperative', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
