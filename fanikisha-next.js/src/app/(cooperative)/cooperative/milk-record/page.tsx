@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { MdSearch } from "react-icons/md";
 import { IoArrowBack, IoPencil, IoAddCircleOutline } from "react-icons/io5";
-import {useMilkRecord} from "@/app/hooks/useMilkRecord"
+import { useMilkRecord } from "@/app/hooks/useMilkRecord";
 import Layout from "@/app/Layout";
 
 interface MilkRecord {
@@ -12,11 +12,13 @@ interface MilkRecord {
   milk_quantity: number;
   price: number;
   date: string;
+  is_collection?: boolean;
 }
 
 const CombinedMilkRecordsPage = () => {
+  const [records, setRecords] = useState<MilkRecord[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const { data: milkRecords, loading, error } = useMilkRecord();
+  const { data: initialMilkRecords, loading, error } = useMilkRecord();
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
   const [selectedFarmer, setSelectedFarmer] = useState<MilkRecord | null>(null);
@@ -30,32 +32,82 @@ const CombinedMilkRecordsPage = () => {
     milk_quantity: 0,
     price: 0,
     date: new Date().toISOString().split('T')[0],
+    is_collection: true
   });
 
   useEffect(() => {
-    if (selectedFarmer) {
+    const loadAllRecords = () => {
+      const storedRecords = JSON.parse(localStorage.getItem('allMilkRecords') || '[]') as MilkRecord[];
+      const initialRecords = (initialMilkRecords || []) as MilkRecord[];
+  
+      const combinedRecords = [
+        ...initialRecords.map((record: MilkRecord) => ({
+          ...record,
+          is_collection: false,
+        })),
+        ...storedRecords,
+      ];
+  
+      const uniqueRecords = Array.from(
+        new Map(combinedRecords.map((record) => [record.record_id, record])).values()
+      );
+  
+      setRecords(uniqueRecords);
+    };
+  
+    loadAllRecords();
+  
+    const handleMilkRecordUpdate = (event: CustomEvent) => {
+      const { type, record } = event.detail as { type: string; record: MilkRecord };
+  
+      if (type === 'add') {
+        setRecords((prevRecords) => [...prevRecords, record]);
+      } else if (type === 'update') {
+        setRecords((prevRecords) =>
+          prevRecords.map((r) => (r.record_id === record.record_id ? record : r))
+        );
+      } else if (type === 'delete') {
+        setRecords((prevRecords) => prevRecords.filter((r) => r.record_id !== record.record_id));
+      }
+    };
+  
+    window.addEventListener('milkRecordUpdated', handleMilkRecordUpdate as EventListener);
+  
+    return () => {
+      window.removeEventListener('milkRecordUpdated', handleMilkRecordUpdate as EventListener);
+    };
+  }, [initialMilkRecords]);
+  
 
-      setFarmerCollections([selectedFarmer]);
+  useEffect(() => {
+    if (selectedFarmer) {
+      const farmerRecords = records.filter(
+        record => 
+          record.first_name === selectedFarmer.first_name && 
+          record.last_name === selectedFarmer.last_name
+      );
+      setFarmerCollections(farmerRecords);
     }
-  }, [selectedFarmer]);
+  }, [selectedFarmer, records]);
 
   if (loading) return <Layout><div className="container mx-auto p-4">Loading...</div></Layout>;
   if (error) return <Layout><div className="container mx-auto p-4">Error: {error}</div></Layout>;
 
-  const filteredRecords = milkRecords
-    ? milkRecords.filter((record: MilkRecord) => {
-        const total = (record.milk_quantity * record.price).toFixed(2);
-        const recordDate = new Date(record.date).toLocaleDateString();
-        return (
-          record.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          record.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          record.milk_quantity.toString().includes(searchTerm) ||
-          record.price.toString().includes(searchTerm) ||
-          recordDate.includes(searchTerm) ||
-          total.includes(searchTerm)
-        );
-      })
-    : [];
+  const filteredRecords = records.filter((record: MilkRecord) => {
+    // Only show non-collection records in the main table
+    if (record.is_collection) return false;
+    
+    const total = (record.milk_quantity * record.price).toFixed(2);
+    const recordDate = new Date(record.date).toLocaleDateString();
+    return (
+      record.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      record.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      record.milk_quantity.toString().includes(searchTerm) ||
+      record.price.toString().includes(searchTerm) ||
+      recordDate.includes(searchTerm) ||
+      total.includes(searchTerm)
+    );
+  });
 
   const totalRecords = filteredRecords.length;
   const totalPages = Math.ceil(totalRecords / recordsPerPage);
@@ -69,21 +121,44 @@ const CombinedMilkRecordsPage = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setNewCollection((prev) => ({ ...prev, [name]: value }));
+    setNewCollection(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    const updatedRecord = {
+      ...newCollection,
+      first_name: selectedFarmer?.first_name || "",
+      last_name: selectedFarmer?.last_name || "",
+      is_collection: true 
+    };
+
     if (editingRecord) {
-      setFarmerCollections(prevCollections =>
-        prevCollections.map(collection =>
-          collection.record_id === editingRecord.record_id ? { ...newCollection, record_id: editingRecord.record_id } : collection
-        )
+      const updatedRecords = records.map(record =>
+        record.record_id === editingRecord.record_id ? updatedRecord : record
       );
+      setRecords(updatedRecords);
+      localStorage.setItem('allMilkRecords', JSON.stringify(updatedRecords));
+
+      const updateEvent = new CustomEvent('milkRecordUpdated', {
+        detail: { type: 'update', record: updatedRecord }
+      });
+      window.dispatchEvent(updateEvent);
     } else {
-      const newRecordId = Math.max(...farmerCollections.map(c => c.record_id), 0) + 1;
-      setFarmerCollections(prevCollections => [...prevCollections, { ...newCollection, record_id: newRecordId }]);
+      const newRecordId = Math.max(...records.map(r => r.record_id), 0) + 1;
+      const newRecord = { ...updatedRecord, record_id: newRecordId };
+      
+      const updatedRecords = [...records, newRecord];
+      setRecords(updatedRecords);
+      localStorage.setItem('allMilkRecords', JSON.stringify(updatedRecords));
+
+      const addEvent = new CustomEvent('milkRecordUpdated', {
+        detail: { type: 'add', record: newRecord }
+      });
+      window.dispatchEvent(addEvent);
     }
+
     resetForm();
   };
 
@@ -95,6 +170,7 @@ const CombinedMilkRecordsPage = () => {
       milk_quantity: 0,
       price: 0,
       date: new Date().toISOString().split('T')[0],
+      is_collection: true
     });
     setShowForm(false);
     setEditingRecord(null);
@@ -212,85 +288,122 @@ const CombinedMilkRecordsPage = () => {
                 <IoAddCircleOutline className="mr-2" /> Add Collection
               </button>
             </div>
-
             {showForm && (
-              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm">
-                <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
+                <div className="bg-white p-6 rounded-lg shadow-lg w-[600px] flex flex-col">
                   <div className="flex justify-between mb-4">
-                    <h2 className="text-xl font-semibold">
+                    <h2 className="text-[34px] font-bold mb-4 text-customBlue text-center">
                       {editingRecord ? "Edit Milk Collection" : "Add Milk Collection"}
                     </h2>
-                    <button onClick={resetForm} className="text-customBlue text-xl">X</button>
                   </div>
-                  <form onSubmit={handleSubmit}>
-                    <input
-                      type="date"
-                      name="date"
-                      value={newCollection.date}
-                      onChange={handleChange}
-                      required
-                      className="w-full mb-4 p-2 border border-gray-300 rounded"
-                    />
-                    <input
-                      type="number"
-                      name="milk_quantity"
-                      value={newCollection.milk_quantity}
-                      onChange={handleChange}
-                      placeholder="Quantity (L)"
-                      required
-                      className="w-full mb-4 p-2 border border-gray-300 rounded"
-                    />
-                    <input
-                      type="number"
-                      name="price"
-                      value={newCollection.price}
-                      onChange={handleChange}
-                      placeholder="Price"
-                      required
-                      className="w-full mb-4 p-2 border border-gray-300 rounded"
-                    />
-                    <div className="flex justify-end mt-4">
-                      <button type="submit" className="bg-customBlue text-white px-4 py-2 rounded">
-                        {editingRecord ? "Update" : "Save"}
-                      </button>
-                      <button type="button" onClick={resetForm} className="bg-red-500 text-white px-4 py-2 rounded ml-2">Cancel</button>
+                  <form onSubmit={handleSubmit} className="flex-1 flex flex-col">
+                    <div className="mb-3">
+                      <label className="block text-[18px] font-medium text-gray-700">
+                        Date
+                      </label>
+                      <input
+                        type="date"
+                        name="date"
+                        value={newCollection.date}
+                        onChange={handleChange}
+                        required
+                        className="mt-1 p-2 w-full border rounded border-gray-300"
+                      />
                     </div>
-                  </form>
-                </div>
-              </div>
-            )}
 
-            <h2 className="text-2xl font-bold mb-4">Farmer Details</h2>
-            <p><strong>Name:</strong> {selectedFarmer.first_name} {selectedFarmer.last_name}</p>
-            <p><strong>Last Collection:</strong> {new Date(selectedFarmer.date).toLocaleDateString()}</p>
-            <p><strong>Quantity:</strong> {selectedFarmer.milk_quantity} L</p>
-            <p><strong>Price:</strong> {selectedFarmer.price} per liter</p>
+                    <div className="mb-3">
+                      <label className="block text-[18px] font-medium text-gray-700">
+                        Quantity (L)
+                      </label>
+                      <input
+                        type="number"
+                        name="milk_quantity"
+                        value={newCollection.milk_quantity}
+                        onChange={handleChange}
+                        placeholder="Quantity (L)"
+                        required
+                        className="mt-1 p-2 w-full border rounded border-gray-300"
+                      />
+                    </div>
 
-            <h3 className="text-xl font-bold mt-8 mb-4">Collection History</h3>
-            <table className="w-full mt-4">
-              <thead>
-                <tr className="border-b-4 border-blue-500">
-                  <th className="text-left py-2 text-lg text-blue-500">Date</th>
-                  <th className="text-left py-2 text-lg text-blue-500">Quantity (L)</th>
-                  <th className="text-left py-2 text-lg text-blue-500">Price</th>
-                  <th className="text-center"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {farmerCollections.map((collection) => (
-                  <tr key={collection.record_id} className="border-b border-black">
-                    <td className="py-3">{new Date(collection.date).toLocaleDateString()}</td>
-                    <td className="py-3">{collection.milk_quantity}</td>
-                    <td className="py-3">{collection.price}</td>
-                    <td className="py-3 text-center">
-                      <button onClick={() => handleEdit(collection)} className="text-black">
-                        <IoPencil />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    <div className="mb-3">
+                      <label className="block text-[18px] font-medium text-gray-700">
+                        Price per Liter
+                      </label>
+                      <input
+                        type="number"
+                        name="price"
+                        value={newCollection.price}
+                        onChange={handleChange}
+                        placeholder="Price"
+                        required
+                        className="mt-1 p-2 w-full border rounded border-gray-300"
+                      />
+                    </div>
+
+                    <div className="flex justify-center mt-4 gap-40">
+                      <button
+            type="button"
+            className="bg-customBlue text-white px-6 py-2 rounded-md"
+            onClick={resetForm}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="bg-customBlue text-white px-6 py-2 rounded-md"
+          >
+            {editingRecord ? "Update" : "Save"}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+<h2 className="text-2xl font-bold mb-4">Farmer Details</h2>
+<p>
+  <strong>Name:</strong> {selectedFarmer.first_name} {selectedFarmer.last_name}
+</p>
+<p>
+  <strong>Last Collection:</strong>{" "}
+  {new Date(selectedFarmer.date).toLocaleDateString()}
+</p>
+<p>
+  <strong>Quantity:</strong> {selectedFarmer.milk_quantity} L
+</p>
+<p>
+  <strong>Price:</strong> {selectedFarmer.price} per liter
+</p>
+<h3 className="text-xl font-bold mt-8 mb-4">Collection History</h3>
+<table className="w-full mt-4">
+  <thead>
+    <tr className="border-b-4 border-blue-500">
+      <th className="text-left py-2 text-lg text-blue-500">Date</th>
+      <th className="text-left py-2 text-lg text-blue-500">Quantity (L)</th>
+      <th className="text-left py-2 text-lg text-blue-500">Price</th>
+      <th className="text-center"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {farmerCollections.map((collection) => (
+      <tr key={collection.record_id} className="border-b border-black">
+        <td className="py-3">
+          {new Date(collection.date).toLocaleDateString()}
+        </td>
+        <td className="py-3">{collection.milk_quantity}</td>
+        <td className="py-3">{collection.price}</td>
+        <td className="py-3 text-center">
+  <button onClick={() => handleEdit(collection)} className="text-black flex items-center gap-2">
+    <IoPencil />
+    <span>Edit</span>
+  </button>
+</td>
+
+      </tr>
+    ))}
+  </tbody>
+</table>
+
           </div>
         )}
       </div>

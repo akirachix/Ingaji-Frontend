@@ -109,6 +109,7 @@ const productionChartOptions: ChartOptions<'bar'> = {
 const Overview = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [allData, setAllData] = useState<MilkRecord[]>([]);
+  const [showNoDataPopup, setShowNoDataPopup] = useState(false);
   const [filteredData, setFilteredData] = useState({
     totalFarmers: 0,
     activeFarmers: 0,
@@ -142,6 +143,20 @@ const Overview = () => {
         (record) => new Date(record.date).getMonth() === month
       );
 
+      if (filteredRecords.length === 0) {
+        setShowNoDataPopup(true);
+        setFilteredData({
+          totalFarmers: 0,
+          activeFarmers: 0,
+          inactiveFarmers: 0,
+          registeredFarmersData: Array(12).fill(0),
+          milkProductionData: Array(12).fill(0),
+          totalPriceData: Array(12).fill(0),
+        });
+        return;
+      }
+
+      setShowNoDataPopup(false);
       const uniqueActiveFarmers = new Set(
         filteredRecords.map((record) => record.farmer_id)
       );
@@ -219,7 +234,23 @@ const Overview = () => {
             <p className="text-red-500">{error}</p>
           ) : (
             <>
-              <div className="flex justify-center mb-2 ">
+              {showNoDataPopup && (
+                <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+                  <div className="bg-white p-6 rounded-md shadow-md text-center">
+                    <p className="text-lg text-gray-800">
+                      No data available for {months[selectedDate.getMonth()]} {selectedDate.getFullYear()}
+                    </p>
+                    <button
+                      onClick={() => setShowNoDataPopup(false)}
+                      className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex justify-center mb-2">
                 <input
                   type="month"
                   value={`${selectedDate.getFullYear()}-${String(
@@ -229,7 +260,8 @@ const Overview = () => {
                   className="rounded-md p-2 bg-white shadow-sm text-md cursor-pointer"
                 />
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 mt-9 ">
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 mt-9">
                 <div className="bg-white w-auto rounded-lg shadow-md text-center">
                   <p className="text-3xl font-bold text-blue-500">
                     {filteredData.totalFarmers}
@@ -259,12 +291,12 @@ const Overview = () => {
                     <Line data={lineChartData} options={farmersChartOptions} />
                   </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-15 lg:mb-20 xl:h-20 ">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-15 lg:mb-20 xl:h-20">
                   <div className="bg-white rounded-lg shadow-md">
                     <h2 className="text-lg font-semibold p-4 text-gray-800">
                       Total Milk Production
                     </h2>
-                    <div className="h-60 ">
+                    <div className="h-60">
                       <Bar
                         data={milkProductionChartData}
                         options={productionChartOptions}
@@ -275,7 +307,7 @@ const Overview = () => {
                     <h2 className="text-lg font-semibold p-4 text-gray-800">
                       Total price per month
                     </h2>
-                    <div className="h-60 px-2 ">
+                    <div className="h-60 px-2">
                       <Bar data={totalPriceChartData} options={productionChartOptions} />
                     </div>
                   </div>
