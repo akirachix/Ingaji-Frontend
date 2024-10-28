@@ -12,7 +12,7 @@ export interface CreditScore {
 
 export const fetchCreditScore = async () => {
     try {
-        const response = await fetch('/api/credit-score', {
+        const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/api/credit-scores/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
