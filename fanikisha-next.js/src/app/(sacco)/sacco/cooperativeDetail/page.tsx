@@ -1,5 +1,4 @@
-"use client";  // Add this line at the top
-
+"use client";
 import React, { useState, useMemo } from "react";
 import { FaSearch, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Layout from "../components/Layout";
