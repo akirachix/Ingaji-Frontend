@@ -63,7 +63,6 @@ const AddFarmerModal: React.FC<AddFarmerModalProps> = ({
           "https://fanikisha-3beb7fcefffe.herokuapp.com/api/sacco"
         );
         const data: Sacco[] = await response.json();
-        console.log(data);
         setSaccos(data);
       } catch (error) {
         console.error("Error fetching saccos:", error);
