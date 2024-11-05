@@ -25,7 +25,7 @@ const MemberPage = ({ params: { userId } }: { params: { userId: string } }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const records = await fetchMilkRecords();
+        const records = (await fetchMilkRecords()) as unknown as MilkRecord[];
         const filteredRecords = records.filter(
           (record: MilkRecord) => record.farmer_id === Number(userId)
         );
@@ -192,3 +192,5 @@ const getColor = (worthiness: string) => {
 };
 
 export default MemberPage;
+
+
