@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { transformFormData } from '../utils/formUtilis';
+import { FarmerFormData } from '../utils/types';
+
 export const useEligibility = () => {
   const [eligibilityResult, setEligibilityResult] = useState<{ isEligible: boolean; qualifyingPoints: number | string; } | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const checkEligibility = async (data: any) => {
+
+  const checkEligibility = async (data: FarmerFormData) => {
     setIsSubmitting(true);
     setApiError(null);
     try {
@@ -34,5 +37,6 @@ export const useEligibility = () => {
       setIsSubmitting(false);
     }
   };
+
   return { eligibilityResult, apiError, isSubmitting, checkEligibility };
 };

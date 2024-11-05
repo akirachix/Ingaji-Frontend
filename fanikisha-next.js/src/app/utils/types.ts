@@ -111,19 +111,34 @@ date: string;
 
 
 export interface FarmerFormData {
-  total_income: number;
-  age: number;
-  education_type: string;
   owns_car: string;
+  owns_property: string;
   num_children: number;
-  number_of_family_members: number;
+  total_income: number;
+  education_type: string;
   family_status: string;
   housing_type: string;
+  age: number;
   employment_duration: number;
+  number_of_family_members: number;
+  total_dependents: number;  
   is_long_employment: string;
-  owns_property?: boolean; 
 }
 
+export interface FormInputData {
+  owns_car: string;
+  owns_property: string;
+  num_children: number;
+  total_income: number;
+  education_type: string;
+  family_status: string;
+  housing_type: string;
+  age: number;
+  employment_duration: number;
+  number_of_family_members: number;
+  total_dependents: number; 
+  is_long_employment: string;
+}
 export interface Farmers{
 cooperative_name: string;
 is_eligible: boolean;

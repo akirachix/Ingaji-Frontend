@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 const baseUrl = process.env.BASE_URL;
 
 export async function POST(request: NextRequest) {
