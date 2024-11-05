@@ -15,6 +15,7 @@ import {
 } from "chart.js";
 import { fetchMilkRecords } from "@/app/utils/fetchMilkRecords";
 import Layout from "../../../Layout";
+import { MilkRecordsResponse } from "@/app/utils/types";
 
 interface MilkRecord {
   farmer_id: number;
@@ -123,7 +124,8 @@ const Overview = () => {
 
   const fetchData = async () => {
     try {
-      const milkRecordsData: MilkRecord[] = await fetchMilkRecords();
+      const milkRecordsResponse: MilkRecordsResponse = await fetchMilkRecords();
+      const milkRecordsData: MilkRecord[] = milkRecordsResponse.records; 
       setAllData(milkRecordsData);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -139,10 +141,23 @@ const Overview = () => {
 
   const filterDataByMonth = useCallback(
     (month: number) => {
+      if (!allData || allData.length === 0) {
+        setShowNoDataPopup(true);
+        setFilteredData({
+          totalFarmers: 0,
+          activeFarmers: 0,
+          inactiveFarmers: 0,
+          registeredFarmersData: Array(12).fill(0),
+          milkProductionData: Array(12).fill(0),
+          totalPriceData: Array(12).fill(0),
+        });
+        return;
+      }
+  
       const filteredRecords = allData.filter(
         (record) => new Date(record.date).getMonth() === month
       );
-
+  
       if (filteredRecords.length === 0) {
         setShowNoDataPopup(true);
         setFilteredData({
@@ -155,21 +170,21 @@ const Overview = () => {
         });
         return;
       }
-
+  
       setShowNoDataPopup(false);
       const uniqueActiveFarmers = new Set(
         filteredRecords.map((record) => record.farmer_id)
       );
       const totalFarmers = uniqueActiveFarmers.size;
-
+  
       const milkProductionByMonth = Array(12).fill(0);
       const totalPriceByMonth = Array(12).fill(0);
-
+  
       filteredRecords.forEach((record) => {
         milkProductionByMonth[month] += record.milk_quantity;
         totalPriceByMonth[month] += record.price;
       });
-
+  
       setFilteredData({
         totalFarmers,
         activeFarmers: totalFarmers,
@@ -183,6 +198,7 @@ const Overview = () => {
     },
     [allData]
   );
+  
 
   useEffect(() => {
     filterDataByMonth(selectedDate.getMonth());
