@@ -1,4 +1,4 @@
-import { MilkRecord, MilkRecordsResponse } from './types'; // Adjust the import path as necessary
+import { MilkRecord, MilkRecordsResponse } from './types'; 
 
 const baseUrl = process.env.BASE_URL;
 

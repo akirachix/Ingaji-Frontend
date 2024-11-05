@@ -5,27 +5,6 @@ export interface LoginCredentials {
   password: string;
 }
 
-
-
-// export interface MilkRecord {
-//   record_id: number;
-//   farmer_id: number;
-//   first_name : string;
-//   last_name : string;
-//   farmer: number;
-//   date: string;
-//   milk_quantity: number;
-//   price: number;
-//   total_value: number;
-//   total_milk_value:number;
-// }
-// export interface MilkRecordsResponse{
-//   // data(data: any): unknown;
-//   filter(arg0: (record: MilkRecord) => boolean): unknown;
-//   records: MilkRecord[];
-//   MilkRecord:string;
-//   total:number
-// }
 export interface MilkRecord {
   record_id: number;
   farmer_id: number;
@@ -40,8 +19,8 @@ export interface MilkRecord {
 }
 
 export interface MilkRecordsResponse {
-  records: MilkRecord[]; // Array of milk records
-  total: number; // Total number of records
+  records: MilkRecord[];
+  total: number; 
 }
 
 
@@ -142,7 +121,7 @@ export interface FarmerFormData {
   housing_type: string;
   employment_duration: number;
   is_long_employment: string;
-  owns_property?: boolean; // Example of an additional field
+  owns_property?: boolean; 
 }
 
 export interface Farmers{

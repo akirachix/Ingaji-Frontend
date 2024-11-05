@@ -4,22 +4,21 @@ import { fetchMilkRecords } from "../utils/fetchMilkRecords";
 import { MilkRecord, MilkRecordsResponse } from "../utils/types";
 
 export const useMilkRecord = () => {
-  const [data, setData] = useState<MilkRecord[]>([]); // State for milk records
-  const [loading, setLoading] = useState(true); // State for loading status
-  const [error, setError] = useState<string | null>(null); // State for error messages
+  const [data, setData] = useState<MilkRecord[]>([]); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState<string | null>(null); 
 
-  // loadMilkRecord function inside useEffect
   useEffect(() => {
     const loadMilkRecord = async () => {
       setLoading(true);
       setError(null);
       try {
         const response: MilkRecordsResponse = await fetchMilkRecords();
-        console.log("API response: ", response); // Check the structure of the response
+        console.log("API response: ", response); 
         
-        if (Array.isArray(response)) {  // Check if the response itself is an array
+        if (Array.isArray(response)) {  
           setData(response);
-        } else if (response.records) {  // If response has a 'records' field
+        } else if (response.records) {  
           setData(response.records);
         } else {
           setError("Invalid data structure");
@@ -36,8 +35,8 @@ export const useMilkRecord = () => {
       }
     };
 
-    loadMilkRecord(); // Call the function to load milk records on component mount
-  }, []); // Empty dependency array means it runs once when the component mounts
+    loadMilkRecord(); 
+  }, []); 
 
   return { data, loading, error }; 
 };

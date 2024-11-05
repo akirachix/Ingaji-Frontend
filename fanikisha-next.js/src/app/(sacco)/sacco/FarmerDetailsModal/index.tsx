@@ -79,7 +79,6 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
     setApiError(null);
     try {
       const transformedData = transformFormData(data);
-      console.log('Sending data:', JSON.stringify(transformedData, null, 2));
 
       const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/api/predict/', {
         method: 'POST',
@@ -90,7 +89,6 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
         body: JSON.stringify(transformedData),
       });
 
-      console.log('Response status:', response.status);
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -99,7 +97,6 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
       }
 
       const result: EligibilityResponse = await response.json();
-      console.log('API Response:', result);
 
       const qualifyingPoints = result.qualifyingPoints;
       const isEligible = qualifyingPoints !== null && qualifyingPoints >= 50;
@@ -183,7 +180,6 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            {/* Numeric Input Fields */}
             {[
               { name: 'total_income', label: 'Total Income (KES)', type: 'number' },
               { name: 'age', label: 'Age', type: 'number' },
@@ -206,7 +202,6 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
               </div>
             ))}
 
-            {/* Select Fields */}
             {[
               { name: 'education_type', label: 'Education Level', options: ['', 'Primary', 'Secondary', 'Tertiary'] },
               { name: 'owns_car', label: 'Car Ownership', options: ['', 'Yes', 'No'] },
