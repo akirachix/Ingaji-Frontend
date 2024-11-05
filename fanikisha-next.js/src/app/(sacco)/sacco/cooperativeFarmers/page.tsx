@@ -116,7 +116,6 @@ const FarmersDashboard: React.FC = () => {
     if (creditScores && farmers.length > 0) {
       const updatedFarmers = farmers.map(farmer => {
         const creditScore = creditScores.find((score: CreditScore) => score.farmer_id === farmer.farmer_id);
-        // if (creditScore) {
           return {
             ...farmer,
             credit_score: creditScore
@@ -130,7 +129,6 @@ const FarmersDashboard: React.FC = () => {
             : undefined,
           };
         
-        // return farmer;
       });
       setFarmers(updatedFarmers);
     }
@@ -183,7 +181,6 @@ const FarmersDashboard: React.FC = () => {
       (farmer) =>
         farmer.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         farmer.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        // farmer.cooperative_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
         (farmer.credit_score?.last_checked_date || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
         (farmer.credit_score?.score?.toString() || "").includes(searchTerm.toLowerCase()) ||
         (farmer.credit_score?.credit_worthiness || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -261,7 +258,6 @@ const FarmersDashboard: React.FC = () => {
                     <tr className="bg-gray-50 uppercase text-xs leading-normal tracking-wider border-b border-gray-200">
                       <th className="py-3 px-6 text-left font-bold text-customBlue text-[20px]">First Name</th>
                       <th className="py-3 px-6 text-left font-bold text-customBlue text-[20px]">Last Name</th>
-                      {/* <th className="py-3 px-6 text-left font-bold text-customBlue text-[20px]">Cooperative</th> */}
                       <th className="py-3 px-6 text-left font-bold text-customBlue text-[20px]">Last Checked</th>
                       <th className="py-3 px-6 text-left font-bold text-customBlue text-[20px]">Score</th>
                       <th className="py-3 px-6 text-left font-bold text-customBlue text-[20px]">Credit Worthiness</th>
@@ -274,7 +270,6 @@ const FarmersDashboard: React.FC = () => {
                       <tr key={farmer.farmer_id} className="border-b border-gray-200 hover:bg-gray-100 transition duration-200">
                         <td className="py-3 px-6">{farmer.first_name}</td>
                         <td className="py-3 px-6">{farmer.last_name}</td>
-                        {/* <td className="py-3 px-6">{farmer.cooperative_id || "N/A"}</td> */}
                         <td className="py-3 px-6">
                           {farmer.credit_score?.last_checked_date || "N/A"}
                         </td>

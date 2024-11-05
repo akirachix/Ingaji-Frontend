@@ -1,5 +1,4 @@
 {
   "/page": "app/page.js",
-  "/(sacco)/sacco/cooperativeFarmers/page": "app/(sacco)/sacco/cooperativeFarmers/page.js",
-  "/(sacco)/sacco/sacco-overview/page": "app/(sacco)/sacco/sacco-overview/page.js"
+  "/(sacco)/sacco/cooperativeFarmers/page": "app/(sacco)/sacco/cooperativeFarmers/page.js"
 }
