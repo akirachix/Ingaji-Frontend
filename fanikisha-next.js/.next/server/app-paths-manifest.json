@@ -1,7 +1,8 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
+  "/sign-Up/page": "app/sign-Up/page.js",
+  "/login/page": "app/login/page.js",
+  "/(sacco)/sacco/sacco-overview/page": "app/(sacco)/sacco/sacco-overview/page.js",
   "/(sacco)/sacco/cooperativeFarmers/page": "app/(sacco)/sacco/cooperativeFarmers/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/api/credit-score/route": "app/api/credit-score/route.js"
+  "/favicon.ico/route": "app/favicon.ico/route.js"
 }

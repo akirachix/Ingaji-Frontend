@@ -69,7 +69,7 @@ const Sidebar: React.FC = () => {
           className="object-contain"
         />
       </div>
-      <nav className="flex-grow flex flex-col justify-center items-center w-full">
+      <nav className="flex-grow flex flex-col justify-center items-center w-full mb-64">
         <ul className="space-y-6 text-center w-full text-lg">
           {navItems.map((item) => (
             <li key={item.name} className="w-full">

@@ -37,9 +37,7 @@ export default function LoginForm() {
         const data = await userLogin({ username, password });
         console.log("Login successful:", data);
 
-        
-
-
+      
            const role =getCookie('role')
            if (role==='sacco'){
             router.push('/sacco/sacco-overview');
@@ -71,12 +69,12 @@ return (
   <div className="flex justify-center items-center min-h-screen bg-gray-100">
     <div className="bg-white p-8  w-full sm:w-[1040px] h-auto">
       <h1 className="text-5xl work-sans font-bold mb-6 mt-20 text-center">
-        Welcome Back!
+        Welcome Back To <b className="text-blue-600">Fanikisha!</b>
       </h1>
       <p className="text-center mb-6 text-2xl">
         Don&apos;t have an account?{" "}
         <Link
-          href="/login"
+          href="/sign-Up"
           className="2xl:font-medium text-blue-600 hover:text-blue-500"
         >
           Sign Up
@@ -142,7 +140,7 @@ return (
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-40 items-center pr-3 flex text-3xl text-blue-500"
+              className="absolute inset-y-0 right-32 items-center pr-3 flex text-3xl text-blue-500"
               onClick={togglePasswordVisibility}
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
