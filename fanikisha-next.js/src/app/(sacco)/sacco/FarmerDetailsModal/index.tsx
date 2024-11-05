@@ -1,10 +1,11 @@
 
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useEligibility } from '@/app/hooks/useEligibility';
 
 interface FarmerFormData {
   owns_car: string;
@@ -19,10 +20,6 @@ interface FarmerFormData {
   number_of_family_members: number;
   total_dependents: number;
   is_long_employment: string;
-}
-
-interface EligibilityResponse {
-  qualifyingPoints: number | null;
 }
 
 const schema = yup.object().shape({
@@ -41,94 +38,19 @@ const schema = yup.object().shape({
 });
 
 const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farmerData?: Partial<FarmerFormData>; }> = ({ isOpen, onClose, farmerData }) => {
-  const [eligibilityResult, setEligibilityResult] = useState<{ isEligible: boolean; qualifyingPoints: number | string; } | null>(null);
-  const [showResultModal, setShowResultModal] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [apiError, setApiError] = useState<string | null>(null);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-    reset
-  } = useForm<FarmerFormData>({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FarmerFormData>({
     resolver: yupResolver(schema),
     defaultValues: farmerData,
   });
 
-  const transformFormData = (data: FarmerFormData) => {
-    return {
-      owns_car: data.owns_car === 'Yes' ? 1 : 0,
-      owns_property: data.owns_property === 'Yes' ? 1 : 0,
-      num_children: Number(data.num_children),
-      total_income: Number(data.total_income),
-      education_type: data.education_type === 'Primary' ? 0 : data.education_type === 'Secondary' ? 1 : 2,
-      family_status: data.family_status === 'Single' ? 0 : data.family_status === 'Married' ? 1 : 2,
-      housing_type: data.housing_type === 'Owned' ? 1 : 0,
-      age: Number(data.age),
-      employment_duration: Number(data.employment_duration),
-      number_of_family_members: Number(data.number_of_family_members),
-      total_dependents: Number(data.total_dependents),
-      is_long_employment: data.is_long_employment === 'Yes' ? 1 : 0,
-    };
-  };
+  const { eligibilityResult, apiError, isSubmitting, checkEligibility } = useEligibility();
 
   const onSubmit = async (data: FarmerFormData) => {
-    setIsSubmitting(true);
-    setApiError(null);
-    try {
-      const transformedData = transformFormData(data);
-
-      const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/api/predict/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify(transformedData),
-      });
-
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('API Error Response:', errorText);
-        throw new Error(`API error: ${response.status} - ${errorText}`);
-      }
-
-      const result: EligibilityResponse = await response.json();
-
-      const qualifyingPoints = result.qualifyingPoints;
-      const isEligible = qualifyingPoints !== null && qualifyingPoints >= 50;
-
-      setEligibilityResult({
-        isEligible,
-        qualifyingPoints: qualifyingPoints !== null ? qualifyingPoints : "No points returned",
-      });
-      setShowResultModal(true);
-
-    } catch (error) {
-      console.error('Error in form submission:', error);
-      setApiError(error instanceof Error ? error.message : 'An error occurred while checking eligibility');
-      setError('root', {
-        type: 'manual',
-        message: error instanceof Error ? error.message : 'An error occurred while checking eligibility',
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const closeResultModal = () => {
-    setShowResultModal(false);
-    setEligibilityResult(null);
+    await checkEligibility(data);
   };
 
   const handleClose = () => {
     reset();
-    setApiError(null);
-    setEligibilityResult(null);
-    setShowResultModal(false);
     onClose();
   };
 
@@ -148,37 +70,23 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
           </div>
         )}
 
-        {showResultModal && eligibilityResult && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
-            <div className="bg-white rounded-lg p-6 max-w-sm w-full shadow-lg">
-              <h3 className="text-lg font-semibold mb-2">Eligibility Result</h3>
-              <div className={`p-4 rounded-lg mb-4 ${
-                eligibilityResult.isEligible 
-                  ? "bg-green-100 text-green-800" 
-                  : "bg-red-100 text-red-800"
-              }`}>
-                <p className="text-md font-medium">
-                  {eligibilityResult.isEligible
-                    ? "The farmer is eligible for the loan!"
-                    : "The farmer is not eligible for the loan at this time."}
-                </p>
-                <p className="mt-2 text-sm">
-                  Qualifying Points: <strong>{eligibilityResult.qualifyingPoints}</strong>
-                </p>
-              </div>
-              <div className="flex justify-end">
-                <button
-                  onClick={closeResultModal}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
+        {eligibilityResult && (
+          <div className={`p-4 rounded-lg mb-4 ${
+            eligibilityResult.isEligible 
+              ? "bg-green-100 text-green-800" 
+              : "bg-red-100 text-red-800"
+          }`}>
+            <p className="text-md font-medium">
+              {eligibilityResult.isEligible
+                ? "The farmer is eligible for the loan!"
+                : "The farmer is not eligible for the loan at this time."}
+            </p>
+            <p className="mt-2 text-sm">
+              Qualifying Points: <strong>{eligibilityResult.qualifyingPoints}</strong>
+            </p>
           </div>
         )}
-
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {[
               { name: 'total_income', label: 'Total Income (KES)', type: 'number' },
@@ -241,17 +149,7 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors flex items-center"
               disabled={isSubmitting}
             >
-              {isSubmitting ? (
-                <>
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Processing...
-                </>
-              ) : (
-                'Check Eligibility'
-              )}
+              {isSubmitting ? 'Processing...' : 'Check Eligibility'}
             </button>
           </div>
         </form>

@@ -1,7 +1,5 @@
 {
   "/page": "app/page.js",
   "/(sacco)/sacco/cooperativeFarmers/page": "app/(sacco)/sacco/cooperativeFarmers/page.js",
-  "/(cooperative)/cooperative/farmeraccounts/page": "app/(cooperative)/cooperative/farmeraccounts/page.js",
-  "/(cooperative)/cooperative/milk-record/page": "app/(cooperative)/cooperative/milk-record/page.js",
-  "/(cooperative)/cooperative/Overview/page": "app/(cooperative)/cooperative/Overview/page.js"
+  "/(sacco)/sacco/sacco-overview/page": "app/(sacco)/sacco/sacco-overview/page.js"
 }
