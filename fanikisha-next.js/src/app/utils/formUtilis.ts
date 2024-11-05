@@ -1,4 +1,3 @@
-// utils/formUtilis.ts
 import { FarmerFormData, FormInputData } from './types';
 
 export const transformFormData = (data: FarmerFormData): FormInputData => {
