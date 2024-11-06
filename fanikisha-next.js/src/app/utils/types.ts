@@ -80,6 +80,17 @@ export interface Farmer {
 
 }
 export interface CreditScore{
+  education_type: string;
+  owns_car: string;
+  family_status: string;
+  housing_type: string;
+  is_long_employment: string;
+  owns_property: string;
+  employment_duration: number;
+  number_of_family_members: number;
+  age: number;
+  num_children: number;
+  total_income: number;
   credit_score_id : number;
   farmer_id:number;
   score:number;
