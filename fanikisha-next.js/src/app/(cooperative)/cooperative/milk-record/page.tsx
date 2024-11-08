@@ -1,30 +1,35 @@
 'use client';
 import React, { useState, useEffect } from "react";
 import { MdSearch } from "react-icons/md";
-import { IoArrowBack, IoPencil, IoAddCircleOutline } from "react-icons/io5";
+import { IoArrowBack, IoAddCircleOutline } from "react-icons/io5";
 import { useMilkRecord } from "@/app/hooks/useMilkRecord";
 import Layout from "@/app/Layout";
+import { createMilkRecord, fetchMilkRecordByFarmerId } from "@/app/utils/fetchMilkRecords";
+import { updateMilkRecord } from "@/app/utils/fetchMilkRecords";
 
 interface MilkRecord {
   record_id: number;
+  farmer_id?: number;
   first_name: string;
   last_name: string;
   milk_quantity: number;
   price: number;
   date: string;
-  is_collection?: boolean;
+  total_value:number;
+  total_milk_value: number;
 }
 
 const CombinedMilkRecordsPage = () => {
-  const [records, setRecords] = useState<MilkRecord[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const { data: initialMilkRecords, loading, error } = useMilkRecord();
+  const { data: milkRecords, loading, error } = useMilkRecord();
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
   const [selectedFarmer, setSelectedFarmer] = useState<MilkRecord | null>(null);
   const [farmerCollections, setFarmerCollections] = useState<MilkRecord[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editingRecord, setEditingRecord] = useState<MilkRecord | null>(null);
+  const [loadingCollections, setLoadingCollections] = useState(false);
+  const [collectionError, setCollectionError] = useState<string | null>(null);
   const [newCollection, setNewCollection] = useState<MilkRecord>({
     record_id: 0,
     first_name: "",
@@ -32,82 +37,50 @@ const CombinedMilkRecordsPage = () => {
     milk_quantity: 0,
     price: 0,
     date: new Date().toISOString().split('T')[0],
-    is_collection: true
+    total_value:0,
+    total_milk_value: 0
   });
 
   useEffect(() => {
-    const loadAllRecords = () => {
-      const storedRecords = JSON.parse(localStorage.getItem('allMilkRecords') || '[]') as MilkRecord[];
-      const initialRecords = (initialMilkRecords || []) as MilkRecord[];
-  
-      const combinedRecords = [
-        ...initialRecords.map((record: MilkRecord) => ({
-          ...record,
-          is_collection: false,
-        })),
-        ...storedRecords,
-      ];
-  
-      const uniqueRecords = Array.from(
-        new Map(combinedRecords.map((record) => [record.record_id, record])).values()
-      );
-  
-      setRecords(uniqueRecords);
-    };
-  
-    loadAllRecords();
-  
-    const handleMilkRecordUpdate = (event: CustomEvent) => {
-      const { type, record } = event.detail as { type: string; record: MilkRecord };
-  
-      if (type === 'add') {
-        setRecords((prevRecords) => [...prevRecords, record]);
-      } else if (type === 'update') {
-        setRecords((prevRecords) =>
-          prevRecords.map((r) => (r.record_id === record.record_id ? record : r))
-        );
-      } else if (type === 'delete') {
-        setRecords((prevRecords) => prevRecords.filter((r) => r.record_id !== record.record_id));
+    const fetchFarmerCollections = async () => {
+      if (selectedFarmer?.farmer_id) {
+        setLoadingCollections(true);
+        setCollectionError(null);
+        try {
+          const collections = await fetchMilkRecordByFarmerId(selectedFarmer.farmer_id);
+          
+          setFarmerCollections(Array.isArray(collections) ? collections : [collections]);
+        } catch (error) {
+          setCollectionError("Failed to load farmer collections");
+          console.error("Error fetching collections:", error);
+        } finally {
+          setLoadingCollections(false);
+        }
       }
     };
   
-    window.addEventListener('milkRecordUpdated', handleMilkRecordUpdate as EventListener);
-  
-    return () => {
-      window.removeEventListener('milkRecordUpdated', handleMilkRecordUpdate as EventListener);
-    };
-  }, [initialMilkRecords]);
-  
-
-  useEffect(() => {
     if (selectedFarmer) {
-      const farmerRecords = records.filter(
-        record => 
-          record.first_name === selectedFarmer.first_name && 
-          record.last_name === selectedFarmer.last_name
-      );
-      setFarmerCollections(farmerRecords);
+      fetchFarmerCollections();
     }
-  }, [selectedFarmer, records]);
+  }, [selectedFarmer]);
+  
 
   if (loading) return <Layout><div className="container mx-auto p-4">Loading...</div></Layout>;
   if (error) return <Layout><div className="container mx-auto p-4">Error: {error}</div></Layout>;
 
-  const filteredRecords = records.filter((record: MilkRecord) => {
-    // Only show non-collection records in the main table
-    if (record.is_collection) return false;
-    
-    const total = (record.milk_quantity * record.price).toFixed(2);
-    const recordDate = new Date(record.date).toLocaleDateString();
-    return (
-      record.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      record.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      record.milk_quantity.toString().includes(searchTerm) ||
-      record.price.toString().includes(searchTerm) ||
-      recordDate.includes(searchTerm) ||
-      total.includes(searchTerm)
-    );
-  });
+  const filteredRecords = milkRecords
+    ? milkRecords.filter((record: MilkRecord) => {
+        const recordDate = new Date(record.date).toLocaleDateString();
+        return (
+          record.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          record.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          record.milk_quantity.toString().includes(searchTerm) ||
+          record.price.toString().includes(searchTerm) ||
+          recordDate.includes(searchTerm) ||
+          record.total_milk_value.toString().includes(searchTerm)
+        );
+      })
+    : [];
 
   const totalRecords = filteredRecords.length;
   const totalPages = Math.ceil(totalRecords / recordsPerPage);
@@ -115,52 +88,83 @@ const CombinedMilkRecordsPage = () => {
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
   const currentRecords = filteredRecords.slice(indexOfFirstRecord, indexOfLastRecord);
 
-  const handleRowClick = (record: MilkRecord) => {
+  const handleRowClick = async (record: MilkRecord) => {
     setSelectedFarmer(record);
+    setLoadingCollections(true);
+    setCollectionError(null);
+    
+    if (record.farmer_id !== undefined) { 
+      try {
+        const collections = await fetchMilkRecordByFarmerId(record.farmer_id);
+        setFarmerCollections(Array.isArray(collections) ? collections : [collections]);
+      } catch (error) {
+        setCollectionError("Failed to load farmer collections");
+        console.error("Error fetching collections:", error);
+      } finally {
+        setLoadingCollections(false);
+      }
+    } else {
+      console.error("farmer_id is undefined for the selected record");
+      setCollectionError("Farmer ID is undefined");
+      setLoadingCollections(false);
+    }
   };
+  
+  
+
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setNewCollection(prev => ({ ...prev, [name]: value }));
+    const numValue = name === 'milk_quantity' || name === 'price' ? parseFloat(value) : value;
+    setNewCollection((prev) => ({
+      ...prev,
+      [name]: numValue,
+    }));
+
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    const updatedRecord = {
-      ...newCollection,
-      first_name: selectedFarmer?.first_name || "",
-      last_name: selectedFarmer?.last_name || "",
-      is_collection: true 
-    };
-
-    if (editingRecord) {
-      const updatedRecords = records.map(record =>
-        record.record_id === editingRecord.record_id ? updatedRecord : record
-      );
-      setRecords(updatedRecords);
-      localStorage.setItem('allMilkRecords', JSON.stringify(updatedRecords));
-
-      const updateEvent = new CustomEvent('milkRecordUpdated', {
-        detail: { type: 'update', record: updatedRecord }
-      });
-      window.dispatchEvent(updateEvent);
-    } else {
-      const newRecordId = Math.max(...records.map(r => r.record_id), 0) + 1;
-      const newRecord = { ...updatedRecord, record_id: newRecordId };
+    try {
+      const recordData = {
+        farmer_id: selectedFarmer?.farmer_id ?? 0, 
+        farmer: selectedFarmer?.farmer_id ?? 0,    
+        first_name: selectedFarmer?.first_name || "",
+        last_name: selectedFarmer?.last_name || "",
+        record_id: newCollection.record_id,
+        milk_quantity: newCollection.milk_quantity,
+        price: newCollection.price,
+        date: newCollection.date,
+        total_value: newCollection.total_value,
+        total_milk_value: newCollection.total_milk_value,
+      };
+  
+      if (editingRecord) {
+        const updatedRecord = await updateMilkRecord({
+          ...recordData,
+          record_id: editingRecord.record_id,
+          farmer: selectedFarmer?.farmer_id ?? 0,
+        });
+        
+        setFarmerCollections(prevCollections =>
+          prevCollections.map(collection =>
+            collection.record_id === editingRecord.record_id ? updatedRecord : collection
+          )
+        );
+      } else {
+        const newRecord = await createMilkRecord(recordData);
+        setFarmerCollections(prevCollections => [...prevCollections, newRecord]);
+      }
       
-      const updatedRecords = [...records, newRecord];
-      setRecords(updatedRecords);
-      localStorage.setItem('allMilkRecords', JSON.stringify(updatedRecords));
-
-      const addEvent = new CustomEvent('milkRecordUpdated', {
-        detail: { type: 'add', record: newRecord }
-      });
-      window.dispatchEvent(addEvent);
+      resetForm();
+    } catch (error) {
+      console.error("Error saving record:", error);
+      setCollectionError("Failed to save milk record");
     }
-
-    resetForm();
   };
+  
+  
 
   const resetForm = () => {
     setNewCollection({
@@ -170,16 +174,11 @@ const CombinedMilkRecordsPage = () => {
       milk_quantity: 0,
       price: 0,
       date: new Date().toISOString().split('T')[0],
-      is_collection: true
+      total_value:0,
+      total_milk_value: 0
     });
     setShowForm(false);
     setEditingRecord(null);
-  };
-
-  const handleEdit = (record: MilkRecord) => {
-    setEditingRecord(record);
-    setNewCollection(record);
-    setShowForm(true);
   };
 
   return (
@@ -231,12 +230,16 @@ const CombinedMilkRecordsPage = () => {
                             <td className="py-3 px-6">{record.milk_quantity}</td>
                             <td className="py-3 px-6">{record.price}</td>
                             <td className="py-3 px-6">{new Date(record.date).toLocaleDateString()}</td>
-                            <td className="py-3 px-6">{(record.milk_quantity * record.price).toFixed(2)}</td>
+                            <td className="py-3 px-6">{record.total_milk_value}</td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
-                    <div className="flex justify-center items-center mt-4">
+                  </div>
+                ) : (
+                  <div className="text-center py-10 text-gray-400">No records found.</div>
+                )}
+                             <div className="flex justify-center items-center mt-4">
                       <button
                         className={`mx-1 px-4 py-2 rounded ${
                           currentPage === 1 ? "bg-gray-200 text-gray-700 cursor-not-allowed" : "bg-blue-500 text-white"
@@ -267,101 +270,17 @@ const CombinedMilkRecordsPage = () => {
                         {">"}
                       </button>
                     </div>
-                  </div>
-                ) : (
-                  <p className="text-blue-500 text-lg">No milk records found.</p>
-                )}
               </section>
             </main>
           </>
+          
         ) : (
-          <div className="container mx-auto p-4 mt-12">
-            <div className="flex items-center justify-between mb-4">
-              <IoArrowBack 
-                onClick={() => setSelectedFarmer(null)} 
-                className="text-blue-500 cursor-pointer text-2xl" 
-              />
-              <button
-                onClick={() => { setShowForm(true); }}
-                className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center"
-              >
-                <IoAddCircleOutline className="mr-2" /> Add Collection
-              </button>
-            </div>
-            {showForm && (
-              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
-                <div className="bg-white p-6 rounded-lg shadow-lg w-[600px] flex flex-col">
-                  <div className="flex justify-between mb-4">
-                    <h2 className="text-[34px] font-bold mb-4 text-customBlue text-center">
-                      {editingRecord ? "Edit Milk Collection" : "Add Milk Collection"}
-                    </h2>
-                  </div>
-                  <form onSubmit={handleSubmit} className="flex-1 flex flex-col">
-                    <div className="mb-3">
-                      <label className="block text-[18px] font-medium text-gray-700">
-                        Date
-                      </label>
-                      <input
-                        type="date"
-                        name="date"
-                        value={newCollection.date}
-                        onChange={handleChange}
-                        required
-                        className="mt-1 p-2 w-full border rounded border-gray-300"
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label className="block text-[18px] font-medium text-gray-700">
-                        Quantity (L)
-                      </label>
-                      <input
-                        type="number"
-                        name="milk_quantity"
-                        value={newCollection.milk_quantity}
-                        onChange={handleChange}
-                        placeholder="Quantity (L)"
-                        required
-                        className="mt-1 p-2 w-full border rounded border-gray-300"
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label className="block text-[18px] font-medium text-gray-700">
-                        Price per Liter
-                      </label>
-                      <input
-                        type="number"
-                        name="price"
-                        value={newCollection.price}
-                        onChange={handleChange}
-                        placeholder="Price"
-                        required
-                        className="mt-1 p-2 w-full border rounded border-gray-300"
-                      />
-                    </div>
-
-                    <div className="flex justify-center mt-4 gap-40">
-                      <button
-            type="button"
-            className="bg-customBlue text-white px-6 py-2 rounded-md"
-            onClick={resetForm}
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="bg-customBlue text-white px-6 py-2 rounded-md"
-          >
-            {editingRecord ? "Update" : "Save"}
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-)}
-<h2 className="text-2xl font-bold mb-4">Farmer Details</h2>
-<p>
+          <main className="container mx-auto p-4">
+            <section>
+              <div className="flex items-center">
+                <div>
+                <h2 className="text-2xl font-bold mb-4">Farmer Details</h2>
+<p >
   <strong>Name:</strong> {selectedFarmer.first_name} {selectedFarmer.last_name}
 </p>
 <p>
@@ -374,38 +293,121 @@ const CombinedMilkRecordsPage = () => {
 <p>
   <strong>Price:</strong> {selectedFarmer.price} per liter
 </p>
-<h3 className="text-xl font-bold mt-8 mb-4">Collection History</h3>
-<table className="w-full mt-4">
-  <thead>
-    <tr className="border-b-4 border-blue-500">
-      <th className="text-left py-2 text-lg text-blue-500">Date</th>
-      <th className="text-left py-2 text-lg text-blue-500">Quantity (L)</th>
-      <th className="text-left py-2 text-lg text-blue-500">Price</th>
-      <th className="text-center"></th>
-    </tr>
-  </thead>
-  <tbody>
-    {farmerCollections.map((collection) => (
-      <tr key={collection.record_id} className="border-b border-black">
-        <td className="py-3">
-          {new Date(collection.date).toLocaleDateString()}
-        </td>
-        <td className="py-3">{collection.milk_quantity}</td>
-        <td className="py-3">{collection.price}</td>
-        <td className="py-3 text-center">
-  <button onClick={() => handleEdit(collection)} className="text-black flex items-center gap-2">
-    <IoPencil />
-    <span>Edit</span>
-  </button>
-</td>
+</div>
+              </div>
+                 <div className="flex items-center justify-between mb-4">
+              <IoArrowBack 
+                onClick={() => setSelectedFarmer(null)} 
+                className="text-blue-500 cursor-pointer text-2xl" 
+              />
+              <button
+                onClick={() => { setShowForm(true); }}
+                className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center"
+              >
+                <IoAddCircleOutline className="mr-2" /> Add Collection
+              </button>
+            </div>
+              <div className="overflow-x-auto mt-4">
+                <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
+                  <thead>
+                    <tr className="bg-gray-50 uppercase text-xs leading-normal tracking-wider border-b border-gray-200">
+                      <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Quantity (L)</th>
+                      <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Price per Litre</th>
+                      <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Total (Ksh)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {loadingCollections ? (
+                      <tr>
+                        <td colSpan={5} className="text-center py-5">Loading...</td>
+                      </tr>
+                    ) : collectionError ? (
+                      <tr>
+                        <td colSpan={5} className="text-center py-5 text-red-500">{collectionError}</td>
+                      </tr>
+                    ) : farmerCollections.length > 0 ? (
+                      farmerCollections.map((collection) => (
+                        <tr key={collection.record_id} className="border-b border-gray-200 hover:bg-gray-100 transition duration-200">
+                          <td className="py-3 px-6">{collection.milk_quantity}</td>
+                          <td className="py-3 px-6">{collection.price}</td>
+                          <td className="py-3 px-6">{collection.total_value}</td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={5} className="text-center py-10 text-gray-400">No records found for this farmer.</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+                
+              </div>
+            </section>
+          </main>
+        )}
+        {showForm && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-4 rounded-lg shadow-md w-full max-w-md">
+              <h3 className="text-2xl font-bold">{editingRecord ? "Edit Milk Record" : "Add Milk Record"}</h3>
+              <form onSubmit={handleSubmit} className="mt-4">
+                <div className="mb-4">
+                  <label htmlFor="milk_quantity" className="block font-medium">Quantity (L)</label>
+                  <input
+                    type="number"
+                    id="milk_quantity"
+                    name="milk_quantity"
+                    value={newCollection.milk_quantity}
+                    onChange={handleChange}
+                    className="border border-gray-300 rounded-md px-3 py-2 w-full"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+  <label htmlFor="price" className="block font-medium">Price per Litre</label>
+  <input
+    type="number"
+    id="price"
+    name="price"
+    value={newCollection.price || 70} 
+    onChange={handleChange}
+    className="border border-gray-300 rounded-md px-3 py-2 w-full"
+    required
+  />
+</div>
 
-      </tr>
-    ))}
-  </tbody>
-</table>
-
+                <div className="mb-4">
+                  <label htmlFor="date" className="block font-medium">Date</label>
+                  <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    value={newCollection.date}
+                    onChange={handleChange}
+                    className="border border-gray-300 rounded-md px-3 py-2 w-full"
+                    required
+                  />
+                </div>
+                <div className="flex justify-end mt-6">
+                  <button
+                    type="button"
+                    onClick={resetForm}
+                    className="mr-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
+                  >
+                    {editingRecord ? "Update Record" : "Save Record"}
+                  </button>
+                </div>
+                
+              </form>
+            </div>
           </div>
         )}
+        
       </div>
     </Layout>
   );

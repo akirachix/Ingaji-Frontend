@@ -64,7 +64,8 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     const record = await request.json();
-    const response = await fetch(`${baseUrl}/api/milk-records/${record.record_id}`, {
+    
+    const response = await fetch(`${baseUrl}/api/milk-records/${record.farmer_id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
