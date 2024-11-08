@@ -4,7 +4,6 @@ const baseURL = process.env.BASE_URL;
 
 export async function POST(request: NextRequest) {
   const requestData = await request.json();
-  console.log("Received data:", requestData);
 
   try {
     const response = await fetch(`${baseURL}/api/farmers/`, {

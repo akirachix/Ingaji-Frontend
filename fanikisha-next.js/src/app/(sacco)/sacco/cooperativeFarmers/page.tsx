@@ -280,13 +280,19 @@ const FarmersDashboard: React.FC = () => {
                           {farmer.credit_score?.credit_worthiness || "N/A"}
                         </td>
                         <td className="py-3 px-6">
-                          <span className={`px-2 py-1 rounded ${
-                            farmer.credit_score?.is_eligible
-                              ? "bg-green-100 text-green-800"
-                              : "bg-red-100 text-red-800"
-                          }`}>
-                            {farmer.credit_score?.is_eligible ? "Eligible" : "Not Eligible"}
-                          </span>
+                        <span className={`px-2 py-1 rounded ${
+                          farmer.credit_score?.is_eligible === undefined
+                            ? "bg-yellow-100 text-yellow-800" 
+                            : farmer.credit_score?.is_eligible
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
+                        }`}>
+                          {farmer.credit_score?.is_eligible === undefined
+                            ? "Unknown" 
+                            : farmer.credit_score?.is_eligible
+                            ? "Eligible"
+                            : "Not Eligible"}
+                        </span>
                         </td>
                         <td className="py-3 px-6">
                           <button
