@@ -65,7 +65,6 @@ export async function PUT(request: Request) {
   try {
     const record = await request.json();
     
-    // Use farmer_id instead of record_id
     const response = await fetch(`${baseUrl}/api/milk-records/${record.farmer_id}`, {
       method: 'PUT',
       headers: {

@@ -1,7 +1,7 @@
 
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -33,7 +33,7 @@ const schema = yup.object().shape({
   total_dependents: yup.number().required("Total dependents is required").min(0),
   family_status: yup.string().required("Family status is required"),
   housing_type: yup.string().required("Housing type is required"),
-  employment_duration: yup.number().required("Employment duration is required").min(0, "Cannot be less than 0").max(100, "Must be less than 100 years"),
+  employment_duration: yup.number().required("Employment duration is required").min(0, "Cannot be less than 100 years"),
   is_long_employment: yup.string().required("Employment type is required"),
 });
 
@@ -44,9 +44,11 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
   });
 
   const { eligibilityResult, apiError, isSubmitting, checkEligibility } = useEligibility();
+  const [showEligibilityResult, setShowEligibilityResult] = useState(false);
 
   const onSubmit = async (data: FarmerFormData) => {
     await checkEligibility(data);
+    setShowEligibilityResult(true);
   };
 
   const handleClose = () => {
@@ -70,23 +72,7 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
           </div>
         )}
 
-        {eligibilityResult && (
-          <div className={`p-4 rounded-lg mb-4 ${
-            eligibilityResult.isEligible 
-              ? "bg-green-100 text-green-800" 
-              : "bg-red-100 text-red-800"
-          }`}>
-            <p className="text-md font-medium">
-              {eligibilityResult.isEligible
-                ? "The farmer is eligible for the loan!"
-                : "The farmer is not eligible for the loan at this time."}
-            </p>
-            <p className="mt-2 text-sm">
-              Qualifying Points: <strong>{eligibilityResult.qualifyingPoints}</strong>
-            </p>
-          </div>
-        )}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {[
               { name: 'total_income', label: 'Total Income (KES)', type: 'number' },
@@ -94,7 +80,7 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
               { name: 'num_children', label: 'Number of Children', type: 'number' },
               { name: 'total_dependents', label: 'Total Dependents', type: 'number' },
               { name: 'number_of_family_members', label: 'Number of Family Members', type: 'number' },
-              { name: 'employment_duration', label: 'Employment Duration (Years)', type: 'number', step: '0.1' }
+              { name: 'employment_duration', label: 'Years of farming experience', type: 'number', step: '0.1' }
             ].map(field => (
               <div key={field.name}>
                 <label className="block text-sm font-medium text-gray-700 mb-1">{field.label}</label>
@@ -116,7 +102,7 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
               { name: 'owns_property', label: 'Property Ownership', options: ['', 'Yes', 'No'] },
               { name: 'family_status', label: 'Family Status', options: ['', 'Single', 'Married', 'Divorced'] },
               { name: 'housing_type', label: 'Housing Type', options: ['', 'Rented', 'Owned'] },
-              { name: 'is_long_employment', label: 'Long-term Employment', options: ['', 'Yes', 'No'] }
+              { name: 'is_long_employment', label: 'Consistent Farming', options: ['', 'Yes', 'No'] }
             ].map(selectField => (
               <div key={selectField.name}>
                 <label className="block text-sm font-medium text-gray-700 mb-1">{selectField.label}</label>
@@ -153,11 +139,34 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
             </button>
           </div>
         </form>
+
+        {showEligibilityResult && eligibilityResult && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-60">
+            <div className="bg-white rounded-lg p-6 md:p-8 max-w-sm w-full shadow-lg">
+              <h3 className="text-xl font-semibold mb-4">Eligibility Result</h3>
+              <p className="text-md font-medium">
+                {eligibilityResult.eligibility === "Eligible"
+                  ? "The farmer is eligible for the loan!"
+                  : "The farmer is not eligible for the loan at this time."}
+              </p>
+              <p className="mt-2 text-sm">
+                Prediction: <strong>{eligibilityResult.prediction[0]}</strong>
+              </p>
+              <p className="mt-2 text-sm">
+                Date Checked: <strong>{eligibilityResult.current_date}</strong>
+              </p>
+              <button
+                onClick={() => setShowEligibilityResult(false)}
+                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default FarmerDetailsModal;
-
-

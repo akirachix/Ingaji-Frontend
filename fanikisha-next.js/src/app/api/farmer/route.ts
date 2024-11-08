@@ -7,7 +7,6 @@ export async function GET() {
         'Content-Type': 'application/json',
       },
     });
-    console.log('Farmers API response status:', response.status);
     if (!response.ok) {
       const errorText = await response.text();
       console.error("GET error response:", errorText);
@@ -16,7 +15,6 @@ export async function GET() {
       });
     }
     const data = await response.json();
-    console.log('Farmers data received:', data);
     return new Response(JSON.stringify(data), {
       status: 200,
       statusText: 'Fetched Successfully',

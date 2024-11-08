@@ -233,4 +233,3 @@ const MugugaCooperative: React.FC = () => {
 };
 
 export default MugugaCooperative;
-

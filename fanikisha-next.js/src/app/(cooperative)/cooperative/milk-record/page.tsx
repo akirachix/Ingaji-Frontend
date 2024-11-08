@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from "react";
 import { MdSearch } from "react-icons/md";
-import { IoArrowBack, IoPencil, IoAddCircleOutline } from "react-icons/io5";
+import { IoArrowBack, IoAddCircleOutline } from "react-icons/io5";
 import { useMilkRecord } from "@/app/hooks/useMilkRecord";
 import Layout from "@/app/Layout";
 import { createMilkRecord, fetchMilkRecordByFarmerId } from "@/app/utils/fetchMilkRecords";
@@ -181,34 +181,6 @@ const CombinedMilkRecordsPage = () => {
     setEditingRecord(null);
   };
 
-  const handleEdit = (record: MilkRecord) => {
-    setEditingRecord(record);
-    setNewCollection(record);
-    setShowForm(true);
-  
-    const updatedData = {
-      farmer_id: record.farmer_id, 
-      price: record.price,
-      milk_quantity: record.milk_quantity,
-    };
-  
-    fetch(`https://fanikisha-3beb7fcefffe.herokuapp.com/api/milk-records/${record.farmer_id}/`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedData),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  };
-  
-
   return (
     <Layout>
       <div className="bg-white">
@@ -342,7 +314,6 @@ const CombinedMilkRecordsPage = () => {
                       <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Quantity (L)</th>
                       <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Price per Litre</th>
                       <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Total (Ksh)</th>
-                      <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -360,12 +331,6 @@ const CombinedMilkRecordsPage = () => {
                           <td className="py-3 px-6">{collection.milk_quantity}</td>
                           <td className="py-3 px-6">{collection.price}</td>
                           <td className="py-3 px-6">{collection.total_value}</td>
-                          <td className="py-3 text-center">
-  <button onClick={() => handleEdit(collection)} className="text-black flex items-center gap-2">
-    <IoPencil />
-    <span>Edit</span>
-  </button>
-</td>
                         </tr>
                       ))
                     ) : (
@@ -375,6 +340,7 @@ const CombinedMilkRecordsPage = () => {
                     )}
                   </tbody>
                 </table>
+                
               </div>
             </section>
           </main>
@@ -436,6 +402,7 @@ const CombinedMilkRecordsPage = () => {
                     {editingRecord ? "Update Record" : "Save Record"}
                   </button>
                 </div>
+                
               </form>
             </div>
           </div>
