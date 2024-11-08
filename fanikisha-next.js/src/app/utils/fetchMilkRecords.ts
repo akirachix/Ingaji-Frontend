@@ -45,7 +45,7 @@ async function fetchMilkRecordByFarmerId(farmer_id: number): Promise<MilkRecord>
 
 async function createMilkRecord(recordData: MilkRecord): Promise<MilkRecord> {
   try {
-    const response = await fetch(`${baseUrl}/api/milk-records/`, {
+    const response = await fetch(`https://fanikisha-3beb7fcefffe.herokuapp.com/api/milk-records/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
