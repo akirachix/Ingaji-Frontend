@@ -17,9 +17,8 @@ const validationSchema = Yup.object().shape({
   first_name: Yup.string().required("First Name is required"),
   last_name: Yup.string().required("Last Name is required"),
   phone_number: Yup.string()
-    .matches(/^[0-9]+$/, "Phone Number must be only digits")
-    .min(10, "Phone Number must be at least 10 digits")
-    .required("Phone Number is required"),
+  .matches(/^\+250\d{9}$/, "Phone number must be in the format +250XXXXXXXXX (Rwandan number format)")
+  .required("Phone Number is required"),
   cooperative_id: Yup.string().required("Cooperative ID is required"),
   sacco_id: Yup.number().required("Sacco ID is required"),
 });

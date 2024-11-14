@@ -8,6 +8,10 @@ import AddFarmerModal from "../farmers";
 import AddMilkRecordModal from "../milkrecords";
 import Layout from "@/app/Layout";
 
+const formatPhoneNumber = (phone: string) => {
+  return phone.slice(0, 4) + phone.slice(4).replace(/\d/g, "X");
+};
+
 const FarmersDashboard: React.FC = () => {
   const { data, isLoading, error } = useFetchFarmers();
   const [searchTerm, setSearchTerm] = useState("");
@@ -160,7 +164,9 @@ const FarmersDashboard: React.FC = () => {
                             <td className="py-3 px-6">
                               {farmer.cooperative_number}
                             </td>
-                            <td className="py-3 px-6">{farmer.phone_number}</td>
+                            <td className="py-3 px-6">
+                              {formatPhoneNumber(farmer.phone_number)}
+                            </td>
                             <td className="py-3 px-6">
                               {formatDate(farmer.created_at)}
                             </td>

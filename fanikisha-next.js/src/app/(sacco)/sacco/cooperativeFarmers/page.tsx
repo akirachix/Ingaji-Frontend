@@ -45,6 +45,7 @@ interface CooperativeData {
   cooperative_id: number;
   cooperative_name: string;
 }
+
 const FarmersDashboard: React.FC = () => {
   const [cooperatives, setCooperatives] = useState<CooperativeData[]>([]);
   const { data: creditScores, loading: loadingScores, error: errorScores } = useScore() as{
@@ -159,18 +160,6 @@ const FarmersDashboard: React.FC = () => {
       
       setSelectedFarmer(combinedFarmerData);
       setIsModalOpen(true);
-      
-      const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/check-eligibity/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ farmer_id: farmer.farmer_id }),
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to check eligibility');
-      }
     } catch (err) {
       console.error('Error checking eligibility:', err instanceof Error ? err.message : 'Unknown error');
     }
@@ -185,14 +174,13 @@ const FarmersDashboard: React.FC = () => {
         (farmer.credit_score?.score?.toString() || "").includes(searchTerm.toLowerCase()) ||
         (farmer.credit_score?.credit_worthiness || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
         (farmer.credit_score?.is_eligible ? "Eligible" : "Not Eligible").toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    ).sort((a, b) => b.farmer_id - a.farmer_id);
   }, [farmers, searchTerm]);
-
+  
   const totalPages = Math.ceil(filteredFarmers.length / itemsPerPage);
   const indexOfLastFarmer = currentPage * itemsPerPage;
   const indexOfFirstFarmer = indexOfLastFarmer - itemsPerPage;
   const paginatedFarmers = filteredFarmers.slice(indexOfFirstFarmer, indexOfLastFarmer);
-
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     setCurrentPage(1);
@@ -259,10 +247,9 @@ const FarmersDashboard: React.FC = () => {
                       <th className="py-3 px-6 text-left font-bold text-customBlue text-[20px]">First Name</th>
                       <th className="py-3 px-6 text-left font-bold text-customBlue text-[20px]">Last Name</th>
                       <th className="py-3 px-6 text-left font-bold text-customBlue text-[20px]">Last Checked</th>
-                      <th className="py-3 px-6 text-left font-bold text-customBlue text-[20px]">Score</th>
                       <th className="py-3 px-6 text-left font-bold text-customBlue text-[20px]">Credit Worthiness</th>
                       <th className="py-3 px-6 text-left font-bold text-customBlue text-[20px]">Status</th>
-                      <th className="py-3 px-6 text-left font-bold text-customBlue text-[20px]">Actions</th>
+                      <th className="py-3 px-6 text-left font-bold text-customBlue text-[20px]">Eligibility</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -272,9 +259,6 @@ const FarmersDashboard: React.FC = () => {
                         <td className="py-3 px-6">{farmer.last_name}</td>
                         <td className="py-3 px-6">
                           {farmer.credit_score?.last_checked_date || "N/A"}
-                        </td>
-                        <td className="py-3 px-6">
-                          {farmer.credit_score?.score || "N/A"}
                         </td>
                         <td className="py-3 px-6">
                           {farmer.credit_score?.credit_worthiness || "N/A"}
@@ -299,7 +283,7 @@ const FarmersDashboard: React.FC = () => {
                             onClick={() => handleViewEligibility(farmer)}
                             className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded transition duration-200"
                           >
-                            View Details
+                            Check Eligibility
                           </button>
                         </td>
                       </tr>
