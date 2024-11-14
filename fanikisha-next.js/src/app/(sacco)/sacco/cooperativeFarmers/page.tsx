@@ -58,7 +58,7 @@ const FarmersDashboard: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFarmer, setSelectedFarmer] = useState<FarmerData | null>(null);
-  const itemsPerPage = 9;
+  const itemsPerPage = 7;
   
   useEffect(() => {
     const fetchFarmers = async () => {
