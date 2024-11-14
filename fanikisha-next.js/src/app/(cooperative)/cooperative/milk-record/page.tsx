@@ -215,7 +215,7 @@ const CombinedMilkRecordsPage = () => {
                           <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Quantity (L)</th>
                           <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Price per Litre</th>
                           <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Date</th>
-                          <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Total (Ksh)</th>
+                          <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Total (Rwf)</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -313,7 +313,7 @@ const CombinedMilkRecordsPage = () => {
                     <tr className="bg-gray-50 uppercase text-xs leading-normal tracking-wider border-b border-gray-200">
                       <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Quantity (L)</th>
                       <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Price per Litre</th>
-                      <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Total (Ksh)</th>
+                      <th className="py-3 px-6 text-left font-bold text-blue-500 text-lg">Total (Rwf)</th>
                     </tr>
                   </thead>
                   <tbody>

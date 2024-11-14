@@ -1,11 +1,11 @@
 
-"use client";
-
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useEligibility } from '@/app/hooks/useEligibility';
+import CelebrationAnimation from '../components/CelebrationAnimation';
+
 
 interface FarmerFormData {
   owns_car: string;
@@ -75,7 +75,7 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {[
-              { name: 'total_income', label: 'Total Income (KES)', type: 'number' },
+              { name: 'total_income', label: 'Total Income (Rwf)', type: 'number' },
               { name: 'age', label: 'Age', type: 'number' },
               { name: 'num_children', label: 'Number of Children', type: 'number' },
               { name: 'total_dependents', label: 'Total Dependents', type: 'number' },
@@ -138,29 +138,55 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
               {isSubmitting ? 'Processing...' : 'Check Eligibility'}
             </button>
           </div>
-        </form>
-
-        {showEligibilityResult && eligibilityResult && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-60">
-            <div className="bg-white rounded-lg p-6 md:p-8 max-w-sm w-full shadow-lg">
-              <h3 className="text-xl font-semibold mb-4">Eligibility Result</h3>
-              <p className="text-md font-medium">
-                {eligibilityResult.eligibility === "Eligible"
-                  ? "The farmer is eligible for the loan!"
+        </form>    {showEligibilityResult && eligibilityResult && (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-60">
+        <div className="bg-white rounded-lg p-6 md:p-8 max-w-sm w-full shadow-lg relative">
+          {eligibilityResult.eligibility === "Eligible" && <CelebrationAnimation />}
+          
+          <h3 className="text-xl font-semibold mb-4 relative z-10">Eligibility Result</h3>
+          <div className="space-y-4 relative z-10">
+            <div className={`p-4 rounded-lg ${
+              eligibilityResult.eligibility === "Eligible" 
+                ? "bg-green-100 text-green-800" 
+                : "bg-red-100 text-red-800"
+            }`}>
+              <p className="text-md font-medium text-center">
+                {eligibilityResult.eligibility === "Eligible" 
+                  ? "Congratulations! The farmer is eligible for the loan!"
                   : "The farmer is not eligible for the loan at this time."}
               </p>
-              <p className="mt-2 text-sm">
-                Prediction: <strong>{eligibilityResult.prediction[0]}</strong>
-              </p>
-              <p className="mt-2 text-sm">
-                Date Checked: <strong>{eligibilityResult.current_date}</strong>
-              </p>
-              <button
-                onClick={() => setShowEligibilityResult(false)}
-                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
-              >
-                Close
-              </button>
+            </div>
+            
+            <div className="border-t border-gray-200 pt-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-600">Credit Worthiness</p>
+                  <p className={`font-semibold ${
+                    eligibilityResult.eligibility === "Eligible"
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }`}>
+                    {eligibilityResult.eligibility === "Eligible" ? "High" : "Low"}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Score</p>
+                  <p className="font-semibold">{eligibilityResult.prediction[0]}</p>
+                </div>
+              </div>
+              <div className="mt-4">
+                <p className="text-sm text-gray-600">Date Checked</p>
+                <p className="font-semibold">{eligibilityResult.current_date}</p>
+              </div>
+            </div>
+          </div>
+          <button
+            onClick={() => setShowEligibilityResult(false)}
+            className="mt-6 w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors relative z-10"
+          >
+            Close
+          </button>
+
             </div>
           </div>
         )}
@@ -170,3 +196,4 @@ const FarmerDetailsModal: React.FC<{ isOpen: boolean; onClose: () => void; farme
 };
 
 export default FarmerDetailsModal;
+
