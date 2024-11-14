@@ -1,7 +1,5 @@
 {
-  "/(cooperative)/cooperative/Overview/page": "app/(cooperative)/cooperative/Overview/page.js",
-  "/(cooperative)/cooperative/milk-record/page": "app/(cooperative)/cooperative/milk-record/page.js",
-  "/(cooperative)/cooperative/farmeraccounts/page": "app/(cooperative)/cooperative/farmeraccounts/page.js",
-  "/(sacco)/sacco/sacco-overview/page": "app/(sacco)/sacco/sacco-overview/page.js",
+  "/page": "app/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/(sacco)/sacco/cooperativeFarmers/page": "app/(sacco)/sacco/cooperativeFarmers/page.js"
 }
