@@ -17,7 +17,7 @@ const AddMilkRecordModal: React.FC<AddMilkRecordModalProps> = ({
 }) => {
   const [date, setDate] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [price] = useState("70"); 
+  const [price] = useState("100"); 
   const { isSubmitting, errorMessage, addMilkRecord } = useAddMilkRecord();
 
   if (!isOpen || !farmer) return null;
@@ -66,7 +66,7 @@ const AddMilkRecordModal: React.FC<AddMilkRecordModalProps> = ({
             />
           </label>
           <label className="block mb-2">
-            Price (KES):
+            Price (RWF):
             <input
               type="number"
               className="border border-gray-300 rounded px-2 py-1 w-full"

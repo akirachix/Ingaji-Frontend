@@ -1,14 +1,10 @@
+
 import { useState } from 'react';
+import { FarmerFormData,EligibilityResponse } from '../utils/types';
 import { transformFormData } from '../utils/formUtilis';
-import { FarmerFormData } from '../utils/types';
 
 export const useEligibility = () => {
-  const [eligibilityResult, setEligibilityResult] = useState<{
-    isEligible: boolean;  
-    prediction: number[];
-    eligibility: string;
-    current_date: string;
-  } | null>(null);
+  const [eligibilityResult, setEligibilityResult] = useState<EligibilityResponse | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -17,31 +13,28 @@ export const useEligibility = () => {
     setApiError(null);
 
     try {
-      const transformedData = transformFormData(data);
+      const requestData = transformFormData(data);
+      console.log('Sending data:', requestData);
+
       const response = await fetch('https://fanikisha-3beb7fcefffe.herokuapp.com/api/predict/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
         },
-        body: JSON.stringify(transformedData),
+        body: JSON.stringify(requestData)
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`API error: ${response.status} - ${errorText}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const result = await response.json();
+      console.log('API Response:', result);
 
-      setEligibilityResult({
-        isEligible: result.eligibility === "Eligible",  
-        prediction: result.prediction,
-        eligibility: result.eligibility,
-        current_date: result.current_date,
-      });
+      setEligibilityResult(result);
     } catch (error) {
-      setApiError(error instanceof Error ? error.message : 'An error occurred while checking eligibility');
+      console.error('API Error:', error);
+      setApiError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setIsSubmitting(false);
     }
@@ -49,4 +42,3 @@ export const useEligibility = () => {
 
   return { eligibilityResult, apiError, isSubmitting, checkEligibility };
 };
-
