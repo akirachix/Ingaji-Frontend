@@ -102,12 +102,6 @@ export interface MilkRecord {
   date: string;
 }
 
-export interface EligibilityData {
-  totalIncome: number;
-  daysEmployed: number;
-  education: 'None' | 'Primary' | 'Secondary' | 'Tertiary'; 
-  housingType: 'Owned' | 'Rented'; 
-}
 
 export interface FarmerFormData {
   owns_car: string;
@@ -120,24 +114,19 @@ export interface FarmerFormData {
   age: number;
   employment_duration: number;
   number_of_family_members: number;
-  total_dependents: number;  
+  total_dependents: number;
   is_long_employment: string;
 }
 
-export interface FormInputData {
-  owns_car: string;
-  owns_property: string;
-  num_children: number;
-  total_income: number;
-  education_type: string;
-  family_status: string;
-  housing_type: string;
-  age: number;
-  employment_duration: number;
-  number_of_family_members: number;
-  total_dependents: number; 
-  is_long_employment: string;
+export interface EligibilityResponse {
+  prediction: number[];
+  eligibility: string;
+  current_date: string;
 }
+
+
+
+
 
 export interface Farmers {
   cooperative_name: string;

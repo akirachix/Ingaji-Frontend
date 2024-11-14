@@ -2,6 +2,7 @@
 import { FarmerData } from "@/app/utils/types";
 import React from "react";
 
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -63,5 +64,4 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, farmersData }) => {
     </div>
   );
 };
-
 export default Modal;
